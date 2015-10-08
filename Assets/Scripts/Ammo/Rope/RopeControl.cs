@@ -35,6 +35,7 @@ public class RopeControl : MonoBehaviour {
         } else if (Vector3.Distance(hookshot.transform.position, hook.transform.position) > properties.maxLength) {
             hookshot.RetractRope();
         }
+        rope.FixedUpdate();
     }
 
     void FixedUpdate()

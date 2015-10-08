@@ -9,7 +9,7 @@ class Rope
     private RopeLink[] rope;
     private int jointCount;
 
-    private SpringJoint2D connectedJoint;
+    private ChainLinkJoint connectedJoint;
 
     public Rope(RopeProperties properties)
     {
@@ -22,14 +22,10 @@ class Rope
 
     private void GenerateInitialLinks()
     {
-        connectedJoint = properties.connectedObject.AddComponent<SpringJoint2D>();
-        connectedJoint.dampingRatio = 1;
-        connectedJoint.frequency = 0;
-        connectedJoint.connectedBody = properties.tetherBody;
-        connectedJoint.anchor = properties.connectionOffset;
-
         Vector2 connectedPoint = properties.connectedPosition + properties.connectedObject.transform.rotation * properties.connectionOffset;
         float length = Vector2.Distance(properties.tetherPosition, connectedPoint);
+
+        connectedJoint = new ChainLinkJoint(properties.connectedObject, properties.tetherObject, length);
         ChangeLength(length);
     }
 
@@ -39,7 +35,6 @@ class Rope
         {
             GameObject.Destroy(rope[i].gameObject);
         }
-        GameObject.Destroy(connectedJoint);
     }
 
     public float Length()
@@ -66,7 +61,7 @@ class Rope
 
         jointCount = newJointCount;
 
-        connectedJoint.connectedBody = jointCount == 0 ? properties.tetherBody : rope[jointCount - 1].body;
+        connectedJoint.connectedTo = jointCount == 0 ? properties.tetherObject : rope[jointCount - 1].gameObject;
         connectedJoint.distance = newLength - newJointCount * properties.linkLength;
     }
 
@@ -81,7 +76,7 @@ class Rope
         Vector2 direction = GetNewJointDirection();
         for (int i = jointCount; i < newJointCount; i++)
         {
-            Rigidbody2D previousBody = i == 0 ? properties.tetherBody : rope[i - 1].body; 
+            GameObject previousBody = i == 0 ? properties.tetherObject : rope[i - 1].gameObject; 
             Vector2 position = (Vector2)(previousBody.transform.position) + direction * properties.linkLength;
             rope[i] = new RopeLink(properties.linkPrefab, position, previousBody);
             rope[i].transform.parent = properties.parentObject.transform;
@@ -90,9 +85,16 @@ class Rope
 
     public Vector2 GetNewJointDirection()
     {
-        Vector2 p1 = connectedJoint.transform.position;
-        Vector2 p2 = connectedJoint.connectedBody.transform.position;
-        return (p1 - p2).normalized;
+        return connectedJoint.DirectionOfJoint();
+    }
+
+    public void FixedUpdate()
+    {
+        for (int i = 0; i < jointCount; i++)
+        {
+            rope[i].FixedUpdate();
+        }
+        connectedJoint.FixedUpdate();
     }
 
     public void Render(LineRenderer renderer)
@@ -101,6 +103,6 @@ class Rope
         renderer.SetPosition(0, properties.tetherObject.transform.position);
         for (int i = 0; i < jointCount; i++)
             renderer.SetPosition(i + 1, rope[i].transform.position);
-        renderer.SetPosition(jointCount + 1, properties.connectedPosition + properties.connectedObject.transform.rotation * connectedJoint.anchor);
+        renderer.SetPosition(jointCount + 1, properties.connectedPosition);
     }
 }
