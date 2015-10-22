@@ -29,8 +29,8 @@ public class LateralMovement : MonoBehaviour
     {
         int traverse = 1;
 
-        if (!checkWalls(horizontal))
-            traverse = 0;
+        //if (!checkWalls(horizontal))
+            //traverse = 0;
 
         if (!hookshotControl.IsHooked())
         {
@@ -64,7 +64,7 @@ public class LateralMovement : MonoBehaviour
         }
     }
 
-    bool checkWalls(float d)
+    /*bool checkWalls(float d)
     {
         if (d > 0)
         {
@@ -76,5 +76,5 @@ public class LateralMovement : MonoBehaviour
         }
         else
             return true;
-    }
+    }*/
 }

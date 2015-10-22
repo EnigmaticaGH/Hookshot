@@ -7,7 +7,8 @@ public class HookshotControl : MonoBehaviour {
         READY,
         EXTENDING,
         RETRACTING,
-        HOOKED
+        HOOKED,
+        FLYING
     }
     private delegate void StateFunction();
     private StateFunction[] stateProcesses;
@@ -18,7 +19,8 @@ public class HookshotControl : MonoBehaviour {
             this.Ready,
             this.Extend,
             this.Retract,
-            this.Hooked
+            this.Hooked,
+            this.Flying
         };
     }
 
@@ -36,6 +38,8 @@ public class HookshotControl : MonoBehaviour {
     private HookshotState state;
     private Vector2 retractPoint;
     private float stateSwitchTime;
+
+    public JumpControl player;
 
     void Start()
     {
@@ -85,10 +89,24 @@ public class HookshotControl : MonoBehaviour {
         if (Input.GetButtonDown("Fire1") || Input.GetButtonDown("Jump"))
         {
             DestroyHookAndRope();
-            ChangeState(HookshotState.READY);
+            ChangeState(HookshotState.FLYING);
         }
 
         RotatGunToFaceHook();
+    }
+
+    void Flying()
+    {
+        if (Input.GetButtonDown("Fire1"))
+        {
+            FireHookAndRope();
+            ChangeState(HookshotState.EXTENDING);
+        }
+
+        if (player.isGrounded())
+        {
+            ChangeState(HookshotState.READY);
+        }
     }
 
     void Retract()
@@ -150,6 +168,11 @@ public class HookshotControl : MonoBehaviour {
     public bool IsHooked()
     {
         return state == HookshotState.HOOKED; 
+    }
+
+    public bool IsFlying()
+    {
+        return state == HookshotState.FLYING;
     }
 
     public Vector2 HookPoint()
