@@ -61,7 +61,7 @@ public class HookshotControl : MonoBehaviour {
     {
         state = newState;
         stateSwitchTime = Time.time;
-        if (state == HookshotState.READY) {
+        if (CanMouseAim()) {
             mouseAimer.ToggleAiming(true);
         } else {
             mouseAimer.ToggleAiming(false);
@@ -107,6 +107,11 @@ public class HookshotControl : MonoBehaviour {
         {
             ChangeState(HookshotState.READY);
         }
+    }
+
+    private bool CanMouseAim()
+    {
+        return state == HookshotState.READY || state == HookshotState.FLYING;
     }
 
     void Retract()
