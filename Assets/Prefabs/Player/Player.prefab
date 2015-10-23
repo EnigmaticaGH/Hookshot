@@ -41,11 +41,10 @@ GameObject:
   m_Component:
   - 4: {fileID: 476450}
   - 50: {fileID: 5073012}
-  - 61: {fileID: 6188672}
   - 114: {fileID: 11448862}
   - 114: {fileID: 11402512}
-  - 114: {fileID: 11478204}
   - 114: {fileID: 11414272}
+  - 114: {fileID: 11458740}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -78,7 +77,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 423042}
-  - 114: {fileID: 11449760}
   - 61: {fileID: 6151468}
   m_Layer: 0
   m_Name: WallSensorL
@@ -95,7 +93,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 411614}
-  - 114: {fileID: 11472900}
   - 61: {fileID: 6191496}
   m_Layer: 0
   m_Name: WallSensorR
@@ -115,6 +112,7 @@ GameObject:
   - 212: {fileID: 21231396}
   - 95: {fileID: 9500482}
   - 114: {fileID: 11432522}
+  - 61: {fileID: 6110152}
   m_Layer: 0
   m_Name: FrogSprite
   m_TagString: Untagged
@@ -164,7 +162,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 199424}
-  m_LocalRotation: {x: 0, y: 0, z: -.0499828532, w: .998750091}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -.00300000003, y: .384000003, z: 0}
   m_LocalScale: {x: .699999988, y: .699999988, z: 1}
   m_Children: []
@@ -177,7 +175,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 131410}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: .423999995, y: .505999982, z: 0}
+  m_LocalPosition: {x: .419, y: .504999995, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 422932}
@@ -190,7 +188,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 149900}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: .513000011, y: 2.8900001, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 424174}
@@ -228,6 +226,19 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!61 &6110152
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 199424}
+  m_Enabled: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_Offset: {x: 0, y: -5.96046448e-08}
+  serializedVersion: 2
+  m_Size: {x: .959999979, y: .550000012}
 --- !u!61 &6151468
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -254,19 +265,6 @@ BoxCollider2D:
   m_Offset: {x: -.00999999978, y: .0599999987}
   serializedVersion: 2
   m_Size: {x: 1.13, y: .200000003}
---- !u!61 &6188672
-BoxCollider2D:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 149900}
-  m_Enabled: 1
-  m_Material: {fileID: 6200000, guid: 784af44ee49d815438714b00650f5e24, type: 2}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_Offset: {x: -.00999999978, y: .360000014}
-  serializedVersion: 2
-  m_Size: {x: .720000029, y: .460000008}
 --- !u!61 &6191496
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -313,8 +311,8 @@ MonoBehaviour:
   moveForce: 400
   hookshotControl: {fileID: 11405712}
   characterSprite: {fileID: 21231396}
-  wallSensorRight: {fileID: 11472900}
-  wallSensorLeft: {fileID: 11449760}
+  wallSensorRight: {fileID: 0}
+  wallSensorLeft: {fileID: 0}
 --- !u!114 &11405712
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -330,6 +328,7 @@ MonoBehaviour:
   ropeFab: {fileID: 146786, guid: 342c817da3ed73444a65c5654b900747, type: 2}
   retractTime: .25
   mouseAimer: {fileID: 11444918}
+  player: {fileID: 11448862}
 --- !u!114 &11414272
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -380,18 +379,19 @@ MonoBehaviour:
   force: 90
   keybinds: {fileID: 0}
   canDoubleJump: 0
---- !u!114 &11449760
+--- !u!114 &11458740
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 154834}
+  m_GameObject: {fileID: 149900}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 91f6f7f2cdcf4794788f361bd4cdda33, type: 3}
+  m_Script: {fileID: 11500000, guid: 4f91f84f3ece7a24fbdcb8f3f8395a96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  emptySpace: 0
+  lethalVelocity: 2
+  hook: {fileID: 11405712}
 --- !u!114 &11465158
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -404,30 +404,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 11448862}
---- !u!114 &11472900
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 184664}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 91f6f7f2cdcf4794788f361bd4cdda33, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  emptySpace: 0
---- !u!114 &11478204
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 149900}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e71b65dff9830f4ea8d0bf0da58ce40, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hookshot: {fileID: 11405712}
 --- !u!212 &21231396
 SpriteRenderer:
   m_ObjectHideFlags: 1
