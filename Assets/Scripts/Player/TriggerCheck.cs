@@ -3,8 +3,18 @@ using System.Collections;
 
 public class TriggerCheck : MonoBehaviour {
     public HookshotControl hookshot;
+    public ParticleSystem death;
+    public Transform playerSprite;
 
     private GameObject lastSpawn;
+    private Rigidbody2D reggieBody;
+
+    public float timeForRespawn = 0.1f;
+
+    void Start()
+    {
+        reggieBody = gameObject.GetComponent<Rigidbody2D>();
+    }
 
     void OnTriggerEnter2D(Collider2D c)
     {
@@ -16,7 +26,7 @@ public class TriggerCheck : MonoBehaviour {
         {
             lastSpawn = c.gameObject;
         }
-        if (c.CompareTag("Enemy") || (c.CompareTag("Water") && !hookshot.IsHooked()))
+        if (c.CompareTag("Enemy"))
         {
             Respawn();
         }
@@ -32,7 +42,19 @@ public class TriggerCheck : MonoBehaviour {
 
     void Respawn()
     {
+        StartCoroutine(delayedRespawn());
+    }
+
+    IEnumerator delayedRespawn()
+    {
+        playerSprite.gameObject.SetActive(false);
+        reggieBody.isKinematic = true;
+        ParticleSystem deathAnimation = Instantiate(death, transform.position, Quaternion.identity) as ParticleSystem;
+        yield return new WaitForSeconds(timeForRespawn);
         transform.position = lastSpawn.transform.position;
+        playerSprite.gameObject.SetActive(true);
+        reggieBody.isKinematic = false;
+        Destroy(deathAnimation);
         hookshot.CancelHook();
     }
 }
