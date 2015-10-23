@@ -6142,12 +6142,29 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 476450, guid: b866b03f9d953874aa53a45d93b3a489, type: 2}
       propertyPath: m_RootOrder
-      value: 32
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 11448862, guid: b866b03f9d953874aa53a45d93b3a489, type: 2}
       propertyPath: keybinds
       value: 
       objectReference: {fileID: 1479302268}
+    - target: {fileID: 11402512, guid: b866b03f9d953874aa53a45d93b3a489, type: 2}
+      propertyPath: speedInWater
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 11478204, guid: b866b03f9d953874aa53a45d93b3a489, type: 2}
+      propertyPath: death
+      value: 
+      objectReference: {fileID: 19839016, guid: 87ea72fd2e963954c851c47d0f46d916,
+        type: 2}
+    - target: {fileID: 11478204, guid: b866b03f9d953874aa53a45d93b3a489, type: 2}
+      propertyPath: timeForRespawn
+      value: .5
+      objectReference: {fileID: 0}
+    - target: {fileID: 11478204, guid: b866b03f9d953874aa53a45d93b3a489, type: 2}
+      propertyPath: playerSprite
+      value: 
+      objectReference: {fileID: 2051412855}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b866b03f9d953874aa53a45d93b3a489, type: 2}
   m_IsPrefabParent: 0
@@ -6921,6 +6938,10 @@ Prefab:
 Transform:
   m_PrefabParentObject: {fileID: 447780, guid: 60dfed4b5d4a57740a491364c9ba2cdc, type: 2}
   m_PrefabInternal: {fileID: 1215128166}
+--- !u!4 &2051412855 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 424174, guid: b866b03f9d953874aa53a45d93b3a489, type: 2}
+  m_PrefabInternal: {fileID: 1936877533}
 --- !u!4 &2056041050 stripped
 Transform:
   m_PrefabParentObject: {fileID: 402580, guid: 03938ff7fe3cb5845b355fe0ef1d8178, type: 2}

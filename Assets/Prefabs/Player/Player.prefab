@@ -104,6 +104,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &184948
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 416916}
+  - 61: {fileID: 6107600}
+  - 114: {fileID: 11445532}
+  m_Layer: 0
+  m_Name: DrowningSensor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &199424
 GameObject:
   m_ObjectHideFlags: 0
@@ -134,6 +151,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 476450}
   m_RootOrder: 3
+--- !u!4 &416916
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 184948}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -.0130000003, y: .586000025, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 476450}
+  m_RootOrder: 5
 --- !u!4 &422932
 Transform:
   m_ObjectHideFlags: 1
@@ -165,7 +194,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 199424}
   m_LocalRotation: {x: 0, y: 0, z: -.0499828532, w: .998750091}
-  m_LocalPosition: {x: -.00300000003, y: .384000003, z: 0}
+  m_LocalPosition: {x: 0, y: .384000003, z: 0}
   m_LocalScale: {x: .699999988, y: .699999988, z: 1}
   m_Children: []
   m_Father: {fileID: 476450}
@@ -190,7 +219,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 149900}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: .513000011, y: 2.8900001, z: 0}
+  m_LocalPosition: {x: -.439999998, y: 1.17999995, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 424174}
@@ -198,6 +227,7 @@ Transform:
   - {fileID: 494560}
   - {fileID: 411614}
   - {fileID: 423042}
+  - {fileID: 416916}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!4 &494560
@@ -228,6 +258,19 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!61 &6107600
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 184948}
+  m_Enabled: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Size: {x: .699999988, y: .0549999997}
 --- !u!61 &6151468
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -309,6 +352,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 7
+  speedInWater: 3
   force: 600
   moveForce: 400
   hookshotControl: {fileID: 11405712}
@@ -366,6 +410,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c35ef580d7602994f953ca1f66ab8f5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &11445532
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 184948}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0291e96fb665264ba226fa4ea5e9b0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  submerged: 0
+  playerHealth: {fileID: 11478204}
+  hooked: {fileID: 0}
+  timeForDrowning: 3
 --- !u!114 &11448862
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -388,7 +447,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 154834}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 91f6f7f2cdcf4794788f361bd4cdda33, type: 3}
+  m_Script: {fileID: 11500000, guid: e0e24637a45aeee469bb47dee591330d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   emptySpace: 0
@@ -412,7 +471,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 184664}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 91f6f7f2cdcf4794788f361bd4cdda33, type: 3}
+  m_Script: {fileID: 11500000, guid: e0e24637a45aeee469bb47dee591330d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   emptySpace: 0
@@ -428,6 +487,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hookshot: {fileID: 11405712}
+  death: {fileID: 19839016, guid: 87ea72fd2e963954c851c47d0f46d916, type: 2}
+  playerSprite: {fileID: 424174}
+  timeForRespawn: .5
 --- !u!212 &21231396
 SpriteRenderer:
   m_ObjectHideFlags: 1
