@@ -36,7 +36,7 @@ public class KillEnemies : MonoBehaviour
         {
             lastSpawn = c.gameObject;
         }
-        if (c.CompareTag("Boundary") || (c.CompareTag("Water") && !hook.IsHooked()))
+        if ((c.CompareTag("Boundary") || (c.CompareTag("Water"))) && !hook.IsHooked())
         {
             Respawn();
         }
