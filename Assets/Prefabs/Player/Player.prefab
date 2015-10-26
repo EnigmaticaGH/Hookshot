@@ -256,7 +256,7 @@ Rigidbody2D:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!61 &6110152
 BoxCollider2D:
@@ -283,7 +283,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_Offset: {x: -.400000006, y: .375}
   serializedVersion: 2
-  m_Size: {x: .100000001, y: .400000006}
+  m_Size: {x: .200000003, y: .400000006}
 --- !u!61 &6161566
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -296,7 +296,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: .100000001}
   serializedVersion: 2
-  m_Size: {x: .699999988, y: .200000003}
+  m_Size: {x: .600000024, y: .200000003}
 --- !u!61 &6163904
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -309,7 +309,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: .649999976}
   serializedVersion: 2
-  m_Size: {x: .699999988, y: .200000003}
+  m_Size: {x: .699999988, y: .300000012}
 --- !u!61 &6191496
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -322,7 +322,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_Offset: {x: .400000006, y: .375}
   serializedVersion: 2
-  m_Size: {x: .100000001, y: .400000006}
+  m_Size: {x: .200000003, y: .400000006}
 --- !u!95 &9500482
 Animator:
   serializedVersion: 3

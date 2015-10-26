@@ -837,26 +837,6 @@ Prefab:
       propertyPath: keybinds
       value: 
       objectReference: {fileID: 29999882}
-    - target: {fileID: 6191496, guid: b866b03f9d953874aa53a45d93b3a489, type: 2}
-      propertyPath: m_Size.x
-      value: .200000003
-      objectReference: {fileID: 0}
-    - target: {fileID: 6191496, guid: b866b03f9d953874aa53a45d93b3a489, type: 2}
-      propertyPath: m_Offset.x
-      value: .400000006
-      objectReference: {fileID: 0}
-    - target: {fileID: 6151468, guid: b866b03f9d953874aa53a45d93b3a489, type: 2}
-      propertyPath: m_Size.x
-      value: .200000003
-      objectReference: {fileID: 0}
-    - target: {fileID: 6163904, guid: b866b03f9d953874aa53a45d93b3a489, type: 2}
-      propertyPath: m_Size.y
-      value: .300000012
-      objectReference: {fileID: 0}
-    - target: {fileID: 5073012, guid: b866b03f9d953874aa53a45d93b3a489, type: 2}
-      propertyPath: m_CollisionDetection
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b866b03f9d953874aa53a45d93b3a489, type: 2}
   m_IsPrefabParent: 0
@@ -1892,7 +1872,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1702469740
 Transform:
   m_ObjectHideFlags: 0
