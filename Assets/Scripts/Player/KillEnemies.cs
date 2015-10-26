@@ -46,6 +46,7 @@ public class KillEnemies : MonoBehaviour
     {
         transform.position = lastSpawn.transform.position;
         hook.CancelHook();
+        player.velocity = Vector2.zero;
     }
 
     private bool Flying()
