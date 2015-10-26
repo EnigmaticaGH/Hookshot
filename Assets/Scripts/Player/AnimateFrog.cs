@@ -25,7 +25,6 @@ public class AnimateFrog : MonoBehaviour
         {
             anim.SetBool("Grounded", jump.isGrounded());
             anim.SetBool("Moving", relativeVel.magnitude > 0.01f);
-            
         }
     }
 

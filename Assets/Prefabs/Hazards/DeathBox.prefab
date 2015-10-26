@@ -9,7 +9,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 482358}
   - 61: {fileID: 6130748}
-  m_Layer: 10
+  m_Layer: 15
   m_Name: DeathBox
   m_TagString: Boundary
   m_Icon: {fileID: 0}
