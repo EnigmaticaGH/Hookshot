@@ -132,6 +132,7 @@ GameObject:
   - 95: {fileID: 9500482}
   - 114: {fileID: 11432522}
   - 61: {fileID: 6110152}
+  - 114: {fileID: 11475298}
   m_Layer: 0
   m_Name: FrogSprite
   m_TagString: Untagged
@@ -486,6 +487,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   triggers: {fileID: 11485138, guid: 342c817da3ed73444a65c5654b900747, type: 2}
+--- !u!114 &11475298
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 199424}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2fdb5a490c2f7548b029daf891216c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hook: {fileID: 11405712}
+  friction: {fileID: 6200000, guid: 784af44ee49d815438714b00650f5e24, type: 2}
+  noFriction: {fileID: 6200000, guid: 019b476438ed7a84eb357f49ab9cdb48, type: 2}
 --- !u!212 &21231396
 SpriteRenderer:
   m_ObjectHideFlags: 1
