@@ -24,7 +24,7 @@ public class StopGettingStuckOnWalls : MonoBehaviour
 
         if (box.sharedMaterial != temp)
         {
-            Debug.Log("Switched material.");
+            //Force an update to the collider's physics material
             box.enabled = false;
             box.enabled = true;
         }
