@@ -11,6 +11,7 @@ public class PauseScript : MonoBehaviour
     void Start()
     {
         pauseScreen.enabled = false;
+        Time.timeScale = 1.0f;
     }
 
     void Update()
