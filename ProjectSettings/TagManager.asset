@@ -13,6 +13,14 @@ TagManager:
   - Platform
   - Water
   - Boundary
+  - Bottom
+  - Top
+  - Left
+  - Right
+  - Back
+  - Mouth
+  - Ass
+  - Feet
   layers:
   - Default
   - TransparentFX
@@ -29,7 +37,7 @@ TagManager:
   - Rope
   - Player
   - Sensor
-  - 
+  - Boundary
   - 
   - 
   - 

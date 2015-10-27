@@ -15,6 +15,9 @@ public struct Rope
 }
 
 public class RopeControl : MonoBehaviour {
+    private bool hittingTop;
+    private bool hittingBot;
+
     private GameObject player;
     private SpriteRenderer playerRenderer;
 
@@ -32,14 +35,16 @@ public class RopeControl : MonoBehaviour {
 
     private bool boostEnabled;
 
-	void Start () {
+    void Start() {
         player = GameObject.FindGameObjectWithTag("Player");
         playerRenderer = player.GetComponentInChildren<SpriteRenderer>();
         line = GetComponent<LineRenderer>();
         boostEnabled = false;
-	}
+        hittingBot = false;
+        hittingTop = false;
+    }
 
-	void Update () {
+    void Update() {
         if (hookshot.IsHooked()) {
             boostEnabled = Input.GetButton("Fire2");
         } else if (Vector3.Distance(hookshot.transform.position, hook.transform.position) > ropeProperties.maxLength) {
@@ -50,7 +55,7 @@ public class RopeControl : MonoBehaviour {
     void FixedUpdate()
     {
         if (hookshot.IsHooked()) {
-            ControlRope();
+            if (CanControlRope()) ControlRope();
             RotateObjectTowardsRope();
         }
         DrawRope();
@@ -60,8 +65,8 @@ public class RopeControl : MonoBehaviour {
     {
         float vertical = boostEnabled ? ropeProperties.boostSpeed : Input.GetAxis("Vertical");
         float distance = vertical * ropeProperties.climbSpeed * Time.fixedDeltaTime;
-        rope.distance = Mathf.Clamp(rope.distance - distance, 
-                                    ropeProperties.minLength, 
+        rope.distance = Mathf.Clamp(rope.distance - distance,
+                                    ropeProperties.minLength,
                                     ropeProperties.maxLength);
     }
 
@@ -110,9 +115,24 @@ public class RopeControl : MonoBehaviour {
         if (hookshot.IsHooked())
             line.SetPosition(0, rope.transform.position + (Vector3)rope.anchor);
         else
-            line.SetPosition(0, player.transform.position 
-                              + playerRenderer.transform.localPosition 
+            line.SetPosition(0, player.transform.position
+                              + playerRenderer.transform.localPosition
                               + playerRenderer.transform.rotation * anchorOffset);
         line.SetPosition(1, hook.transform.position);
+    }
+
+    bool CanControlRope()
+    {
+        return !(hittingTop || hittingBot);
+    }
+
+    public void setTop(bool f)
+    {
+        hittingTop = f;
+    }
+
+    public void setBot(bool f)
+    {
+        hittingBot = f;
     }
 }
