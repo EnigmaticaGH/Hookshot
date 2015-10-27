@@ -28,7 +28,6 @@ GameObject:
   - 222: {fileID: 22239718}
   - 114: {fileID: 11494934}
   - 114: {fileID: 11458774}
-  - 114: {fileID: 11427128}
   m_Layer: 5
   m_Name: LevelLoadingButton
   m_TagString: Untagged
@@ -36,18 +35,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &11427128
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 182596}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f8bf5dbba3e3fed47aef6414d1881d15, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  levelToLoad: 4d6f76696e67506c6174666f726d4c6576656c
 --- !u!114 &11427474
 MonoBehaviour:
   m_ObjectHideFlags: 1
