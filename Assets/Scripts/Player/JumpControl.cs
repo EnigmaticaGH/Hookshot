@@ -7,7 +7,7 @@ public class JumpControl : MonoBehaviour {
     public float force;
 
     private Rigidbody2D body;
-    public KeybindScript keybinds;
+    private KeybindScript keybinds;
 
     private bool jump;
     private bool doubleJump;
@@ -17,6 +17,7 @@ public class JumpControl : MonoBehaviour {
 
 	void Start () 
     {
+        keybinds = GameObject.FindGameObjectWithTag("KeyBinds").GetComponent<KeybindScript>();
         body = GetComponent<Rigidbody2D>();
 	}
 	

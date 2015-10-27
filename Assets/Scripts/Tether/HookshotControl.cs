@@ -35,6 +35,7 @@ public class HookshotControl : MonoBehaviour {
     public AimAtMouse mouseAimer;
     private GameObject hook;
 
+    private KeybindScript keybinds;
     private HookshotState state;
     private Vector2 retractPoint;
     private float stateSwitchTime;
@@ -43,6 +44,7 @@ public class HookshotControl : MonoBehaviour {
 
     void Start()
     {
+        keybinds = GameObject.FindGameObjectWithTag("KeyBinds").GetComponent<KeybindScript>();
         MapStateFunctions();
         hand = transform.parent.gameObject;
         FindPlayerColliders();
@@ -86,7 +88,7 @@ public class HookshotControl : MonoBehaviour {
 
     void Hooked()
     {
-        if (Input.GetButtonDown("Fire1") || Input.GetButtonDown("Jump"))
+        if (Input.GetButtonDown("Fire1") || keybinds.GetButtonDown("Jump"))
         {
             DestroyHookAndRope();
             ChangeState(HookshotState.FLYING);
