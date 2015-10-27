@@ -324,6 +324,29 @@ Transform:
 Transform:
   m_PrefabParentObject: {fileID: 472182, guid: cfa8d32b811ff5f409ab866f047dfd97, type: 2}
   m_PrefabInternal: {fileID: 650516042}
+--- !u!1 &187802049 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 149900, guid: b866b03f9d953874aa53a45d93b3a489, type: 2}
+  m_PrefabInternal: {fileID: 774654442}
+--- !u!114 &187802050 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 11448862, guid: b866b03f9d953874aa53a45d93b3a489,
+    type: 2}
+  m_PrefabInternal: {fileID: 774654442}
+  m_Script: {fileID: 11500000, guid: 68be204a48c676646910df89d9039d78, type: 3}
+--- !u!114 &187802051
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 187802049}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f91f84f3ece7a24fbdcb8f3f8395a96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lethalVelocity: 2
+  hook: {fileID: 936259812}
 --- !u!4 &190734686 stripped
 Transform:
   m_PrefabParentObject: {fileID: 466978, guid: 4b4a818016e83cb46a9d97e133abdeae, type: 2}
@@ -840,7 +863,14 @@ Prefab:
       propertyPath: m_LocalPosition.x
       value: .419
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 11405712, guid: b866b03f9d953874aa53a45d93b3a489, type: 2}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 187802050}
+    m_RemovedComponents:
+    - {fileID: 11472900, guid: b866b03f9d953874aa53a45d93b3a489, type: 2}
+    - {fileID: 11449760, guid: b866b03f9d953874aa53a45d93b3a489, type: 2}
+    - {fileID: 11478204, guid: b866b03f9d953874aa53a45d93b3a489, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: b866b03f9d953874aa53a45d93b3a489, type: 2}
   m_IsPrefabParent: 0
 --- !u!1001 &869854259
@@ -951,6 +981,12 @@ Prefab:
 Transform:
   m_PrefabParentObject: {fileID: 420988, guid: 5ca5412c29560164eb241df9d3364f17, type: 2}
   m_PrefabInternal: {fileID: 1335798318}
+--- !u!114 &936259812 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 11405712, guid: b866b03f9d953874aa53a45d93b3a489,
+    type: 2}
+  m_PrefabInternal: {fileID: 774654442}
+  m_Script: {fileID: 11500000, guid: 38bf5829e3fb4b149bed52b45d60b3b6, type: 3}
 --- !u!4 &1022135477 stripped
 Transform:
   m_PrefabParentObject: {fileID: 466978, guid: 4b4a818016e83cb46a9d97e133abdeae, type: 2}

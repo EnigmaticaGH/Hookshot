@@ -12,6 +12,7 @@ TagManager:
   - Rope
   - Platform
   - Water
+  - Boundary
   layers:
   - Default
   - TransparentFX
