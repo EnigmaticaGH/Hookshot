@@ -8,13 +8,11 @@ public class PauseScript : MonoBehaviour
 
     private float oldTime;
 
-    // Use this for initialization
     void Start()
     {
         pauseScreen.enabled = false;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -32,4 +30,8 @@ public class PauseScript : MonoBehaviour
         }
     }
 
+    public void QuitToMenu()
+    {
+        Application.LoadLevel("MainMenu");
+    }
 }
