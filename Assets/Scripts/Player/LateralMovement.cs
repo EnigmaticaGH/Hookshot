@@ -29,9 +29,6 @@ public class LateralMovement : MonoBehaviour
     {
         int traverse = 1;
 
-        //if (!checkWalls(horizontal))
-            //traverse = 0;
-
         if (!hookshotControl.IsHooked())
         {
             Vector2 lateralForce = new Vector2(horizontal * moveForce * traverse, 0);
@@ -63,18 +60,4 @@ public class LateralMovement : MonoBehaviour
             characterSprite.transform.rotation = rot;
         }
     }
-
-    /*bool checkWalls(float d)
-    {
-        if (d > 0)
-        {
-            return wallSensorRight.emptySpace;
-        }
-        else if (d < 0)
-        {
-            return wallSensorLeft.emptySpace;
-        }
-        else
-            return true;
-    }*/
 }
