@@ -4,8 +4,6 @@ using System.Collections;
 public class AnimateFrog : MonoBehaviour
 {
     public JumpControl jump;
-    private Rigidbody2D player;
-    private LateralMovement movement;
     private Animator anim;
     private Vector2 relativeVel;
 
@@ -13,8 +11,6 @@ public class AnimateFrog : MonoBehaviour
     void Start()
     {
         anim = GetComponent<Animator>();
-        player = GetComponentInParent<Rigidbody2D>();
-        movement = GetComponentInParent<LateralMovement>();
         anim.speed = 1.2f;
     }
 
