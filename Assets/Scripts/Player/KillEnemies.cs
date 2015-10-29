@@ -8,7 +8,6 @@ public class KillEnemies : MonoBehaviour
     private Rigidbody2D player;
     private GameObject lastSpawn;
 
-    // Use this for initialization
     void Start()
     {
         player = GetComponent<Rigidbody2D>();
@@ -20,7 +19,7 @@ public class KillEnemies : MonoBehaviour
         {
             Destroy(c.gameObject);
         }
-        else if (c.collider.CompareTag("Enemy"))
+        else if (c.collider.CompareTag("Enemy") || c.collider.CompareTag("Hazard"))
         {
             Respawn();
         }
