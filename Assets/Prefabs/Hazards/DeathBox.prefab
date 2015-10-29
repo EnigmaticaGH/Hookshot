@@ -9,9 +9,9 @@ GameObject:
   m_Component:
   - 4: {fileID: 482358}
   - 61: {fileID: 6130748}
-  m_Layer: 10
+  m_Layer: 15
   m_Name: DeathBox
-  m_TagString: Enemy
+  m_TagString: Boundary
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -47,7 +47,11 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: m_TagString
+      value: Boundary
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 168068}
