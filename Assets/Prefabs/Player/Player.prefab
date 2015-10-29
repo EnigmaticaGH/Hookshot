@@ -353,12 +353,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 7
+  speedInWater: 0
   force: 600
   moveForce: 400
   hookshotControl: {fileID: 11405712}
   characterSprite: {fileID: 21231396}
-  wallSensorRight: {fileID: 0}
-  wallSensorLeft: {fileID: 0}
+  wallSensorRight: {fileID: 11412010}
+  wallSensorLeft: {fileID: 11468090}
 --- !u!114 &11405712
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -383,10 +384,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 184664}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 011c31283b55c19429c186b0db776126, type: 3}
+  m_Script: {fileID: 11500000, guid: e0e24637a45aeee469bb47dee591330d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  triggers: {fileID: 11485138, guid: 342c817da3ed73444a65c5654b900747, type: 2}
+  emptySpace: 0
 --- !u!114 &11414272
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -471,10 +472,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 154834}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1dae969d7c060554fb904173d8c9bb2d, type: 3}
+  m_Script: {fileID: 11500000, guid: e0e24637a45aeee469bb47dee591330d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  triggers: {fileID: 11485138, guid: 342c817da3ed73444a65c5654b900747, type: 2}
+  emptySpace: 0
 --- !u!114 &11471466
 MonoBehaviour:
   m_ObjectHideFlags: 1
