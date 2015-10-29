@@ -112,7 +112,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 411614}
   - 61: {fileID: 6191496}
-  - 114: {fileID: 11412010}
+  - 114: {fileID: 11431990}
   m_Layer: 0
   m_Name: WallSensorR
   m_TagString: Mouth
@@ -208,7 +208,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 149900}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 1.25999999, y: 3.24000001, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 424174}
@@ -353,12 +353,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 7
+  speedInWater: 0
   force: 600
   moveForce: 400
   hookshotControl: {fileID: 11405712}
   characterSprite: {fileID: 21231396}
   wallSensorRight: {fileID: 0}
-  wallSensorLeft: {fileID: 0}
+  wallSensorLeft: {fileID: 11468090}
 --- !u!114 &11405712
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -375,18 +376,6 @@ MonoBehaviour:
   retractTime: .25
   mouseAimer: {fileID: 11444918}
   player: {fileID: 11448862}
---- !u!114 &11412010
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 184664}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 011c31283b55c19429c186b0db776126, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  triggers: {fileID: 11485138, guid: 342c817da3ed73444a65c5654b900747, type: 2}
 --- !u!114 &11414272
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -400,6 +389,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lethalVelocity: 9
   frogSprite: {fileID: 424174}
+--- !u!114 &11431990
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 184664}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0e24637a45aeee469bb47dee591330d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  emptySpace: 0
 --- !u!114 &11432522
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -435,7 +436,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   force: 90
-  keybinds: {fileID: 0}
   canDoubleJump: 0
 --- !u!114 &11458740
 MonoBehaviour:
@@ -471,10 +471,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 154834}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1dae969d7c060554fb904173d8c9bb2d, type: 3}
+  m_Script: {fileID: 11500000, guid: e0e24637a45aeee469bb47dee591330d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  triggers: {fileID: 11485138, guid: 342c817da3ed73444a65c5654b900747, type: 2}
+  emptySpace: 0
 --- !u!114 &11471466
 MonoBehaviour:
   m_ObjectHideFlags: 1

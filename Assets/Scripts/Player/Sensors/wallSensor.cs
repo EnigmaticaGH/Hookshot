@@ -2,13 +2,7 @@
 using System.Collections;
 
 public class WallSensor : MonoBehaviour {
-
     public bool emptySpace;
-
-	// Use this for initialization
-	void Start () {
-	
-	}
 
     void OnTriggerStay2D(Collider2D c)
     {
@@ -22,11 +16,4 @@ public class WallSensor : MonoBehaviour {
     {
             emptySpace = true;
     }
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
-
-
 }

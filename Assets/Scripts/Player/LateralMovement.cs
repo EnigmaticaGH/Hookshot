@@ -4,6 +4,8 @@ using System.Collections;
 public class LateralMovement : MonoBehaviour
 {
     public float speed;
+    public float speedInWater;
+    private float regularSpeed;
     public float force;
     public float moveForce;
     public HookshotControl hookshotControl;
@@ -15,6 +17,7 @@ public class LateralMovement : MonoBehaviour
 
     void Start()
     {
+        regularSpeed = speed;
         player = GetComponent<Rigidbody2D>();
     }
 
@@ -23,6 +26,24 @@ public class LateralMovement : MonoBehaviour
         float horizontal = Input.GetAxisRaw("Horizontal");
         Move(horizontal);
         Orient(horizontal);
+    }
+
+    void OnTriggerStay2D(Collider2D c)
+    {
+        if (c.CompareTag("Water"))
+            speed = speedInWater;
+    }
+
+    //void OnTriggerEnter2D(Collider2D c)
+    //{
+    //    if (c.CompareTag("Water"))
+    //        player.velocity /= 2;
+    //}
+
+    void OnTriggerExit2D(Collider2D c)
+    {
+        if (c.CompareTag("Water"))
+            speed = regularSpeed;
     }
 
     void Move(float horizontal)
