@@ -5,12 +5,17 @@ public class CameraFollow2D : MonoBehaviour
 {
     public float dampTime;
     private Vector3 velocity = Vector3.zero;
-    public Transform target;
+    private Transform target;
     public float zoomSpeed;
     public float minZoom;
     public float maxZoom;
     public float rotationSpeed;
     public bool followY;
+
+    void Start()
+    {
+        target = GameObject.FindGameObjectWithTag("Player").transform;
+    }
 
     // Update is called once per frame
     void Update()
