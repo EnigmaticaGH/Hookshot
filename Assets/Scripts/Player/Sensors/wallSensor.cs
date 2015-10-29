@@ -1,19 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class WallSensor : MonoBehaviour {
-    public bool emptySpace;
+public class WallSensor : MonoBehaviour
+{
+    private bool wallCollide;
 
     void OnTriggerStay2D(Collider2D c)
     {
-        if (c.CompareTag("Environment"))
-            emptySpace = false;
-        else
-            emptySpace = true;
+        wallCollide = c.CompareTag("Environment");
     }
 
     void OnTriggerExit2D(Collider2D c)
     {
-            emptySpace = true;
+        wallCollide = false;
     }
 }
