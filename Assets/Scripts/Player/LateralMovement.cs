@@ -105,4 +105,18 @@ public class LateralMovement : MonoBehaviour
 
         canMove = true;
     }
+
+    /*bool checkWalls(float d)
+    {
+        if (d > 0)
+        {
+            return wallSensorRight.emptySpace;
+        }
+        else if (d < 0)
+        {
+            return wallSensorLeft.emptySpace;
+        }
+        else
+            return true;
+    }*/
 }
