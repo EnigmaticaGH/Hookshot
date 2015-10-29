@@ -143,12 +143,6 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4b4a818016e83cb46a9d97e133abdeae, type: 2}
   m_IsPrefabParent: 0
---- !u!114 &29999882 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 11421406, guid: 59dd1c1c078330e4781da8d561a98032,
-    type: 2}
-  m_PrefabInternal: {fileID: 1230044917}
-  m_Script: {fileID: 11500000, guid: fdaa990b78a6a2f4daea9af3b549eb53, type: 3}
 --- !u!1001 &38060614
 Prefab:
   m_ObjectHideFlags: 0
@@ -1506,7 +1500,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1539890582
 Transform:
   m_ObjectHideFlags: 0
@@ -2035,10 +2029,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
-    - target: {fileID: 11448862, guid: 6d5a6eff0db5ecf488b5287d08b1f651, type: 2}
-      propertyPath: keybinds
-      value: 
-      objectReference: {fileID: 29999882}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6d5a6eff0db5ecf488b5287d08b1f651, type: 2}
   m_IsPrefabParent: 0

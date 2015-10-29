@@ -42,12 +42,6 @@ public class LateralMovement : MonoBehaviour
             speed = speedInWater;
     }
 
-    //void OnTriggerEnter2D(Collider2D c)
-    //{
-    //    if (c.CompareTag("Water"))
-    //        player.velocity /= 2;
-    //}
-
     void OnTriggerExit2D(Collider2D c)
     {
         if (c.CompareTag("Water"))
@@ -105,18 +99,4 @@ public class LateralMovement : MonoBehaviour
 
         canMove = true;
     }
-
-    /*bool checkWalls(float d)
-    {
-        if (d > 0)
-        {
-            return wallSensorRight.emptySpace;
-        }
-        else if (d < 0)
-        {
-            return wallSensorLeft.emptySpace;
-        }
-        else
-            return true;
-    }*/
 }
