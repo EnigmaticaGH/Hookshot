@@ -8,17 +8,25 @@ public class LateralMovement : MonoBehaviour
     private float regularSpeed;
     public float force;
     public float moveForce;
+
     public HookshotControl hookshotControl;
     public SpriteRenderer characterSprite;
+    private JumpControl jump;
     private Rigidbody2D player;
     private Vector2 contactNormal;
+
     public WallSensor wallSensorRight;
     public WallSensor wallSensorLeft;
+
+    private const float AIR_STOP_TIME = 0.08f;
+    private bool canMove;
 
     void Start()
     {
         regularSpeed = speed;
         player = GetComponent<Rigidbody2D>();
+        canMove = true;
+        jump = GetComponent<JumpControl>();
     }
 
     void FixedUpdate()
@@ -54,12 +62,19 @@ public class LateralMovement : MonoBehaviour
         {
             Vector2 lateralForce = new Vector2(horizontal * moveForce * traverse, 0);
 
-            if (Mathf.Abs(player.velocity.x) < speed)
+            if (Mathf.Abs(player.velocity.x) < speed && canMove)
                 player.AddForce(lateralForce);
 
             if (player.velocity.x > 0 && horizontal < 0
              || player.velocity.x < 0 && horizontal > 0)
+            {
                 player.velocity = new Vector2(0, player.velocity.y);
+
+                if (!jump.isGrounded())
+                {
+                    StartCoroutine(AirStopTime());
+                }
+            }
         }
         else
         {
@@ -81,4 +96,30 @@ public class LateralMovement : MonoBehaviour
             characterSprite.transform.rotation = rot;
         }
     }
+<<<<<<< HEAD
+=======
+
+    IEnumerator AirStopTime()
+    {
+        canMove = false;
+
+        yield return new WaitForSeconds(AIR_STOP_TIME);
+
+        canMove = true;
+    }
+
+    /*bool checkWalls(float d)
+    {
+        if (d > 0)
+        {
+            return wallSensorRight.emptySpace;
+        }
+        else if (d < 0)
+        {
+            return wallSensorLeft.emptySpace;
+        }
+        else
+            return true;
+    }*/
+>>>>>>> origin/BugFixes
 }
