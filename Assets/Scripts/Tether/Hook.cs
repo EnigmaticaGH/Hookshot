@@ -19,7 +19,7 @@ public class Hook : MonoBehaviour {
     {
         if (hookGun.IsHooked())
         {
-            transform.position = hookedObject.transform.position + offsetToHookPoint;
+            transform.position = hookedObject.transform.position + hookedObject.transform.rotation * offsetToHookPoint;
         }
     }
 
@@ -29,6 +29,7 @@ public class Hook : MonoBehaviour {
         {
             hookedObject = collision.collider.gameObject;
             offsetToHookPoint = transform.position - hookedObject.transform.position;
+            offsetToHookPoint = Quaternion.Inverse(hookedObject.transform.rotation) * offsetToHookPoint;
             Rigidbody2D hookBody = GetComponent<Rigidbody2D>();
             hookBody.isKinematic = true;
             hookBody.velocity = Vector3.zero;
