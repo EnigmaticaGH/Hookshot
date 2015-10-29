@@ -15,7 +15,7 @@ public class KillEnemies : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D c)
     {
-        if (c.collider.CompareTag("Enemy") && c.relativeVelocity.magnitude >= lethalVelocity && Flying())
+        if (c.collider.CompareTag("Enemy") && !c.collider.name&& c.relativeVelocity.magnitude >= lethalVelocity && Flying())
         {
             Destroy(c.gameObject);
         }
