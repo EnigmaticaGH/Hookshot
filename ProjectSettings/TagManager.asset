@@ -22,6 +22,7 @@ TagManager:
   - Ass
   - Feet
   - KeyBinds
+  - Hazard
   layers:
   - Default
   - TransparentFX
