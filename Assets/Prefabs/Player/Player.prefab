@@ -358,7 +358,7 @@ MonoBehaviour:
   moveForce: 400
   hookshotControl: {fileID: 11405712}
   characterSprite: {fileID: 21231396}
-  wallSensorRight: {fileID: 0}
+  wallSensorRight: {fileID: 11431990}
   wallSensorLeft: {fileID: 11468090}
 --- !u!114 &11405712
 MonoBehaviour:
@@ -542,6 +542,10 @@ Prefab:
       propertyPath: m_LocalPosition.y
       value: .505999982
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: wallSensorRight
+      value: 
+      objectReference: {fileID: 11431990}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 149900}
