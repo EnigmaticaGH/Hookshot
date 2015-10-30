@@ -37,6 +37,9 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
+--- !u!127 &3
+LevelGameManager:
+  m_ObjectHideFlags: 0
 --- !u!157 &4
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -65,7 +68,6 @@ LightmapSettings:
     m_TextureCompression: 1
     m_FinalGather: 0
     m_FinalGatherRayCount: 1024
-    m_ReflectionCompression: 2
   m_LightmapSnapshot: {fileID: 0}
   m_RuntimeCPUUsage: 25
 --- !u!196 &5
@@ -4827,7 +4829,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 447780, guid: 60dfed4b5d4a57740a491364c9ba2cdc, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 57
+      value: 59.4199982
       objectReference: {fileID: 0}
     - target: {fileID: 447780, guid: 60dfed4b5d4a57740a491364c9ba2cdc, type: 2}
       propertyPath: m_LocalPosition.y
@@ -4855,7 +4857,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 447780, guid: 60dfed4b5d4a57740a491364c9ba2cdc, type: 2}
       propertyPath: m_RootOrder
-      value: 0
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 150786, guid: 60dfed4b5d4a57740a491364c9ba2cdc, type: 2}
       propertyPath: m_Name
@@ -7359,7 +7361,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 472182, guid: cfa8d32b811ff5f409ab866f047dfd97, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 57.0053482
+      value: 59.4300003
       objectReference: {fileID: 0}
     - target: {fileID: 472182, guid: cfa8d32b811ff5f409ab866f047dfd97, type: 2}
       propertyPath: m_LocalPosition.y
@@ -7387,7 +7389,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 472182, guid: cfa8d32b811ff5f409ab866f047dfd97, type: 2}
       propertyPath: m_RootOrder
-      value: 12
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 145170, guid: cfa8d32b811ff5f409ab866f047dfd97, type: 2}
       propertyPath: m_Name
