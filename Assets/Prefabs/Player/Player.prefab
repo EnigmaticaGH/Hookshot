@@ -26,6 +26,7 @@ GameObject:
   - 4: {fileID: 489182}
   - 61: {fileID: 6163904}
   - 114: {fileID: 11471466}
+  - 114: {fileID: 11467670}
   m_Layer: 0
   m_Name: CeilingSensor
   m_TagString: Back
@@ -208,7 +209,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 149900}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -5.30999994, y: -3.01999998, z: 10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 424174}
@@ -353,12 +354,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 7
-  speedInWater: 0
+  speedInWater: 3
   force: 600
   moveForce: 400
   hookshotControl: {fileID: 11405712}
   characterSprite: {fileID: 21231396}
-  wallSensorRight: {fileID: 0}
+  wallSensorRight: {fileID: 11437522}
   wallSensorLeft: {fileID: 11468090}
 --- !u!114 &11405712
 MonoBehaviour:
@@ -387,7 +388,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c622e38440859748b969e9095699585, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lethalVelocity: 9
+  lethalVelocity: 12
   frogSprite: {fileID: 424174}
 --- !u!114 &11432522
 MonoBehaviour:
@@ -447,7 +448,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f91f84f3ece7a24fbdcb8f3f8395a96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lethalVelocity: 2
+  lethalVelocity: 10
+  respawnDelay: .400000006
+  playersprite: {fileID: 424174}
+  DeathParticle: {fileID: 19839016, guid: 87ea72fd2e963954c851c47d0f46d916, type: 2}
   hook: {fileID: 11405712}
 --- !u!114 &11465158
 MonoBehaviour:
@@ -461,7 +465,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 11448862}
-  triggers: {fileID: 11485138, guid: 342c817da3ed73444a65c5654b900747, type: 2}
+--- !u!114 &11467670
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 108970}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0291e96fb665264ba226fa4ea5e9b0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  submerged: 0
+  playerHealth: {fileID: 11458740}
+  hooked: {fileID: 11405712}
+  timeForDrowning: 5
 --- !u!114 &11468090
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -484,7 +502,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5d6b95c01e23884e8c3ffaa0c699e73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  triggers: {fileID: 11485138, guid: 342c817da3ed73444a65c5654b900747, type: 2}
 --- !u!114 &11475298
 MonoBehaviour:
   m_ObjectHideFlags: 1
