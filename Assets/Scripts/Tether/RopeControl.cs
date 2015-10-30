@@ -15,9 +15,6 @@ public struct Rope
 }
 
 public class RopeControl : MonoBehaviour {
-    private bool hittingTop;
-    private bool hittingBot;
-
     private GameObject player;
     private SpriteRenderer playerRenderer;
 
@@ -35,13 +32,18 @@ public class RopeControl : MonoBehaviour {
 
     private bool boostEnabled;
 
+    private bool canControlRope;
+    private GroundSensor ground;
+    private CeilingSensor ceiling;
+
     void Start() {
         player = GameObject.FindGameObjectWithTag("Player");
+        ground = player.GetComponentInChildren<GroundSensor>();
+        ceiling = player.GetComponentInChildren<CeilingSensor>();
         playerRenderer = player.GetComponentInChildren<SpriteRenderer>();
         line = GetComponent<LineRenderer>();
         boostEnabled = false;
-        hittingBot = false;
-        hittingTop = false;
+        canControlRope = true;
     }
 
     void Update() {
@@ -121,18 +123,9 @@ public class RopeControl : MonoBehaviour {
         line.SetPosition(1, hook.transform.position);
     }
 
-    bool CanControlRope()
+    private bool CanControlRope()
     {
-        return !(hittingTop || hittingBot);
-    }
-
-    public void setTop(bool f)
-    {
-        hittingTop = f;
-    }
-
-    public void setBot(bool f)
-    {
-        hittingBot = f;
+        Debug.Log(ground.CanControlRope() + ", " + ceiling.CanControlRope());
+        return ground.CanControlRope() && ceiling.CanControlRope();
     }
 }

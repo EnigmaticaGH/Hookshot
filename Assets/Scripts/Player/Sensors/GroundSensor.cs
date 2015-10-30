@@ -3,14 +3,20 @@ using System.Collections;
 
 public class GroundSensor : MonoBehaviour {
     public JumpControl player;
-    public RopeControl triggers;
+    private bool canControlRope;
+    private bool inTrigger;
 
-    void OnTriggerStay2D(Collider2D other)
+    void Update()
+    {
+        canControlRope = (Input.GetAxis("Vertical") >= 0 && inTrigger) || !inTrigger;
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Environment") || other.CompareTag("Hookable"))
         {
             player.SetGrounded(true);
-            triggers.setBot(true);
+            inTrigger = true;
         }
     }
 
@@ -19,7 +25,12 @@ public class GroundSensor : MonoBehaviour {
         if (other.CompareTag("Environment") || other.CompareTag("Hookable"))
         {
             player.SetGrounded(false);
-            triggers.setBot(false);
+            inTrigger = false;
         }
+    }
+
+    public bool CanControlRope()
+    {
+        return canControlRope;
     }
 }
