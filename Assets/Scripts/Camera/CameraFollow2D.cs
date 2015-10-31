@@ -12,6 +12,9 @@ public class CameraFollow2D : MonoBehaviour
     public float rotationSpeed;
     public bool followY;
     public bool followX;
+    public bool LimitCameraPos;
+    public Vector2 minPos;
+    public Vector2 maxPos;
 
     void Start()
     {
@@ -42,6 +45,25 @@ public class CameraFollow2D : MonoBehaviour
         else
         {
             xCoordinate = transform.position.x;
+        }
+
+        if (LimitCameraPos)
+        {
+            if (followY)
+            {
+                if (yCoordinate > maxPos.y)
+                    yCoordinate = maxPos.y;
+                else if (yCoordinate < minPos.y)
+                    yCoordinate = minPos.y;
+            }
+
+            if (followX)
+            {
+                if (xCoordinate > maxPos.x)
+                    xCoordinate = maxPos.x;
+                else if (xCoordinate < minPos.x)
+                    xCoordinate = minPos.x;
+            }
         }
 
         destination = new Vector3(xCoordinate, yCoordinate, transform.position.z + delta.z);
