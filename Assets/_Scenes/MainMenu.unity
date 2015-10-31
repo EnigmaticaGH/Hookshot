@@ -96,7 +96,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 11440038, guid: 68efa0a4a0a31aa43bd261a199873c04, type: 2}
       propertyPath: buttons.Array.size
-      value: 10
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 22438074, guid: 68efa0a4a0a31aa43bd261a199873c04, type: 2}
       propertyPath: m_LocalPosition.x
@@ -168,7 +168,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22438074, guid: 68efa0a4a0a31aa43bd261a199873c04, type: 2}
       propertyPath: m_Pivot.y
-      value: .5
+      value: .200000003
       objectReference: {fileID: 0}
     - target: {fileID: 11428522, guid: 68efa0a4a0a31aa43bd261a199873c04, type: 2}
       propertyPath: m_Sprite
@@ -202,6 +202,14 @@ Prefab:
     - target: {fileID: 11440038, guid: 68efa0a4a0a31aa43bd261a199873c04, type: 2}
       propertyPath: buttons.Array.data[9].levelName
       value: Level 3 Alpha
+      objectReference: {fileID: 0}
+    - target: {fileID: 11440038, guid: 68efa0a4a0a31aa43bd261a199873c04, type: 2}
+      propertyPath: buttons.Array.data[10].text
+      value: Game Level 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11440038, guid: 68efa0a4a0a31aa43bd261a199873c04, type: 2}
+      propertyPath: buttons.Array.data[10].levelName
+      value: Level 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 68efa0a4a0a31aa43bd261a199873c04, type: 2}
