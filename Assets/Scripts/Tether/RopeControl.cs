@@ -16,6 +16,7 @@ public struct Rope
 
 public class RopeControl : MonoBehaviour {
     private GameObject player;
+    private Rigidbody2D playerBody;
     private SpriteRenderer playerRenderer;
 
     public HookshotControl hookshot;
@@ -30,18 +31,39 @@ public class RopeControl : MonoBehaviour {
     private DistanceJoint2D rope;
     private SpringJoint2D spring;
 
-    private bool boostEnabled;
+    private WallSensor leftWallSensor;
+    private WallSensor rightWallSensor;
+    private float moveForce;
+    private float maxVerticalSpeed;
 
-    private GroundSensor ground;
-    private CeilingSensor ceiling;
+    private bool boostEnabled;
 
     void Start() {
         player = GameObject.FindGameObjectWithTag("Player");
-        ground = player.GetComponentInChildren<GroundSensor>();
-        ceiling = player.GetComponentInChildren<CeilingSensor>();
+        playerBody = player.GetComponent<Rigidbody2D>();
         playerRenderer = player.GetComponentInChildren<SpriteRenderer>();
+        FindWallSensors();
+        EstablishConstants();
         line = GetComponent<LineRenderer>();
         boostEnabled = false;
+    }
+
+    void FindWallSensors() 
+    {
+        WallSensor[] sensors = player.GetComponentsInChildren<WallSensor>();
+        foreach(WallSensor sensor in sensors) {
+            if (sensor.name == "WallSensorL")
+                leftWallSensor = sensor;
+            else if (sensor.name == "WallSensorR")
+                rightWallSensor = sensor;
+        }
+    }
+
+    void EstablishConstants()
+    {
+        LateralMovement movement = player.GetComponent<LateralMovement>();
+        moveForce = movement.moveForce;
+        maxVerticalSpeed = movement.speed;
     }
 
     void Update() {
@@ -55,7 +77,7 @@ public class RopeControl : MonoBehaviour {
     void FixedUpdate()
     {
         if (hookshot.IsHooked()) {
-            if (CanControlRope()) ControlRope();
+            ControlRope();
             RotateObjectTowardsRope();
         }
         DrawRope();
@@ -63,11 +85,35 @@ public class RopeControl : MonoBehaviour {
 
     void ControlRope()
     {
-        float vertical = boostEnabled ? ropeProperties.boostSpeed : Input.GetAxis("Vertical");
-        float distance = vertical * ropeProperties.climbSpeed * Time.fixedDeltaTime;
-        rope.distance = Mathf.Clamp(rope.distance - distance,
-                                    ropeProperties.minLength,
-                                    ropeProperties.maxLength);
+        // When player is touching a wall, make the player walk up the wall.
+        if (leftWallSensor.IsWallCollide() || rightWallSensor.IsWallCollide())
+        {
+            FaceWall();
+            MoveAlongWall();
+        }
+        else
+        {
+            float vertical = boostEnabled ? ropeProperties.boostSpeed : Input.GetAxis("Vertical");
+            float distance = vertical * ropeProperties.climbSpeed * Time.fixedDeltaTime;
+            rope.distance = Mathf.Clamp(rope.distance - distance,
+                                        ropeProperties.minLength,
+                                        ropeProperties.maxLength);
+        }
+    }
+
+    private void FaceWall()
+    {
+        // Yeah
+    }
+
+    private void MoveAlongWall()
+    {
+        float vertical = Input.GetAxis("Vertical");
+        Vector2 lateralForce = new Vector2(0, vertical * moveForce);
+        if (Mathf.Abs(playerBody.velocity.y) < maxVerticalSpeed)
+            playerBody.AddForce(lateralForce);
+
+        // And shorten rope appropriately.
     }
 
     public void AttachRope()
@@ -119,10 +165,5 @@ public class RopeControl : MonoBehaviour {
                               + playerRenderer.transform.localPosition
                               + playerRenderer.transform.rotation * anchorOffset);
         line.SetPosition(1, hook.transform.position);
-    }
-
-    private bool CanControlRope()
-    {
-        return ground.CanControlRope() && ceiling.CanControlRope();
     }
 }
