@@ -32,7 +32,6 @@ public class RopeControl : MonoBehaviour {
     private WallSensor leftWallSensor;
     private WallSensor rightWallSensor;
     private float moveForce;
-    private float maxVerticalSpeed;
 
     private bool boostEnabled;
 
@@ -61,7 +60,6 @@ public class RopeControl : MonoBehaviour {
     {
         LateralMovement movement = player.GetComponent<LateralMovement>();
         moveForce = movement.moveForce;
-        maxVerticalSpeed = movement.speed;
     }
 
     void Update() {
@@ -108,7 +106,7 @@ public class RopeControl : MonoBehaviour {
     {
         float vertical = Input.GetAxis("Vertical");
         Vector2 lateralForce = new Vector2(0, vertical * moveForce);
-        if (Mathf.Abs(playerBody.velocity.y) < maxVerticalSpeed)
+        if (Mathf.Abs(playerBody.velocity.y) < ropeProperties.climbSpeed)
             playerBody.AddForce(lateralForce);
 
         rope.distance = Mathf.Clamp(PhysicalRopeLength(),
