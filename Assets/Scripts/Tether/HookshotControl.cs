@@ -32,7 +32,7 @@ public class HookshotControl : MonoBehaviour {
     private List<Collider2D> playerColliders;
     private GameObject hand;
     private RopeControl rope;
-    public AimAtMouse mouseAimer;
+    private AimAtMouse mouseAimer;
     private GameObject hook;
 
     private KeybindScript keybinds;
@@ -40,15 +40,26 @@ public class HookshotControl : MonoBehaviour {
     private Vector2 retractPoint;
     private float stateSwitchTime;
 
-    public JumpControl player;
+    private GameObject player;
+    private SpriteRenderer playerRenderer;
+    private JumpControl jumpControl;
 
     void Start()
     {
-        keybinds = GameObject.FindGameObjectWithTag("KeyBinds").GetComponent<KeybindScript>();
         MapStateFunctions();
-        hand = transform.parent.gameObject;
-        FindPlayerColliders();
+        keybinds = GameObject.FindGameObjectWithTag("KeyBinds").GetComponent<KeybindScript>();
+        FindPlayerParts();
         ChangeState(HookshotState.READY);
+    }
+
+    private void FindPlayerParts()
+    {
+        player = GameObject.FindGameObjectWithTag("Player");
+        playerRenderer = player.GetComponentInChildren<SpriteRenderer>();
+        jumpControl = player.GetComponent<JumpControl>();
+        hand = transform.parent.gameObject;
+        mouseAimer = hand.GetComponent<AimAtMouse>();
+        FindPlayerColliders();
     }
 
     private void FindPlayerColliders()
@@ -105,7 +116,7 @@ public class HookshotControl : MonoBehaviour {
             ChangeState(HookshotState.EXTENDING);
         }
 
-        if (player.isGrounded())
+        if (jumpControl.isGrounded())
         {
             ChangeState(HookshotState.READY);
         }
@@ -130,8 +141,11 @@ public class HookshotControl : MonoBehaviour {
 
     void FireHookAndRope()
     {
+        Vector2 hookPos = playerRenderer.transform.position + 
+            playerRenderer.transform.rotation * ropeFab.GetComponent<RopeControl>().anchorOffset;
+
         // Shoot out a hook instance
-        hook = (GameObject)Instantiate(hookFab, transform.position, transform.rotation);
+        hook = (GameObject)Instantiate(hookFab, hookPos, transform.rotation);
         hook.GetComponent<Hook>().hookGun = this;
 
         IgnoreHookPlayerCollisions();

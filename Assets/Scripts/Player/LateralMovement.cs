@@ -50,11 +50,9 @@ public class LateralMovement : MonoBehaviour
 
     void Move(float horizontal)
     {
-        int traverse = 1;
-
         if (!hookshotControl.IsHooked())
         {
-            Vector2 lateralForce = new Vector2(horizontal * moveForce * traverse, 0);
+            Vector2 lateralForce = new Vector2(horizontal * moveForce, 0);
 
             if (Mathf.Abs(player.velocity.x) < speed && canMove)
                 player.AddForce(lateralForce);
@@ -76,7 +74,7 @@ public class LateralMovement : MonoBehaviour
             if (horizontal > 0 && pivotPoint.x >= transform.position.x || horizontal < 0 && pivotPoint.x <= transform.position.x)
             {
                 Vector2 lateralForce = Vector3.Cross((Vector3)pivotPoint - transform.position, Vector3.forward).normalized;                
-                lateralForce *= horizontal * force * traverse/ (player.velocity.magnitude + 1f);
+                lateralForce *= horizontal * force / (player.velocity.magnitude + 1f);
                 player.AddForce(lateralForce);
             }
         }
