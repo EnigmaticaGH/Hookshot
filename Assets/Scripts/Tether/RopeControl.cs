@@ -82,9 +82,8 @@ public class RopeControl : MonoBehaviour {
     void ControlRope()
     {
         // When player is touching a wall, make the player walk up the wall.
-        if (leftWallSensor.IsWallCollide() || rightWallSensor.IsWallCollide())
+        if (isTouchingWall())
         {
-            FaceWall();
             MoveAlongWall();
         }
         else
@@ -97,9 +96,15 @@ public class RopeControl : MonoBehaviour {
         }
     }
 
+    private bool isTouchingWall()
+    {
+        return leftWallSensor.IsWallCollide() || rightWallSensor.IsWallCollide();
+    }
+
     private void FaceWall()
     {
-        playerRenderer.transform.rotation = Quaternion.Euler(0, leftWallSensor.IsWallCollide() ? 180f : 0f, 90f);
+        playerRenderer.transform.rotation = Quaternion.Euler(0, 
+            leftWallSensor.IsWallCollide() ? 180f : 0f, 90f);
     }
 
     private void MoveAlongWall()
@@ -121,6 +126,21 @@ public class RopeControl : MonoBehaviour {
         return Vector2.Distance(connPos, startPos);
     }
 
+    void RotateObjectTowardsRope()
+    {
+
+        Transform spriteTransform = playerRenderer.gameObject.transform;
+
+        Vector2 jointDirection = hook.transform.position - spriteTransform.position;
+        spriteTransform.rotation = Quaternion.FromToRotation(Vector2.right, jointDirection);
+
+        rope.anchor = playerRenderer.transform.localPosition + spriteTransform.rotation * anchorOffset;
+
+        if(isTouchingWall())
+            FaceWall();
+    }
+
+
     public void AttachRope()
     {
         MakeRope();
@@ -129,11 +149,9 @@ public class RopeControl : MonoBehaviour {
 
     private void MakeRope()
     {
-        // Adding spring joint first. The rope will attach to it
         float initialDistance = Vector2.Distance(player.transform.position, hook.transform.position);
         initialDistance *= ropeProperties.initialDistancePortion;
 
-        // Rope Joint 
         rope = player.AddComponent<DistanceJoint2D>();
         rope.connectedBody = hook.GetComponent<Rigidbody2D>();
         rope.distance = Mathf.Clamp(initialDistance, ropeProperties.minLength, ropeProperties.maxLength);
@@ -149,16 +167,6 @@ public class RopeControl : MonoBehaviour {
             playerRenderer.gameObject.transform.rotation = Quaternion.identity;
             DestroyObject(rope);
         }
-    }
-
-    void RotateObjectTowardsRope()
-    {
-        Transform spriteTransform = playerRenderer.gameObject.transform;
-
-        Vector2 jointDirection = hook.transform.position - spriteTransform.position;
-        spriteTransform.rotation = Quaternion.FromToRotation(Vector2.right, jointDirection);
-
-        rope.anchor = playerRenderer.transform.localPosition + spriteTransform.rotation * anchorOffset;
     }
 
     void DrawRope()
