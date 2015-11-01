@@ -103,7 +103,7 @@ public class RopeControl : MonoBehaviour {
 
     private void FaceWall()
     {
-        // Yeah
+        playerRenderer.transform.rotation = Quaternion.Euler(0, leftWallSensor.IsWallCollide() ? 180f : 0f, 90f);
     }
 
     private void MoveAlongWall()
@@ -113,7 +113,16 @@ public class RopeControl : MonoBehaviour {
         if (Mathf.Abs(playerBody.velocity.y) < maxVerticalSpeed)
             playerBody.AddForce(lateralForce);
 
-        // And shorten rope appropriately.
+        rope.distance = Mathf.Clamp(PhysicalRopeLength(),
+                                    ropeProperties.minLength,
+                                    ropeProperties.maxLength);
+    }
+
+    private float PhysicalRopeLength()
+    {
+        Vector2 connPos = rope.connectedBody.transform.position;
+        Vector2 startPos = rope.transform.position + rope.transform.rotation * rope.anchor;
+        return Vector2.Distance(connPos, startPos);
     }
 
     public void AttachRope()
