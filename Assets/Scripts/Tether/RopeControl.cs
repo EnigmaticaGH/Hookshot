@@ -32,7 +32,6 @@ public class RopeControl : MonoBehaviour {
 
     private bool boostEnabled;
 
-    private bool canControlRope;
     private GroundSensor ground;
     private CeilingSensor ceiling;
 
@@ -43,7 +42,6 @@ public class RopeControl : MonoBehaviour {
         playerRenderer = player.GetComponentInChildren<SpriteRenderer>();
         line = GetComponent<LineRenderer>();
         boostEnabled = false;
-        canControlRope = true;
     }
 
     void Update() {
