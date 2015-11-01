@@ -25,8 +25,6 @@ public class RopeControl : MonoBehaviour {
     public Rope ropeProperties;
     public Vector2 anchorOffset;
 
-    public GameObject springPrefab;
-
     private LineRenderer line;
     private DistanceJoint2D rope;
     private SpringJoint2D spring;
