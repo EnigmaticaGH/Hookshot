@@ -91,7 +91,9 @@ public class HookshotControl : MonoBehaviour {
         UpdateHookFire();
     }
 
-    void Extend() { /* The hook object is traveling through the world. */ }
+    void Extend() { /* The hook object is traveling through the world. */
+        AimAtMouse();
+    }
 
     void Hooked()
     {
@@ -215,5 +217,18 @@ public class HookshotControl : MonoBehaviour {
             Vector2.right, 
             hook.transform.position - hand.transform.position
         );
+    }
+
+    void AimAtMouse()
+    {
+        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector3 playerPos = playerRenderer.transform.position;
+        Vector3 direction = mousePos - playerPos;
+        direction = new Vector3(direction.x, direction.y, 0);
+        Debug.Log(direction);
+        Vector3 angles = Quaternion.FromToRotation(Vector3.right, direction).eulerAngles;
+        float flip = direction.x < 0 ? 180f : 0f;
+        angles = new Vector3(0, 0, angles.z);
+        playerRenderer.transform.rotation = Quaternion.Euler(angles);
     }
 }

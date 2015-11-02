@@ -89,10 +89,6 @@ public class LateralMovement : MonoBehaviour
                 Quaternion.Euler(0, 180, -5.73f);
             characterSprite.transform.rotation = rot;
         }
-        else if (!jump.isGrounded())
-        {
-            //AimAtMouse();
-        }
     }
 
     IEnumerator AirStopTime(float t)
@@ -102,18 +98,5 @@ public class LateralMovement : MonoBehaviour
         yield return new WaitForSeconds(t);
 
         canMove = true;
-    }
-
-    void AimAtMouse()
-    {
-        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector3 playerPos = characterSprite.transform.position;
-        Vector3 direction = mousePos - playerPos;
-        direction = new Vector3(direction.x, direction.y, 0);
-        Debug.Log(direction);
-        Vector3 angles = Quaternion.FromToRotation(Vector3.right, direction).eulerAngles;
-        float flip = direction.x < 0 ? 180f : 0f;
-        angles = new Vector3(0, 0, angles.z);
-        characterSprite.transform.rotation = Quaternion.Euler(angles);
     }
 }
