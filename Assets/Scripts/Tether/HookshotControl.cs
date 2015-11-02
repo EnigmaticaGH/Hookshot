@@ -88,11 +88,7 @@ public class HookshotControl : MonoBehaviour {
 
     void Ready()
     {
-        if (Input.GetButtonDown("Fire1"))
-        {
-            FireHookAndRope();
-            ChangeState(HookshotState.EXTENDING);
-        }
+        UpdateHookFire();
     }
 
     void Extend() { /* The hook object is traveling through the world. */ }
@@ -110,15 +106,20 @@ public class HookshotControl : MonoBehaviour {
 
     void Flying()
     {
-        if (Input.GetButtonDown("Fire1"))
-        {
-            FireHookAndRope();
-            ChangeState(HookshotState.EXTENDING);
-        }
+        UpdateHookFire();
 
         if (jumpControl.isGrounded())
         {
             ChangeState(HookshotState.READY);
+        }
+    }
+
+    void UpdateHookFire()
+    {
+        if (Input.GetButtonDown("Fire1") && !jumpControl.isGrounded())
+        {
+            FireHookAndRope();
+            ChangeState(HookshotState.EXTENDING);
         }
     }
 

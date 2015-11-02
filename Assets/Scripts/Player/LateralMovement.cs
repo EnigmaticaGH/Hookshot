@@ -82,10 +82,16 @@ public class LateralMovement : MonoBehaviour
 
     void Orient(float horizontal)
     {
-        if (!hookshotControl.IsHooked() && horizontal != 0)
+        if (!hookshotControl.IsHooked() && horizontal != 0 && jump.isGrounded())
         {
-            Quaternion rot = horizontal == 1 ? Quaternion.Euler(0, 0, -5.73f) : Quaternion.Euler(0, 180, -5.73f);
+            Quaternion rot = horizontal == 1 ?
+                Quaternion.Euler(0, 0, -5.73f) : 
+                Quaternion.Euler(0, 180, -5.73f);
             characterSprite.transform.rotation = rot;
+        }
+        else if (!jump.isGrounded())
+        {
+            //AimAtMouse();
         }
     }
 
@@ -96,5 +102,18 @@ public class LateralMovement : MonoBehaviour
         yield return new WaitForSeconds(t);
 
         canMove = true;
+    }
+
+    void AimAtMouse()
+    {
+        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector3 playerPos = characterSprite.transform.position;
+        Vector3 direction = mousePos - playerPos;
+        direction = new Vector3(direction.x, direction.y, 0);
+        Debug.Log(direction);
+        Vector3 angles = Quaternion.FromToRotation(Vector3.right, direction).eulerAngles;
+        float flip = direction.x < 0 ? 180f : 0f;
+        angles = new Vector3(0, 0, angles.z);
+        characterSprite.transform.rotation = Quaternion.Euler(angles);
     }
 }
