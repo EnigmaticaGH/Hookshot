@@ -37,9 +37,6 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
---- !u!127 &3
-LevelGameManager:
-  m_ObjectHideFlags: 0
 --- !u!157 &4
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -68,6 +65,7 @@ LightmapSettings:
     m_TextureCompression: 1
     m_FinalGather: 0
     m_FinalGatherRayCount: 1024
+    m_ReflectionCompression: 2
   m_LightmapSnapshot: {fileID: 0}
   m_RuntimeCPUUsage: 25
 --- !u!196 &5
@@ -94,10 +92,6 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 482625035}
     m_Modifications:
-    - target: {fileID: 11440038, guid: 68efa0a4a0a31aa43bd261a199873c04, type: 2}
-      propertyPath: buttons.Array.size
-      value: 11
-      objectReference: {fileID: 0}
     - target: {fileID: 22438074, guid: 68efa0a4a0a31aa43bd261a199873c04, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -168,7 +162,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22438074, guid: 68efa0a4a0a31aa43bd261a199873c04, type: 2}
       propertyPath: m_Pivot.y
-      value: .200000003
+      value: .5
       objectReference: {fileID: 0}
     - target: {fileID: 11428522, guid: 68efa0a4a0a31aa43bd261a199873c04, type: 2}
       propertyPath: m_Sprite
@@ -178,38 +172,6 @@ Prefab:
     - target: {fileID: 11428522, guid: 68efa0a4a0a31aa43bd261a199873c04, type: 2}
       propertyPath: m_Type
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 11440038, guid: 68efa0a4a0a31aa43bd261a199873c04, type: 2}
-      propertyPath: buttons.Array.data[7].text
-      value: Alpha Level 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 11440038, guid: 68efa0a4a0a31aa43bd261a199873c04, type: 2}
-      propertyPath: buttons.Array.data[7].levelName
-      value: Level 1 Alpha
-      objectReference: {fileID: 0}
-    - target: {fileID: 11440038, guid: 68efa0a4a0a31aa43bd261a199873c04, type: 2}
-      propertyPath: buttons.Array.data[8].text
-      value: Alpha Level 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 11440038, guid: 68efa0a4a0a31aa43bd261a199873c04, type: 2}
-      propertyPath: buttons.Array.data[8].levelName
-      value: Level 2 Alpha
-      objectReference: {fileID: 0}
-    - target: {fileID: 11440038, guid: 68efa0a4a0a31aa43bd261a199873c04, type: 2}
-      propertyPath: buttons.Array.data[9].text
-      value: Alpha Level 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 11440038, guid: 68efa0a4a0a31aa43bd261a199873c04, type: 2}
-      propertyPath: buttons.Array.data[9].levelName
-      value: Level 3 Alpha
-      objectReference: {fileID: 0}
-    - target: {fileID: 11440038, guid: 68efa0a4a0a31aa43bd261a199873c04, type: 2}
-      propertyPath: buttons.Array.data[10].text
-      value: Game Level 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 11440038, guid: 68efa0a4a0a31aa43bd261a199873c04, type: 2}
-      propertyPath: buttons.Array.data[10].levelName
-      value: Level 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 68efa0a4a0a31aa43bd261a199873c04, type: 2}
@@ -243,7 +205,7 @@ MonoBehaviour:
   m_Script: {fileID: 1997211142, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowActivationOnStandalone: 0
+  m_ForceModuleActive: 0
 --- !u!114 &186284610
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -261,7 +223,7 @@ MonoBehaviour:
   m_CancelButton: Cancel
   m_InputActionsPerSecond: 10
   m_RepeatDelay: .5
-  m_AllowActivationOnMobileDevice: 0
+  m_ForceModuleActive: 0
 --- !u!114 &186284611
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -446,6 +408,7 @@ Camera:
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
+  m_TargetEye: 3
   m_HDR: 0
   m_OcclusionCulling: 1
   m_StereoConvergence: 10

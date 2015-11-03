@@ -10,7 +10,6 @@ GameObject:
   - 4: {fileID: 472182}
   - 212: {fileID: 21218954}
   - 58: {fileID: 5870348}
-  - 61: {fileID: 6160690}
   m_Layer: 0
   m_Name: SpawnPoint
   m_TagString: Respawn
@@ -25,7 +24,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 145170}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 22.6200008, y: 1.91999996, z: 0}
+  m_LocalPosition: {x: .354449034, y: 3.24945641, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -43,19 +42,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 2
---- !u!61 &6160690
-BoxCollider2D:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 145170}
-  m_Enabled: 0
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_Offset: {x: 0, y: 3.61999989}
-  serializedVersion: 2
-  m_Size: {x: .319999993, y: 7.42000008}
 --- !u!212 &21218954
 SpriteRenderer:
   m_ObjectHideFlags: 1
