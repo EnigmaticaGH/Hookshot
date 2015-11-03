@@ -60,7 +60,6 @@ Camera:
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
-  m_TargetEye: 3
   m_HDR: 0
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
@@ -92,12 +91,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dampTime: 0
-  target: {fileID: 0}
   zoomSpeed: 0
   minZoom: 0
   maxZoom: 0
   rotationSpeed: 0
   followY: 0
+  followX: 1
+  LimitCameraPos: 1
+  minPos: {x: 0, y: 0}
+  maxPos: {x: 0, y: 0}
 --- !u!124 &12489156
 Behaviour:
   m_ObjectHideFlags: 1
@@ -111,7 +113,11 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: LimitCameraPos
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 139512}

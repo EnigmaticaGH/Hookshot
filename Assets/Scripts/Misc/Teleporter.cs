@@ -6,7 +6,7 @@ public class Teleporter : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
+        if (other.name == "FrogSprite")
         {
             Application.LoadLevel(zoneName);
         }
