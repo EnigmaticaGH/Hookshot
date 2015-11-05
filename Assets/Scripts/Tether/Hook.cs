@@ -40,5 +40,11 @@ public class Hook : MonoBehaviour {
         {
             hookGun.CancelHook();
         }
+
+        if (collision.collider.CompareTag("Edible"))
+        {
+            Destroy(collision.collider.gameObject);
+            hookGun.CancelHook();
+        }
     }
 }
