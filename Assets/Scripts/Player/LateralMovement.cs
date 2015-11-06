@@ -3,11 +3,37 @@ using System.Collections;
 
 public class LateralMovement : MonoBehaviour
 {
+    enum MovementState
+    {
+        GROUND,
+        AIR,
+        HOOKED,
+        WALLJUMP,
+        WALLWALK,
+        DISABLED
+    }
+    private delegate void StateFunction();
+    private StateFunction[] stateProcesses;
+    private MovementState state;
+
+    void MapStateFunctions()
+    {
+        stateProcesses = new StateFunction[] {
+            this.Ground,
+            this.Air,
+            this.Hooked,
+            this.WallJump,
+            this.WallWalk,
+            this.Disabled
+        };
+    }
+
     public float speed;
     public float speedInWater;
     private float regularSpeed;
     public float force;
     public float moveForce;
+    private float horizontal;
 
     public HookshotControl hookshotControl;
     public SpriteRenderer characterSprite;
@@ -15,8 +41,8 @@ public class LateralMovement : MonoBehaviour
     private Rigidbody2D player;
     private Vector2 contactNormal;
 
-    public WallSensor wallSensorRight;
-    public WallSensor wallSensorLeft;
+    private WallSensor wallSensorRight;
+    private WallSensor wallSensorLeft;
 
     private const float AIR_STOP_TIME = 0.08f;
     private bool canMove;
@@ -24,16 +50,26 @@ public class LateralMovement : MonoBehaviour
     void Start()
     {
         regularSpeed = speed;
-        player = GetComponent<Rigidbody2D>();
+        horizontal = 0;
         canMove = true;
+        FindPlayerParts();
+        MapStateFunctions();
+    }
+
+    private void FindPlayerParts()
+    {
+        player = GetComponent<Rigidbody2D>();
         jump = GetComponent<JumpControl>();
+        wallSensorRight = GameObject.Find("WallSensorR").GetComponent<WallSensor>();
+        wallSensorLeft = GameObject.Find("WallSensorL").GetComponent<WallSensor>();
     }
 
     void FixedUpdate()
     {
-        float horizontal = Input.GetAxisRaw("Horizontal");
-        Move(horizontal);
-        Orient(horizontal);
+        horizontal = Input.GetAxisRaw("Horizontal");
+        UpdateState();
+        stateProcesses[(int)state]();
+        Orient();
     }
 
     void OnTriggerStay2D(Collider2D c)
@@ -48,41 +84,97 @@ public class LateralMovement : MonoBehaviour
             speed = regularSpeed;
     }
 
-    void Move(float horizontal)
+    void ChangeState(MovementState newState)
     {
-        if (!hookshotControl.IsHooked())
+        state = newState;
+    }
+
+    void UpdateState()
+    {
+        if (!canMove) ChangeState(MovementState.DISABLED);
+        else if (isGrounded() && !isHooked()) ChangeState(MovementState.GROUND);
+        else if (!isGrounded() && !isHooked()) ChangeState(MovementState.AIR);
+        else if (!isGrounded() && isHooked()) ChangeState(MovementState.HOOKED);
+        else if (isOnWall() && isHooked()) ChangeState(MovementState.WALLWALK);
+        else if (isOnWall() && !isHooked()) ChangeState(MovementState.WALLJUMP);
+        else Debug.Log("Unaccounted movement state found. Grounded: " + isGrounded() + " On a wall: " + isOnWall() + ", Hooked: " + isHooked());
+    }
+
+    void Ground()
+    {
+        DoNormalMovement(isGrounded());
+    }
+
+    void Air()
+    {
+        DoNormalMovement(isGrounded());
+    }
+
+    void Hooked()
+    {
+        Vector2 pivotPoint = hookshotControl.HookPoint();
+        if (horizontal > 0 && pivotPoint.x >= transform.position.x || horizontal < 0 && pivotPoint.x <= transform.position.x)
         {
-            Vector2 lateralForce = new Vector2(horizontal * moveForce, 0);
-
-            if (Mathf.Abs(player.velocity.x) < speed && canMove)
-                player.AddForce(lateralForce);
-
-            if (player.velocity.x > 0 && horizontal < 0
-             || player.velocity.x < 0 && horizontal > 0)
-            {
-                player.velocity = new Vector2(0, player.velocity.y);
-
-                if (!jump.isGrounded())
-                {
-                    StartCoroutine(AirStopTime(AIR_STOP_TIME));
-                }
-            }
+            Vector2 lateralForce = Vector3.Cross((Vector3)pivotPoint - transform.position, Vector3.forward).normalized;
+            lateralForce *= horizontal * force / (player.velocity.magnitude + 1f);
+            player.AddForce(lateralForce);
         }
-        else
+    }
+
+    void WallJump()
+    {
+
+    }
+
+    void WallWalk()
+    {
+        Rope().MoveAlongWall(); //RopeControl
+    }
+
+    void Disabled(){ /* The player is unable to move */ }
+
+    void DoNormalMovement(bool onTheGround)
+    {
+        Vector2 lateralForce = new Vector2(horizontal * moveForce, 0);
+
+        if (Mathf.Abs(player.velocity.x) < speed)
+            player.AddForce(lateralForce);
+
+        if (player.velocity.x > 0 && horizontal < 0
+         || player.velocity.x < 0 && horizontal > 0)
         {
-            Vector2 pivotPoint = hookshotControl.HookPoint();
-            if (horizontal > 0 && pivotPoint.x >= transform.position.x || horizontal < 0 && pivotPoint.x <= transform.position.x)
+            player.velocity = new Vector2(0, player.velocity.y);
+
+            if (!onTheGround)
             {
-                Vector2 lateralForce = Vector3.Cross((Vector3)pivotPoint - transform.position, Vector3.forward).normalized;                
-                lateralForce *= horizontal * force / (player.velocity.magnitude + 1f);
-                player.AddForce(lateralForce);
+                StartCoroutine(DisableMovement(AIR_STOP_TIME));
             }
         }
     }
 
-    void Orient(float horizontal)
+    bool isGrounded()
     {
-        if (!hookshotControl.IsHooked() && horizontal != 0 && jump.isGrounded())
+        return jump.isGrounded();
+    }
+
+    bool isHooked()
+    {
+        return hookshotControl.IsHooked();
+    }
+
+    bool isOnWall()
+    {
+        return wallSensorLeft.IsWallCollide() || wallSensorRight.IsWallCollide();
+    }
+
+    RopeControl Rope()
+    {
+        return hookshotControl.Rope().GetComponent<RopeControl>();
+    }
+
+    void Orient()
+    {
+        if (!isHooked() && Mathf.Abs(horizontal) > 0)
         {
             Quaternion rot = horizontal == 1 ?
                 Quaternion.Euler(0, 0, -5.73f) : 
@@ -91,7 +183,7 @@ public class LateralMovement : MonoBehaviour
         }
     }
 
-    IEnumerator AirStopTime(float t)
+    IEnumerator DisableMovement(float t)
     {
         canMove = false;
 

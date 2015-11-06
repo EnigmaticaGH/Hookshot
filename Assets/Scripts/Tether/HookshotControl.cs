@@ -44,6 +44,8 @@ public class HookshotControl : MonoBehaviour {
     private SpriteRenderer playerRenderer;
     private JumpControl jumpControl;
 
+    private GameObject ropeObj;
+
     void Start()
     {
         MapStateFunctions();
@@ -154,7 +156,7 @@ public class HookshotControl : MonoBehaviour {
         IgnoreHookPlayerCollisions();
 
         // And spawn a rope to go with it
-        GameObject ropeObj = Instantiate(ropeFab);
+        ropeObj = Instantiate(ropeFab);
         rope = ropeObj.GetComponent<RopeControl>();
         rope.hookshot = this;
         rope.hook = hook;
@@ -209,6 +211,11 @@ public class HookshotControl : MonoBehaviour {
         if(state != HookshotState.READY)
             DestroyHookAndRope();
         ChangeState(HookshotState.READY);
+    }
+
+    public GameObject Rope()
+    {
+        return ropeObj;
     }
 
     void RotatGunToFaceHook()
