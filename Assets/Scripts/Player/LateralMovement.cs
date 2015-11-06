@@ -34,6 +34,7 @@ public class LateralMovement : MonoBehaviour
     public float force;
     public float moveForce;
     private float horizontal;
+    private float vertical;
 
     public HookshotControl hookshotControl;
     public SpriteRenderer characterSprite;
@@ -46,6 +47,7 @@ public class LateralMovement : MonoBehaviour
 
     private const float AIR_STOP_TIME = 0.08f;
     private bool canMove;
+    private float spriteOffsetAngle;
 
     void Start()
     {
@@ -54,6 +56,7 @@ public class LateralMovement : MonoBehaviour
         canMove = true;
         FindPlayerParts();
         MapStateFunctions();
+        spriteOffsetAngle = -5.73f;
     }
 
     private void FindPlayerParts()
@@ -67,9 +70,9 @@ public class LateralMovement : MonoBehaviour
     void FixedUpdate()
     {
         horizontal = Input.GetAxisRaw("Horizontal");
+        vertical = Input.GetAxisRaw("Vertical");
         UpdateState();
         stateProcesses[(int)state]();
-        Orient();
     }
 
     void OnTriggerStay2D(Collider2D c)
@@ -95,9 +98,9 @@ public class LateralMovement : MonoBehaviour
         else if (isGrounded() && !isHooked()) ChangeState(MovementState.GROUND);
         else if (!isGrounded() && !isHooked()) ChangeState(MovementState.AIR);
         else if (!isGrounded() && isHooked()) ChangeState(MovementState.HOOKED);
-        else if (isOnWall() && isHooked()) ChangeState(MovementState.WALLWALK);
+        else if ((isOnWall() || isGrounded()) && isHooked()) ChangeState(MovementState.WALLWALK);
         else if (isOnWall() && !isHooked()) ChangeState(MovementState.WALLJUMP);
-        else Debug.Log("Unaccounted movement state found. Grounded: " + isGrounded() + " On a wall: " + isOnWall() + ", Hooked: " + isHooked());
+        else Debug.Log("Unaccounted movement state found. Grounded: " + isGrounded() + ", On a wall: " + isOnWall() + ", Hooked: " + isHooked());
     }
 
     void Ground()
@@ -129,6 +132,7 @@ public class LateralMovement : MonoBehaviour
     void WallWalk()
     {
         Rope().MoveAlongWall(); //RopeControl
+        OrientVertical();
     }
 
     void Disabled(){ /* The player is unable to move */ }
@@ -150,6 +154,8 @@ public class LateralMovement : MonoBehaviour
                 StartCoroutine(DisableMovement(AIR_STOP_TIME));
             }
         }
+
+        OrientHorizontal();
     }
 
     bool isGrounded()
@@ -172,13 +178,24 @@ public class LateralMovement : MonoBehaviour
         return hookshotControl.Rope().GetComponent<RopeControl>();
     }
 
-    void Orient()
+    void OrientHorizontal()
     {
-        if (!isHooked() && Mathf.Abs(horizontal) > 0)
+        if (horizontal != 0)
         {
-            Quaternion rot = horizontal == 1 ?
-                Quaternion.Euler(0, 0, -5.73f) : 
-                Quaternion.Euler(0, 180, -5.73f);
+            Quaternion rot = horizontal > 0 ?
+                Quaternion.Euler(0, 0, spriteOffsetAngle) : 
+                Quaternion.Euler(0, 180, spriteOffsetAngle);
+            characterSprite.transform.rotation = rot;
+        }
+    }
+
+    void OrientVertical()
+    {
+        if (vertical != 0)
+        {
+            Quaternion rot = vertical > 0 ?
+                Quaternion.Euler(0, 0, spriteOffsetAngle + 90) :
+                Quaternion.Euler(0, 180, spriteOffsetAngle - 90);
             characterSprite.transform.rotation = rot;
         }
     }

@@ -4,7 +4,8 @@ using UnityEngine.UI;
 
 [RequireComponent (typeof (KeybindScript))]
 public class JumpControl : MonoBehaviour {
-    public float force;
+    public float jumpForce;
+    public float wallJumpForce;
 
     private Rigidbody2D body;
     private KeybindScript keybinds;
@@ -37,7 +38,7 @@ public class JumpControl : MonoBehaviour {
     void FixedUpdate()
     {
         if (jump) {
-            body.AddForce(transform.up * force, ForceMode2D.Impulse);
+            body.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
             jump = false;
         }
     }

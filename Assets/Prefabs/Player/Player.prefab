@@ -295,9 +295,9 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 0
-  m_Offset: {x: 0, y: .100000001}
+  m_Offset: {x: 0, y: .150000006}
   serializedVersion: 2
-  m_Size: {x: 1, y: .25}
+  m_Size: {x: .5, y: .25}
 --- !u!61 &6163904
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -310,7 +310,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: .699999988}
   serializedVersion: 2
-  m_Size: {x: 1, y: .200000003}
+  m_Size: {x: .5, y: .200000003}
 --- !u!61 &6191496
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -358,8 +358,6 @@ MonoBehaviour:
   moveForce: 400
   hookshotControl: {fileID: 11405712}
   characterSprite: {fileID: 21231396}
-  wallSensorRight: {fileID: 0}
-  wallSensorLeft: {fileID: 11468090}
 --- !u!114 &11405712
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -432,7 +430,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68be204a48c676646910df89d9039d78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  force: 90
+  jumpForce: 90
+  wallJumpForce: 0
   canDoubleJump: 0
 --- !u!114 &11458740
 MonoBehaviour:

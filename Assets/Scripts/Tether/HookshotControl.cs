@@ -232,7 +232,6 @@ public class HookshotControl : MonoBehaviour {
         Vector3 playerPos = playerRenderer.transform.position;
         Vector3 direction = mousePos - playerPos;
         direction = new Vector3(direction.x, direction.y, 0);
-        Debug.Log(direction);
         Vector3 angles = Quaternion.FromToRotation(Vector3.right, direction).eulerAngles;
         float flip = direction.x < 0 ? 180f : 0f;
         angles = new Vector3(0, 0, angles.z);
