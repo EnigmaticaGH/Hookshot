@@ -82,9 +82,11 @@ public class LateralMovement : MonoBehaviour
 
     void Orient(float horizontal)
     {
-        if (!hookshotControl.IsHooked() && horizontal != 0)
+        if (!hookshotControl.IsHooked() && horizontal != 0 && jump.isGrounded())
         {
-            Quaternion rot = horizontal == 1 ? Quaternion.Euler(0, 0, -5.73f) : Quaternion.Euler(0, 180, -5.73f);
+            Quaternion rot = horizontal == 1 ?
+                Quaternion.Euler(0, 0, -5.73f) : 
+                Quaternion.Euler(0, 180, -5.73f);
             characterSprite.transform.rotation = rot;
         }
     }
