@@ -4,14 +4,14 @@ using System.Collections;
 public class HitSplat : MonoBehaviour
 {
     public float lethalVelocity;
-    public Transform frogSprite;
+    private Transform frogSprite;
     private Rigidbody2D player;
     private bool lethalHit;
     private Vector3 frogScale;
 
-    // Use this for initialization
     void Start()
     {
+        frogSprite = GetComponent<LateralMovement>().getSprite().transform;
         player = GetComponent<Rigidbody2D>();
         frogScale = frogSprite.localScale;
     }

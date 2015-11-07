@@ -284,7 +284,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_Offset: {x: -.400000006, y: .400000006}
   serializedVersion: 2
-  m_Size: {x: .200000003, y: .400000006}
+  m_Size: {x: .200000003, y: .300000012}
 --- !u!61 &6161566
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -295,9 +295,9 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 0
-  m_Offset: {x: 0, y: .100000001}
+  m_Offset: {x: 0, y: .150000006}
   serializedVersion: 2
-  m_Size: {x: 1, y: .25}
+  m_Size: {x: .5, y: .25}
 --- !u!61 &6163904
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -310,7 +310,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: .699999988}
   serializedVersion: 2
-  m_Size: {x: 1, y: .200000003}
+  m_Size: {x: .5, y: .200000003}
 --- !u!61 &6191496
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -323,7 +323,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_Offset: {x: .400000006, y: .400000006}
   serializedVersion: 2
-  m_Size: {x: .200000003, y: .400000006}
+  m_Size: {x: .200000003, y: .300000012}
 --- !u!95 &9500482
 Animator:
   serializedVersion: 3
@@ -356,10 +356,6 @@ MonoBehaviour:
   speedInWater: 0
   force: 600
   moveForce: 400
-  hookshotControl: {fileID: 11405712}
-  characterSprite: {fileID: 21231396}
-  wallSensorRight: {fileID: 0}
-  wallSensorLeft: {fileID: 11468090}
 --- !u!114 &11405712
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -386,7 +382,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lethalVelocity: 9
-  frogSprite: {fileID: 424174}
 --- !u!114 &11432522
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -398,7 +393,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ed63c5d209f25b4ba4551bb42043dd9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jump: {fileID: 11448862}
 --- !u!114 &11437522
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -432,7 +426,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68be204a48c676646910df89d9039d78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  force: 90
+  jumpForce: 90
+  wallJumpForce: 50
   canDoubleJump: 0
 --- !u!114 &11458740
 MonoBehaviour:
@@ -446,7 +441,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lethalVelocity: 2
-  hook: {fileID: 11405712}
 --- !u!114 &11465158
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -458,7 +452,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 798667631325c10438ad93783dba757b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 11448862}
 --- !u!114 &11468090
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -492,7 +485,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2fdb5a490c2f7548b029daf891216c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hook: {fileID: 11405712}
   friction: {fileID: 6200000, guid: 784af44ee49d815438714b00650f5e24, type: 2}
   noFriction: {fileID: 6200000, guid: 019b476438ed7a84eb357f49ab9cdb48, type: 2}
 --- !u!212 &21231396

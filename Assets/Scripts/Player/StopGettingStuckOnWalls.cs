@@ -4,7 +4,7 @@ using System.Collections;
 public class StopGettingStuckOnWalls : MonoBehaviour
 {
     private JumpControl jump;
-    public HookshotControl hook;
+    private HookshotControl hook;
     private BoxCollider2D box;
     public PhysicsMaterial2D friction;
     public PhysicsMaterial2D noFriction;
@@ -12,6 +12,7 @@ public class StopGettingStuckOnWalls : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        hook = GetComponentInParent<LateralMovement>().getHookScript();
         box = GetComponent<BoxCollider2D>();
         jump = GetComponentInParent<JumpControl>();
     }
