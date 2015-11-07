@@ -36,35 +36,43 @@ public class LateralMovement : MonoBehaviour
     private float horizontal;
     private float vertical;
 
-    public HookshotControl hookshotControl;
-    public SpriteRenderer characterSprite;
+    private GameObject hand;
+    private HookshotControl hookshotControl;
+    private GameObject characterSprite;
     private JumpControl jump;
     private Rigidbody2D player;
     private Vector2 contactNormal;
-
+    private CeilingSensor ceilingSensor;
     private WallSensor wallSensorRight;
     private WallSensor wallSensorLeft;
 
     private const float AIR_STOP_TIME = 0.08f;
+    private const float SPRITE_OFFSET_ANGLE = -5.73f;
     private bool canMove;
-    private float spriteOffsetAngle;
 
     void Start()
     {
         regularSpeed = speed;
         horizontal = 0;
         canMove = true;
-        FindPlayerParts();
         MapStateFunctions();
-        spriteOffsetAngle = -5.73f;
+        player = GetComponent<Rigidbody2D>();
+        jump = GetComponent<JumpControl>();
+    }
+
+    void Awake()
+    {
+        FindPlayerParts();
     }
 
     private void FindPlayerParts()
     {
-        player = GetComponent<Rigidbody2D>();
-        jump = GetComponent<JumpControl>();
+        characterSprite = GetComponentInChildren<SpriteRenderer>().gameObject;
+        hand = characterSprite.GetComponentInChildren<AimAtMouse>().gameObject;
+        hookshotControl = hand.GetComponentInChildren<HookshotControl>();
         wallSensorRight = GameObject.Find("WallSensorR").GetComponent<WallSensor>();
         wallSensorLeft = GameObject.Find("WallSensorL").GetComponent<WallSensor>();
+        ceilingSensor = GameObject.Find("CeilingSensor").GetComponent<CeilingSensor>();
     }
 
     void FixedUpdate()
@@ -72,7 +80,6 @@ public class LateralMovement : MonoBehaviour
         horizontal = Input.GetAxisRaw("Horizontal");
         vertical = Input.GetAxisRaw("Vertical");
         UpdateState();
-        stateProcesses[(int)state]();
     }
 
     void OnTriggerStay2D(Collider2D c)
@@ -101,6 +108,7 @@ public class LateralMovement : MonoBehaviour
         else if ((isOnWall() || isGrounded()) && isHooked()) ChangeState(MovementState.WALLWALK);
         else if (isOnWall() && !isHooked()) ChangeState(MovementState.WALLJUMP);
         else Debug.Log("Unaccounted movement state found. Grounded: " + isGrounded() + ", On a wall: " + isOnWall() + ", Hooked: " + isHooked());
+        stateProcesses[(int)state]();
     }
 
     void Ground()
@@ -158,24 +166,63 @@ public class LateralMovement : MonoBehaviour
         OrientHorizontal();
     }
 
-    bool isGrounded()
+    public bool isGrounded()
     {
         return jump.isGrounded();
     }
 
-    bool isHooked()
+    public bool touchingCeiling()
+    {
+        return ceilingSensor.onCeiling();
+    }
+
+    public bool isHooked()
     {
         return hookshotControl.IsHooked();
     }
 
-    bool isOnWall()
+    public bool isOnWall()
     {
         return wallSensorLeft.IsWallCollide() || wallSensorRight.IsWallCollide();
     }
 
-    RopeControl Rope()
+    public RopeControl Rope()
     {
         return hookshotControl.Rope().GetComponent<RopeControl>();
+    }
+
+    public HookshotControl getHookScript()
+    {
+        return hookshotControl;
+    }
+
+    public JumpControl getJumpScript()
+    {
+        return jump;
+    }
+
+    public WallSensor[] getWallSensors()
+    {
+        return new WallSensor[2]
+        {
+            wallSensorRight,
+            wallSensorLeft
+        };
+    }
+
+    public CeilingSensor getCeilingSensor()
+    {
+        return ceilingSensor;
+    }
+
+    public Rigidbody2D getRigidBody()
+    {
+        return player;
+    }
+
+    public GameObject getSprite()
+    {
+        return characterSprite;
     }
 
     void OrientHorizontal()
@@ -183,8 +230,8 @@ public class LateralMovement : MonoBehaviour
         if (horizontal != 0)
         {
             Quaternion rot = horizontal > 0 ?
-                Quaternion.Euler(0, 0, spriteOffsetAngle) : 
-                Quaternion.Euler(0, 180, spriteOffsetAngle);
+                Quaternion.Euler(0, 0, SPRITE_OFFSET_ANGLE) : 
+                Quaternion.Euler(0, 180, SPRITE_OFFSET_ANGLE);
             characterSprite.transform.rotation = rot;
         }
     }
@@ -194,8 +241,8 @@ public class LateralMovement : MonoBehaviour
         if (vertical != 0)
         {
             Quaternion rot = vertical > 0 ?
-                Quaternion.Euler(0, 0, spriteOffsetAngle + 90) :
-                Quaternion.Euler(0, 180, spriteOffsetAngle - 90);
+                Quaternion.Euler(0, 0, SPRITE_OFFSET_ANGLE + 90) :
+                Quaternion.Euler(0, 180, SPRITE_OFFSET_ANGLE - 90);
             characterSprite.transform.rotation = rot;
         }
     }

@@ -40,8 +40,8 @@ public class HookshotControl : MonoBehaviour {
     private Vector2 retractPoint;
     private float stateSwitchTime;
 
-    private GameObject player;
-    private SpriteRenderer playerRenderer;
+    private LateralMovement player;
+    private GameObject playerRenderer;
     private JumpControl jumpControl;
 
     private GameObject ropeObj;
@@ -50,15 +50,19 @@ public class HookshotControl : MonoBehaviour {
     {
         MapStateFunctions();
         keybinds = GameObject.FindGameObjectWithTag("KeyBinds").GetComponent<KeybindScript>();
-        FindPlayerParts();
         ChangeState(HookshotState.READY);
+    }
+
+    void Awake()
+    {
+        FindPlayerParts();
     }
 
     private void FindPlayerParts()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
-        playerRenderer = player.GetComponentInChildren<SpriteRenderer>();
-        jumpControl = player.GetComponent<JumpControl>();
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<LateralMovement>();
+        playerRenderer = player.getSprite();
+        jumpControl = player.getJumpScript();
         hand = transform.parent.gameObject;
         mouseAimer = hand.GetComponent<AimAtMouse>();
         FindPlayerColliders();
@@ -120,7 +124,7 @@ public class HookshotControl : MonoBehaviour {
 
     void UpdateHookFire()
     {
-        if (Input.GetButtonDown("Fire1") && !jumpControl.isGrounded())
+        if (Input.GetButtonDown("Fire1")/* && !jumpControl.isGrounded()*/)
         {
             FireHookAndRope();
             ChangeState(HookshotState.EXTENDING);

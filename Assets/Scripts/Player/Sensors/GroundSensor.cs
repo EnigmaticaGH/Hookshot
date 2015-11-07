@@ -2,9 +2,14 @@
 using System.Collections;
 
 public class GroundSensor : MonoBehaviour {
-    public JumpControl player;
+    private JumpControl player;
     private bool canControlRope;
     private bool inTrigger;
+
+    void Awake()
+    {
+        player = transform.parent.gameObject.GetComponent<JumpControl>();
+    }
 
     void Update()
     {

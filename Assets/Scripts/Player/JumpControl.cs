@@ -2,8 +2,9 @@
 using System.Collections;
 using UnityEngine.UI;
 
-[RequireComponent (typeof (KeybindScript))]
-public class JumpControl : MonoBehaviour {
+[RequireComponent(typeof(KeybindScript))]
+public class JumpControl : MonoBehaviour
+{
     public float jumpForce;
     public float wallJumpForce;
 
@@ -16,34 +17,39 @@ public class JumpControl : MonoBehaviour {
 
     private bool grounded;
 
-	void Start () 
+    void Start()
     {
         keybinds = GameObject.FindGameObjectWithTag("KeyBinds").GetComponent<KeybindScript>();
         body = GetComponent<Rigidbody2D>();
-	}
-	
-	void Update () 
+    }
+
+    void Update()
     {
         if (keybinds.GetButtonDown("Jump") && Time.timeScale > 0f)
         {
-            if (grounded) {
+            if (grounded)
+            {
                 jump = true;
-            } else if (doubleJump && canDoubleJump) {
+            }
+            else if (doubleJump && canDoubleJump)
+            {
                 jump = true;
                 doubleJump = false;
             }
         }
-	}
+    }
 
     void FixedUpdate()
     {
-        if (jump) {
+        if (jump)
+        {
             body.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
             jump = false;
         }
     }
 
-    public void SetGrounded(bool flag) {
+    public void SetGrounded(bool flag)
+    {
         grounded = flag;
         doubleJump = flag || doubleJump;
     }

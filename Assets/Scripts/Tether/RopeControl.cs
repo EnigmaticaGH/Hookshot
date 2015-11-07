@@ -15,9 +15,9 @@ public struct Rope
 }
 
 public class RopeControl : MonoBehaviour {
-    private GameObject player;
+    private LateralMovement player;
     private Rigidbody2D playerBody;
-    private SpriteRenderer playerRenderer;
+    private GameObject playerRenderer;
 
     public HookshotControl hookshot;
     public GameObject hook;
@@ -36,30 +36,28 @@ public class RopeControl : MonoBehaviour {
     private bool boostEnabled;
 
     void Start() {
-        player = GameObject.FindGameObjectWithTag("Player");
-        playerBody = player.GetComponent<Rigidbody2D>();
-        playerRenderer = player.GetComponentInChildren<SpriteRenderer>();
-        FindWallSensors();
-        EstablishConstants();
         line = GetComponent<LineRenderer>();
         boostEnabled = false;
     }
 
+    void Awake()
+    {
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<LateralMovement>();
+        playerBody = player.getRigidBody();
+        playerRenderer = player.getSprite();
+        FindWallSensors();
+        moveForce = player.moveForce;
+    }
+
     void FindWallSensors() 
     {
-        WallSensor[] sensors = player.GetComponentsInChildren<WallSensor>();
+        WallSensor[] sensors = player.getWallSensors();
         foreach(WallSensor sensor in sensors) {
             if (sensor.name == "WallSensorL")
                 leftWallSensor = sensor;
             else if (sensor.name == "WallSensorR")
                 rightWallSensor = sensor;
         }
-    }
-
-    void EstablishConstants()
-    {
-        LateralMovement movement = player.GetComponent<LateralMovement>();
-        moveForce = movement.moveForce;
     }
 
     void Update() {
@@ -158,7 +156,7 @@ public class RopeControl : MonoBehaviour {
         float initialDistance = Vector2.Distance(player.transform.position, hook.transform.position);
         initialDistance *= ropeProperties.initialDistancePortion;
 
-        rope = player.AddComponent<DistanceJoint2D>();
+        rope = player.gameObject.AddComponent<DistanceJoint2D>();
         rope.connectedBody = hook.GetComponent<Rigidbody2D>();
         rope.distance = Mathf.Clamp(initialDistance, ropeProperties.minLength, ropeProperties.maxLength);
         rope.maxDistanceOnly = true;

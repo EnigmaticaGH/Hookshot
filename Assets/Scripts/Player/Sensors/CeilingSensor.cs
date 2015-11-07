@@ -27,6 +27,11 @@ public class CeilingSensor : MonoBehaviour {
         }
     }
 
+    public bool onCeiling()
+    {
+        return inTrigger;
+    }
+
     public bool CanControlRope()
     {
         return canControlRope;
