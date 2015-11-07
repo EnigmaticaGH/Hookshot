@@ -12,6 +12,9 @@ public struct Rope
     public float maxLength;
 
     public float initialDistancePortion;
+
+    public int segmentCount;
+    public float maxRopeSagDistance;
 }
 
 public class RopeControl : MonoBehaviour {
@@ -161,6 +164,8 @@ public class RopeControl : MonoBehaviour {
         rope.distance = Mathf.Clamp(initialDistance, ropeProperties.minLength, ropeProperties.maxLength);
         rope.maxDistanceOnly = true;
 
+        line.SetVertexCount(ropeProperties.segmentCount);
+
         RotateObjectTowardsRope();
     }
 
@@ -176,11 +181,55 @@ public class RopeControl : MonoBehaviour {
     void DrawRope()
     {
         if (hookshot.IsHooked())
-            line.SetPosition(0, rope.transform.position + (Vector3)rope.anchor);
+            DrawCurvyLine();
         else
-            line.SetPosition(0, player.transform.position
-                              + playerRenderer.transform.localPosition
-                              + playerRenderer.transform.rotation * anchorOffset);
-        line.SetPosition(1, hook.transform.position);
+        {
+            line.SetPosition(0, GetPlayerOffset());
+            line.SetPosition(1, hook.transform.position);
+        }
+    }
+
+    private Vector2 GetPlayerOffset()
+    {
+        return player.transform.position
+              + playerRenderer.transform.localPosition
+              + playerRenderer.transform.rotation * anchorOffset;
+    }
+
+    Vector2 jointDir;
+    Vector2 orthogonal;
+    Vector2 midpoint;
+    float midDist;
+    Vector2 offsetDir;
+    float maxSag;
+
+    private void DrawCurvyLine()
+    {
+        Vector2 p0 = GetPlayerOffset();
+        Vector2 pn = hook.transform.position;
+
+        jointDir = (pn - p0).normalized;
+        orthogonal = Vector3.Cross(Vector3.forward, jointDir).normalized;
+
+        midpoint = (pn + p0) / 2.0f; 
+        midDist = Vector2.Distance(midpoint, p0);
+
+        offsetDir = Vector3.Project(playerBody.velocity, orthogonal).normalized;
+        maxSag = ropeProperties.maxRopeSagDistance * rope.distance / ropeProperties.maxLength;
+
+        line.SetPosition(0, p0);
+        for (int i = 1; i < ropeProperties.segmentCount - 1; i++)
+            DrawVertex(i, p0, pn);
+        line.SetPosition(ropeProperties.segmentCount - 1, pn);
+    }
+
+    private void DrawVertex(int n, Vector2 p0, Vector2 pn)
+    {
+        Vector2 jointPos = p0 + jointDir * Vector2.Distance(pn, p0) * ((float)n / ropeProperties.segmentCount);
+        float offsetMag = Mathf.Clamp(playerBody.velocity.magnitude/50.0f, 0.0f, maxSag) * 
+                          Mathf.Sin(3.14f / 2.0f * (1.0f - Vector2.Distance(jointPos, midpoint) / midDist));
+        Vector2 offset = offsetDir * offsetMag;
+
+        line.SetPosition(n, jointPos + offset);
     }
 }

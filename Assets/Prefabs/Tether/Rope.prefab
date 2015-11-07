@@ -43,12 +43,13 @@ MonoBehaviour:
   hookshot: {fileID: 0}
   hook: {fileID: 0}
   ropeProperties:
-    wallClimbSpeed: 4
     climbSpeed: 3
     boostSpeed: 5
     minLength: .5
     maxLength: 10
     initialDistancePortion: .850000024
+    segmentCount: 15
+    maxRopeSagDistance: .5
   anchorOffset: {x: .5, y: .379999995}
 --- !u!120 &12099772
 LineRenderer:
@@ -246,6 +247,14 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: ropeProperties.wallClimbSpeed
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: ropeProperties.segmentCount
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: ropeProperties.maxRopeSagDistance
+      value: .5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
