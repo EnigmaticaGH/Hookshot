@@ -21,6 +21,12 @@ public class AimAtMouse : MonoBehaviour {
             Vector3 pivotPos = Camera.main.WorldToScreenPoint(transform.position);
             Vector3 coords = Input.mousePosition;
             Vector3 direction = coords - pivotPos;
+            direction = new Vector3(direction.x, direction.y, 0);
+
+            //Vector3 p = Camera.main.ScreenToWorldPoint(pivotPos);
+            //Vector3 c = Camera.main.ScreenToWorldPoint(coords);
+            //Debug.DrawLine(p, c, Color.red, Time.deltaTime);
+
             if (direction.x < 0)
             {
                 direction.x = -direction.x;

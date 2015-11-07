@@ -3,13 +3,14 @@ using System.Collections;
 
 public class AnimateFrog : MonoBehaviour
 {
-    public JumpControl jump;
+    private LateralMovement player;
     private Animator anim;
     private Vector2 relativeVel;
 
     // Use this for initialization
     void Start()
     {
+        player = GetComponentInParent<LateralMovement>();
         anim = GetComponent<Animator>();
         anim.speed = 1.2f;
     }
@@ -19,7 +20,7 @@ public class AnimateFrog : MonoBehaviour
     {
         if(Time.time > 0.1f)
         {
-            anim.SetBool("Grounded", jump.isGrounded());
+            anim.SetBool("Grounded", player.isGrounded());
             anim.SetBool("Moving", relativeVel.magnitude > 0.01f);
         }
     }

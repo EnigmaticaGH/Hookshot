@@ -23,6 +23,7 @@ TagManager:
   - Feet
   - KeyBinds
   - Hazard
+  - Player Sprite
   layers:
   - Default
   - TransparentFX
