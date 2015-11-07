@@ -43,13 +43,13 @@ MonoBehaviour:
   hookshot: {fileID: 0}
   hook: {fileID: 0}
   ropeProperties:
+    wallClimbSpeed: 4
     climbSpeed: 3
     boostSpeed: 5
     minLength: .5
     maxLength: 10
     initialDistancePortion: .850000024
   anchorOffset: {x: .5, y: .379999995}
-  springPrefab: {fileID: 108492, guid: d4889896881276443b15063725b2a1ca, type: 2}
 --- !u!120 &12099772
 LineRenderer:
   m_ObjectHideFlags: 1
@@ -242,6 +242,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: anchorOffset.y
       value: .379999995
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: ropeProperties.wallClimbSpeed
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

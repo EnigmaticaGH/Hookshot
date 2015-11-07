@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Hook : MonoBehaviour {
+public class Hook : MonoBehaviour
+{
+    [HideInInspector]
     public HookshotControl hookGun;
     public float hookSpeed;
 
@@ -36,7 +38,7 @@ public class Hook : MonoBehaviour {
             hookGun.HookOn();
             GetComponent<PolygonCollider2D>().enabled = false;
         }
-        else 
+        else
         {
             hookGun.CancelHook();
         }

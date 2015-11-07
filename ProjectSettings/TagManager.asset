@@ -25,6 +25,7 @@ TagManager:
   - Hazard
   - Hook
   - Edible
+  - Player Sprite
   layers:
   - Default
   - TransparentFX

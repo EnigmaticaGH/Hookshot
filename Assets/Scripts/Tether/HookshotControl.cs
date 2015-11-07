@@ -32,7 +32,7 @@ public class HookshotControl : MonoBehaviour {
     private List<Collider2D> playerColliders;
     private GameObject hand;
     private RopeControl rope;
-    public AimAtMouse mouseAimer;
+    private AimAtMouse mouseAimer;
     private GameObject hook;
 
     private KeybindScript keybinds;
@@ -40,15 +40,39 @@ public class HookshotControl : MonoBehaviour {
     private Vector2 retractPoint;
     private float stateSwitchTime;
 
-    public JumpControl player;
+    private LateralMovement player;
+    private GameObject playerRenderer;
+    private JumpControl jumpControl;
+
+    private GameObject ropeObj;
+    private bool hookEnabled;
+
+    void Awake()
+    {
+        hookEnabled = true;
+    }
+
+    void OnDestroy()
+    {
+        hookEnabled = false;
+    }
 
     void Start()
     {
-        keybinds = GameObject.FindGameObjectWithTag("KeyBinds").GetComponent<KeybindScript>();
         MapStateFunctions();
-        hand = transform.parent.gameObject;
-        FindPlayerColliders();
+        keybinds = GameObject.FindGameObjectWithTag("KeyBinds").GetComponent<KeybindScript>();
+        FindPlayerParts();
         ChangeState(HookshotState.READY);
+    }
+
+    private void FindPlayerParts()
+    {
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<LateralMovement>();
+        playerRenderer = player.getSprite();
+        jumpControl = player.GetComponent<JumpControl>();
+        FindPlayerColliders();
+        hand = transform.parent.gameObject;
+        mouseAimer = hand.GetComponent<AimAtMouse>();
     }
 
     private void FindPlayerColliders()
@@ -77,14 +101,12 @@ public class HookshotControl : MonoBehaviour {
 
     void Ready()
     {
-        if (Input.GetButtonDown("Fire1"))
-        {
-            FireHookAndRope();
-            ChangeState(HookshotState.EXTENDING);
-        }
+        UpdateHookFire();
     }
 
-    void Extend() { /* The hook object is traveling through the world. */ }
+    void Extend() { /* The hook object is traveling through the world. */
+        AimAtMouse();
+    }
 
     void Hooked()
     {
@@ -99,15 +121,20 @@ public class HookshotControl : MonoBehaviour {
 
     void Flying()
     {
-        if (Input.GetButtonDown("Fire1"))
+        UpdateHookFire();
+
+        if (jumpControl.isGrounded())
+        {
+            ChangeState(HookshotState.READY);
+        }
+    }
+
+    void UpdateHookFire()
+    {
+        if (Input.GetButtonDown("Fire1")/* && !jumpControl.isGrounded()*/)
         {
             FireHookAndRope();
             ChangeState(HookshotState.EXTENDING);
-        }
-
-        if (player.isGrounded())
-        {
-            ChangeState(HookshotState.READY);
         }
     }
 
@@ -130,14 +157,17 @@ public class HookshotControl : MonoBehaviour {
 
     void FireHookAndRope()
     {
+        Vector2 hookPos = playerRenderer.transform.position + 
+            playerRenderer.transform.rotation * ropeFab.GetComponent<RopeControl>().anchorOffset;
+
         // Shoot out a hook instance
-        hook = (GameObject)Instantiate(hookFab, transform.position, transform.rotation);
+        hook = (GameObject)Instantiate(hookFab, hookPos, transform.rotation);
         hook.GetComponent<Hook>().hookGun = this;
 
         IgnoreHookPlayerCollisions();
 
         // And spawn a rope to go with it
-        GameObject ropeObj = Instantiate(ropeFab);
+        ropeObj = Instantiate(ropeFab);
         rope = ropeObj.GetComponent<RopeControl>();
         rope.hookshot = this;
         rope.hook = hook;
@@ -182,9 +212,9 @@ public class HookshotControl : MonoBehaviour {
         return state == HookshotState.FLYING;
     }
 
-    public Vector2 HookPoint()
+    public Transform HookPoint()
     {
-        return hook.transform.position;
+        return hook == null ? null : hook.transform;
     }
 
     public void CancelHook()
@@ -194,11 +224,28 @@ public class HookshotControl : MonoBehaviour {
         ChangeState(HookshotState.READY);
     }
 
+    public GameObject Rope()
+    {
+        return ropeObj;
+    }
+
     void RotatGunToFaceHook()
     {
         hand.transform.rotation = Quaternion.FromToRotation(
             Vector2.right, 
             hook.transform.position - hand.transform.position
         );
+    }
+
+    void AimAtMouse()
+    {
+        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector3 playerPos = playerRenderer.transform.position;
+        Vector3 direction = mousePos - playerPos;
+        direction = new Vector3(direction.x, direction.y, 0);
+        Vector3 angles = Quaternion.FromToRotation(Vector3.right, direction).eulerAngles;
+        float flip = direction.x < 0 ? 180f : 0f;
+        angles = new Vector3(0, 0, angles.z);
+        playerRenderer.transform.rotation = Quaternion.Euler(angles);
     }
 }

@@ -4,16 +4,14 @@ using System.Collections;
 public class KillEnemies : MonoBehaviour
 {
     public float lethalVelocity;
-    public float respawnDelay = 0.4f;
-    public Transform playersprite;
-    public ParticleSystem DeathParticle;
-    public HookshotControl hook;
+    private HookshotControl hook;
     private Rigidbody2D player;
     private GameObject lastSpawn;
 
     void Start()
     {
         player = GetComponent<Rigidbody2D>();
+        hook = GetComponent<LateralMovement>().getHookScript();
     }
 
     void OnCollisionEnter2D(Collision2D c)
@@ -22,7 +20,7 @@ public class KillEnemies : MonoBehaviour
         {
             Destroy(c.gameObject);
         }
-        else if (c.collider.CompareTag("Enemy"))
+        else if (c.collider.CompareTag("Enemy") || c.collider.CompareTag("Hazard"))
         {
             Respawn();
         }
@@ -38,7 +36,7 @@ public class KillEnemies : MonoBehaviour
         {
             lastSpawn = c.gameObject;
         }
-        if (c.CompareTag("Boundary") || c.CompareTag("Hazard"))
+        if ((c.CompareTag("Boundary") || (c.CompareTag("Water"))) && !hook.IsHooked())
         {
             Respawn();
         }
@@ -46,21 +44,9 @@ public class KillEnemies : MonoBehaviour
 
     void Respawn()
     {
-        StartCoroutine(Explosion());
-    }
-
-    IEnumerator Explosion()
-    {
-        hook.CancelHook();
-        playersprite.gameObject.SetActive(false);
-        player.velocity = Vector2.zero;
-        player.isKinematic = true;
-        ParticleSystem Death = Instantiate(DeathParticle, transform.position, Quaternion.identity) as ParticleSystem;
-        yield return new WaitForSeconds(respawnDelay);
         transform.position = lastSpawn.transform.position;
-        playersprite.gameObject.SetActive(true);
-        player.isKinematic = false;
-        Destroy(Death);
+        hook.CancelHook();
+        player.velocity = Vector2.zero;
     }
 
     private bool Flying()
