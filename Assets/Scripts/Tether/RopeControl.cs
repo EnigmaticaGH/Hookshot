@@ -186,9 +186,7 @@ public class RopeControl : MonoBehaviour {
     void DrawRope()
     {
         if (hookshot.IsHooked())
-        {
             DrawCurvyLine();
-        }
         else
         {
             line.SetPosition(0, GetPlayerOffset());
@@ -220,11 +218,12 @@ public class RopeControl : MonoBehaviour {
         Vector2 jointPos = p0 + jointDir * Vector2.Distance(pn, p0) * ((float)n / ropeProperties.segmentCount);
         Vector2 orthogonal = Vector3.Cross(Vector3.forward, jointDir).normalized;
 
-        Vector2 midpoint = (pn + p0) / 2.0f;
+        Vector2 midpoint = (pn + p0) / 2.0f; 
         float midDist = Vector2.Distance(midpoint, p0);
 
         Vector2 offsetDir = Vector3.Project(playerBody.velocity, orthogonal).normalized;
-        float offsetMag = Mathf.Clamp(playerBody.velocity.magnitude/50.0f, 0.0f, ropeProperties.maxRopeSagDistance) * 
+        float maxSag = ropeProperties.maxRopeSagDistance * rope.distance / ropeProperties.maxLength;
+        float offsetMag = Mathf.Clamp(playerBody.velocity.magnitude/50.0f, 0.0f, maxSag) * 
                           Mathf.Sin(3.14f / 2.0f * (1.0f - Vector2.Distance(jointPos, midpoint) / midDist));
         Vector2 offset = offsetDir * offsetMag;
 
