@@ -58,6 +58,7 @@ public class LateralMovement : MonoBehaviour
         MapStateFunctions();
         player = GetComponent<Rigidbody2D>();
         jump = GetComponent<JumpControl>();
+        ChangeState(MovementState.GROUND);
     }
 
     void Awake()
@@ -80,6 +81,7 @@ public class LateralMovement : MonoBehaviour
         horizontal = Input.GetAxisRaw("Horizontal");
         vertical = Input.GetAxisRaw("Vertical");
         UpdateState();
+        //Debug.Log(state.ToString());
     }
 
     void OnTriggerStay2D(Collider2D c)
@@ -102,12 +104,16 @@ public class LateralMovement : MonoBehaviour
     void UpdateState()
     {
         if (!canMove) ChangeState(MovementState.DISABLED);
-        else if (isGrounded() && !isHooked()) ChangeState(MovementState.GROUND);
-        else if (!isGrounded() && !isHooked()) ChangeState(MovementState.AIR);
-        else if (!isGrounded() && isHooked()) ChangeState(MovementState.HOOKED);
-        else if ((isOnWall() || isGrounded()) && isHooked()) ChangeState(MovementState.WALLWALK);
-        else if (isOnWall() && !isHooked()) ChangeState(MovementState.WALLJUMP);
-        else Debug.Log("Unaccounted movement state found. Grounded: " + isGrounded() + ", On a wall: " + isOnWall() + ", Hooked: " + isHooked());
+        else
+        {
+            ChangeState(isGrounded() ? MovementState.GROUND : MovementState.AIR);
+            ChangeState(isHooked() ? MovementState.HOOKED : state);
+            if (isOnWall() && !isGrounded())
+            {
+                ChangeState(isHooked() ? MovementState.WALLWALK : MovementState.WALLJUMP);
+            }
+        }
+        //else Debug.Log("Unaccounted movement state found. Grounded: " + isGrounded() + ", On a wall: " + isOnWall() + ", Hooked: " + isHooked());
         stateProcesses[(int)state]();
     }
 
@@ -134,7 +140,7 @@ public class LateralMovement : MonoBehaviour
 
     void WallJump()
     {
-
+        jump.WallJump();
     }
 
     void WallWalk()
@@ -247,7 +253,7 @@ public class LateralMovement : MonoBehaviour
         }
     }
 
-    IEnumerator DisableMovement(float t)
+    public IEnumerator DisableMovement(float t)
     {
         canMove = false;
 

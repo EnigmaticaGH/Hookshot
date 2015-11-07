@@ -50,22 +50,18 @@ public class HookshotControl : MonoBehaviour {
     {
         MapStateFunctions();
         keybinds = GameObject.FindGameObjectWithTag("KeyBinds").GetComponent<KeybindScript>();
-        ChangeState(HookshotState.READY);
-    }
-
-    void Awake()
-    {
         FindPlayerParts();
+        ChangeState(HookshotState.READY);
     }
 
     private void FindPlayerParts()
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<LateralMovement>();
         playerRenderer = player.getSprite();
-        jumpControl = player.getJumpScript();
+        jumpControl = player.GetComponent<JumpControl>();
+        FindPlayerColliders();
         hand = transform.parent.gameObject;
         mouseAimer = hand.GetComponent<AimAtMouse>();
-        FindPlayerColliders();
     }
 
     private void FindPlayerColliders()

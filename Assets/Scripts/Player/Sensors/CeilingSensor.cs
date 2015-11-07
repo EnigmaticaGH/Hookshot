@@ -11,7 +11,7 @@ public class CeilingSensor : MonoBehaviour {
         canControlRope = (Input.GetAxis("Vertical") <= 0 && inTrigger) || !inTrigger;
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+    void OnTriggerStay2D(Collider2D other)
     {
         if (other.CompareTag("Environment") || other.CompareTag("Hookable"))
         {
