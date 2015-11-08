@@ -50,7 +50,6 @@ public class LateralMovement : MonoBehaviour
     private const float AIR_STOP_TIME = 0.08f;
     private const float SPRITE_OFFSET_ANGLE = -5.73f;
     private bool canMove;
-    private bool jumpPressed;
 
     void Start()
     {
@@ -61,7 +60,6 @@ public class LateralMovement : MonoBehaviour
         player = GetComponent<Rigidbody2D>();
         jump = GetComponent<JumpControl>();
         ChangeState(MovementState.GROUND);
-        jumpPressed = false;
     }
 
     void Awake()
@@ -78,11 +76,6 @@ public class LateralMovement : MonoBehaviour
         wallSensorRight = GameObject.Find("WallSensorR").GetComponent<WallSensor>();
         wallSensorLeft = GameObject.Find("WallSensorL").GetComponent<WallSensor>();
         ceilingSensor = GameObject.Find("CeilingSensor").GetComponent<CeilingSensor>();
-    }
-
-    void Update()
-    {
-        jumpPressed = Keybinds().GetButtonDown("Jump");
     }
 
     void FixedUpdate()
@@ -147,7 +140,7 @@ public class LateralMovement : MonoBehaviour
         if (!isOnWall()) ChangeState(MovementState.AIR);
         if (isHooked()) ChangeState(MovementState.HOOKED);
         DoNormalMovement(true);
-        if (jumpPressed && Time.timeScale > 0f)
+        if (Keybinds().GetButton("Jump") && Time.timeScale > 0f)
         {
             jump.WallJump();
             StartCoroutine(frogAnim.PlayWallJump());
