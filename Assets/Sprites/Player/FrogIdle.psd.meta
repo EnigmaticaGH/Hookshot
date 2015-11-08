@@ -1,22 +1,19 @@
 fileFormatVersion: 2
-guid: 76d0976d2a4aacf4fbf0c8244f5cf121
-timeCreated: 1445554518
-licenseType: Free
+guid: 3c2f9718a65d7584eb912c2b93ba7301
+timeCreated: 1446941052
+licenseType: Pro
 TextureImporter:
   fileIDToRecycleName:
-    21300000: frogspritesheet_2_0
-    21300002: frogspritesheet_2_1
-    21300004: frogspritesheet_2_2
-    21300006: frogspritesheet_2_3
-    21300008: frogspritesheet_2_4
-    21300010: frogspritesheet_2_6
-    21300012: frogspritesheet_2_7
-    21300014: frogspritesheet_2_8
-    21300016: frogspritesheet_2_9
+    21300000: FrogIdle_0
+    21300002: FrogIdle_1
+    21300004: FrogIdle_2
+    21300006: FrogIdle_3
+    21300008: FrogIdle_4
+    21300010: FrogIdle_5
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
-    enableMipMap: 1
+    enableMipMap: 0
     linearTexture: 0
     correctGamma: 0
     fadeOut: 0
@@ -59,95 +56,65 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     sprites:
-    - name: frogspritesheet_2_0
+    - name: FrogIdle_0
       rect:
         serializedVersion: 2
-        x: 16
-        y: 877
-        width: 132
-        height: 105
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: frogspritesheet_2_1
-      rect:
-        serializedVersion: 2
-        x: 181
-        y: 867
-        width: 124
-        height: 109
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: frogspritesheet_2_2
-      rect:
-        serializedVersion: 2
-        x: 343
-        y: 847
-        width: 156
-        height: 135
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: frogspritesheet_2_3
-      rect:
-        serializedVersion: 2
-        x: 544
-        y: 824
-        width: 197
-        height: 158
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: frogspritesheet_2_4
-      rect:
-        serializedVersion: 2
-        x: 794
-        y: 848
-        width: 189
-        height: 96
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: frogspritesheet_2_6
-      rect:
-        serializedVersion: 2
-        x: 16
-        y: 667
+        x: 20
+        y: 147
         width: 132
         height: 94
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: frogspritesheet_2_7
+    - name: FrogIdle_1
       rect:
         serializedVersion: 2
-        x: 164
-        y: 667
+        x: 224
+        y: 147
+        width: 134
+        height: 94
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: FrogIdle_2
+      rect:
+        serializedVersion: 2
+        x: 432
+        y: 147
+        width: 132
+        height: 94
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: FrogIdle_3
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 25
+        width: 132
+        height: 94
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: FrogIdle_4
+      rect:
+        serializedVersion: 2
+        x: 226
+        y: 25
         width: 123
         height: 105
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: frogspritesheet_2_8
+    - name: FrogIdle_5
       rect:
         serializedVersion: 2
-        x: 300
-        y: 667
+        x: 432
+        y: 25
         width: 121
         height: 105
       alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: frogspritesheet_2_9
-      rect:
-        serializedVersion: 2
-        x: 462
-        y: 667
-        width: 132
-        height: 94
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 
