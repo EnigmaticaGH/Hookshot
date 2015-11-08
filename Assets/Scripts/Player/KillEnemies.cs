@@ -11,6 +11,9 @@ public class KillEnemies : MonoBehaviour
     private Rigidbody2D player;
     private GameObject lastSpawn;
 
+    public delegate void RespawnAction();
+    public static event RespawnAction OnRespawn;
+
     void Start()
     {
         playerSprite = gameObject.transform.Find("FrogSprite");
@@ -51,6 +54,7 @@ public class KillEnemies : MonoBehaviour
         //transform.position = lastSpawn.transform.position;
         //hook.CancelHook();
         //player.velocity = Vector2.zero;
+        OnRespawn();
         StartCoroutine(Explosion());
     }
 

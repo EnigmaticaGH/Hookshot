@@ -13,6 +13,12 @@ public class AnimateFrog : MonoBehaviour
     {
         player = GetComponentInParent<LateralMovement>();
         anim = GetComponent<Animator>();
+        KillEnemies.OnRespawn += ResetAnim;
+    }
+
+    void OnDestroy()
+    {
+        KillEnemies.OnRespawn -= ResetAnim;
     }
 
     // Update is called once per frame
@@ -30,6 +36,13 @@ public class AnimateFrog : MonoBehaviour
     void OnCollisionStay2D(Collision2D c)
     {
         relativeVel = c.relativeVelocity;
+    }
+
+    void ResetAnim()
+    {
+        anim.SetBool("Grounded", true);
+        anim.SetBool("Moving", false);
+        anim.SetFloat("Horizontal", 1);
     }
 
     public IEnumerator PlayWallJump()

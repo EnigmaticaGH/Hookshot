@@ -20,8 +20,19 @@ public class DynamicCollider : MonoBehaviour
 
         player = GetComponentInParent<LateralMovement>();
         defaultCollider = GetComponent<PolygonCollider2D>().points;
+        KillEnemies.OnRespawn += ResetCollider;
 
         StartCoroutine(UpdateCollider());
+    }
+
+    void OnDestroy()
+    {
+        KillEnemies.OnRespawn -= ResetCollider;
+    }
+
+    void ResetCollider()
+    {
+        GetComponent<PolygonCollider2D>().points = defaultCollider;
     }
 
     IEnumerator UpdateCollider()
@@ -43,7 +54,7 @@ public class DynamicCollider : MonoBehaviour
             }
             else if(!player.isHooked())
             {
-                GetComponent<PolygonCollider2D>().points = defaultCollider;
+                ResetCollider();
             }
             yield return new WaitForSeconds(COLLIDER_UPDATE_DELTA);
         }
