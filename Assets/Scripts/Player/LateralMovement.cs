@@ -49,7 +49,9 @@ public class LateralMovement : MonoBehaviour
 
     private const float AIR_STOP_TIME = 0.08f;
     private const float SPRITE_OFFSET_ANGLE = -5.73f;
+    private const float TIME_BETWEEN_JUMPS = 0.2f;
     private bool canMove;
+    private bool canJump;
 
     void Start()
     {
@@ -150,10 +152,11 @@ public class LateralMovement : MonoBehaviour
         if (!isOnWall()) ChangeState(MovementState.AIR);
         if (isHooked()) ChangeState(MovementState.HOOKED);
         DoNormalMovement(true);
-        if (Keybinds().GetButton("Jump") && Time.timeScale > 0f)
+        if (canJump && Keybinds().GetButton("Jump") && Time.timeScale > 0f)
         {
             jump.WallJump();
             StartCoroutine(frogAnim.PlayWallJump());
+            StartCoroutine(TimeBetweenJumps());
             ChangeState(MovementState.DISABLED);
         }
         
@@ -293,12 +296,17 @@ public class LateralMovement : MonoBehaviour
         return characterSprite;
     }
 
-    public IEnumerator DisableMovement(float t)
+    public IEnumerator DisableMovement(float disableTime)
     {
         canMove = false;
-
-        yield return new WaitForSeconds(t);
-
+        yield return new WaitForSeconds(disableTime);
         canMove = true;
+    }
+
+    public IEnumerator TimeBetweenJumps()
+    {
+        canJump = false;
+        yield return new WaitForSeconds(TIME_BETWEEN_JUMPS);
+        canJump = true;
     }
 }

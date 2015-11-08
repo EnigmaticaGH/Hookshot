@@ -46,17 +46,6 @@ public class HookshotControl : MonoBehaviour {
     private AnimateFrog frogAnim;
 
     private GameObject ropeObj;
-    private bool hookEnabled;
-
-    void Awake()
-    {
-        hookEnabled = true;
-    }
-
-    void OnDestroy()
-    {
-        hookEnabled = false;
-    }
 
     void Start()
     {
@@ -251,7 +240,6 @@ public class HookshotControl : MonoBehaviour {
         Vector3 direction = mousePos - playerPos;
         direction = new Vector3(direction.x, direction.y, 0);
         Vector3 angles = Quaternion.FromToRotation(Vector3.right, direction).eulerAngles;
-        float flip = direction.x < 0 ? 180f : 0f;
         angles = new Vector3(0, 0, angles.z);
         playerRenderer.transform.rotation = Quaternion.Euler(angles);
     }
