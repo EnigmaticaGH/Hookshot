@@ -24,6 +24,7 @@ public class AnimateFrog : MonoBehaviour
             anim.SetBool("Grounded", player.isGrounded());
             anim.SetBool("Moving", relativeVel.magnitude > 0.01f);
             anim.SetFloat("Horizontal", horizontal);
+            Debug.Log(anim.GetBool("Grounded"));
         }
     }
 
