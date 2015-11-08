@@ -1,0 +1,177 @@
+fileFormatVersion: 2
+guid: 9b7dc52857697464daf586e386488574
+timeCreated: 1446937686
+licenseType: Pro
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: FrogMoving_0
+    21300002: FrogMoving_1
+    21300004: FrogMoving_2
+    21300006: FrogMoving_3
+    21300008: FrogMoving_4
+    21300010: FrogMoving_5
+    21300012: FrogMoving_6
+    21300014: FrogMoving_7
+    21300016: FrogMoving_8
+    21300018: FrogMoving_10
+    21300020: FrogMoving_11
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: .25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 8
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: .5, y: .5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: FrogMoving_0
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 495
+        width: 132
+        height: 105
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: FrogMoving_1
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 495
+        width: 129
+        height: 105
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: FrogMoving_2
+      rect:
+        serializedVersion: 2
+        x: 332
+        y: 487
+        width: 124
+        height: 109
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: FrogMoving_3
+      rect:
+        serializedVersion: 2
+        x: 473
+        y: 484
+        width: 127
+        height: 116
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: FrogMoving_4
+      rect:
+        serializedVersion: 2
+        x: 31
+        y: 334
+        width: 129
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: FrogMoving_5
+      rect:
+        serializedVersion: 2
+        x: 211
+        y: 334
+        width: 156
+        height: 135
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: FrogMoving_6
+      rect:
+        serializedVersion: 2
+        x: 394
+        y: 334
+        width: 181
+        height: 134
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: FrogMoving_7
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 169
+        width: 197
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: FrogMoving_8
+      rect:
+        serializedVersion: 2
+        x: 338
+        y: 165
+        width: 182
+        height: 154
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: FrogMoving_10
+      rect:
+        serializedVersion: 2
+        x: 77
+        y: 0
+        width: 182
+        height: 154
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: FrogMoving_11
+      rect:
+        serializedVersion: 2
+        x: 296
+        y: 29
+        width: 189
+        height: 96
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

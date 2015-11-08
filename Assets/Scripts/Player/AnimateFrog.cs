@@ -12,7 +12,6 @@ public class AnimateFrog : MonoBehaviour
     {
         player = GetComponentInParent<LateralMovement>();
         anim = GetComponent<Animator>();
-        anim.speed = 1.2f;
     }
 
     // Update is called once per frame
@@ -22,6 +21,7 @@ public class AnimateFrog : MonoBehaviour
         {
             anim.SetBool("Grounded", player.isGrounded());
             anim.SetBool("Moving", relativeVel.magnitude > 0.01f);
+            anim.SetFloat("Horizontal", Input.GetAxisRaw("Horizontal"));
         }
     }
 
