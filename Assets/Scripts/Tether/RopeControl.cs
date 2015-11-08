@@ -22,11 +22,13 @@ public class RopeControl : MonoBehaviour {
     private Rigidbody2D playerBody;
     private GameObject playerRenderer;
 
+    [HideInInspector]
     public HookshotControl hookshot;
+    [HideInInspector]
     public GameObject hook;
 
     public Rope ropeProperties;
-    public Vector2 anchorOffset;
+    private Vector2 anchorOffset;
 
     private DistanceJoint2D rope;
     private SpringJoint2D spring;
@@ -39,6 +41,7 @@ public class RopeControl : MonoBehaviour {
 
     void Start() {
         boostEnabled = false;
+        anchorOffset = player.getSprite().GetComponentInChildren<AimAtMouse>().transform.localPosition;
     }
 
     void Awake()
@@ -140,7 +143,7 @@ public class RopeControl : MonoBehaviour {
         Vector2 jointDirection = hook.transform.position - spriteTransform.position;
         spriteTransform.rotation = Quaternion.FromToRotation(Vector2.right, jointDirection);
 
-        rope.anchor = playerRenderer.transform.localPosition + spriteTransform.rotation * anchorOffset;
+        rope.anchor = Vector2.zero; //playerRenderer.transform.localPosition + spriteTransform.rotation * anchorOffset;
 
         if(isTouchingWall())
             FaceWall();
