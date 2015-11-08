@@ -54,7 +54,6 @@ public class KillEnemies : MonoBehaviour
         //transform.position = lastSpawn.transform.position;
         //hook.CancelHook();
         //player.velocity = Vector2.zero;
-        OnRespawn();
         StartCoroutine(Explosion());
     }
 
@@ -69,6 +68,7 @@ public class KillEnemies : MonoBehaviour
         transform.position = lastSpawn.transform.position;
         playerSprite.gameObject.SetActive(true);
         player.isKinematic = false;
+        OnRespawn();
         //Destroy(Death);
     }
 

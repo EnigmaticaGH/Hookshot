@@ -7,9 +7,14 @@ public class DynamicCollider : MonoBehaviour
     private Sprite sprite;
     private LateralMovement player;
     private Vector2[] defaultCollider;
+    private bool running = true;
     private const float COLLIDER_UPDATE_DELTA = 0.1f;
+
     void Start()
     {
+        KillEnemies.OnRespawn += ResetCollider;
+        player = GetComponentInParent<LateralMovement>();
+        defaultCollider = GetComponent<PolygonCollider2D>().points;
         Sensors = new BoxCollider2D[4]
         {
             GameObject.Find("GroundSensor").GetComponent<BoxCollider2D>(),
@@ -17,12 +22,18 @@ public class DynamicCollider : MonoBehaviour
             GameObject.Find("WallSensorR").GetComponent<BoxCollider2D>(),
             GameObject.Find("WallSensorL").GetComponent<BoxCollider2D>()
         };
-
-        player = GetComponentInParent<LateralMovement>();
-        defaultCollider = GetComponent<PolygonCollider2D>().points;
-        KillEnemies.OnRespawn += ResetCollider;
-
         StartCoroutine(UpdateCollider());
+    }
+
+    void OnEnable()
+    {
+        if (!running) StartCoroutine(UpdateCollider());
+    }
+
+    void OnDisable()
+    {
+        running = false;
+        StopAllCoroutines();
     }
 
     void OnDestroy()
@@ -46,6 +57,7 @@ public class DynamicCollider : MonoBehaviour
             Sensors[1].offset = new Vector2(0, extents.y - 0.15f);
             Sensors[2].offset = new Vector2(extents.x - 0.2f, 0);
             Sensors[3].offset = new Vector2(-extents.x + 0.2f, 0);
+
             if(!player.isGrounded())
             {
                 Sensors[0].offset = new Vector2(0, -extents.y + 0.1f);

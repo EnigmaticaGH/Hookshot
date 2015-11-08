@@ -63,7 +63,7 @@ public class LateralMovement : MonoBehaviour
         relativeVel = Vector2.zero;
         MapStateFunctions();
         player = GetComponent<Rigidbody2D>();
-        jump = GetComponent<JumpControl>();
+        
         ChangeState(MovementState.GROUND);
     }
 
@@ -74,6 +74,7 @@ public class LateralMovement : MonoBehaviour
 
     private void FindPlayerParts()
     {
+        jump = GetComponent<JumpControl>();
         characterSprite = GetComponentInChildren<SpriteRenderer>().gameObject;
         frogAnim = characterSprite.GetComponent<AnimateFrog>();
         hand = characterSprite.GetComponentInChildren<AimAtMouse>().gameObject;
