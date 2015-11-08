@@ -79,7 +79,7 @@ public class JumpControl : MonoBehaviour
 
         body.velocity = Vector2.zero;
         body.AddForce(new Vector2(wallJumpForce * direction, jumpForce), ForceMode2D.Impulse);
-        StartCoroutine(GetComponent<LateralMovement>().DisableMovement(0.4f));
+        StartCoroutine(GetComponent<LateralMovement>().DisableMovement(0.5f));
     }
 
     public void SetGrounded(bool flag)
