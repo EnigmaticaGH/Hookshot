@@ -4,8 +4,7 @@ using System.Collections;
 public class drowningSensor : MonoBehaviour {
 
     public bool submerged;
-    public TriggerCheck playerHealth;
-    public HookshotControl hooked;
+    public KillEnemies playerHealth;
     public float timeForDrowning = 3.0f;
 
     private float timeSubmerged = 0;

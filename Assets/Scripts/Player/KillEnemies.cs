@@ -4,12 +4,16 @@ using System.Collections;
 public class KillEnemies : MonoBehaviour
 {
     public float lethalVelocity;
+    public float respawnDelay = 0.5f;
+    public ParticleSystem deathParticle;
+    private Transform playerSprite;
     private HookshotControl hook;
     private Rigidbody2D player;
     private GameObject lastSpawn;
 
     void Start()
     {
+        playerSprite = gameObject.transform.Find("FrogSprite");
         player = GetComponent<Rigidbody2D>();
         hook = GetComponent<LateralMovement>().getHookScript();
     }
@@ -36,7 +40,7 @@ public class KillEnemies : MonoBehaviour
         {
             lastSpawn = c.gameObject;
         }
-        if ((c.CompareTag("Boundary") || (c.CompareTag("Water"))) && !hook.IsHooked())
+        if ((c.CompareTag("Boundary")))
         {
             Respawn();
         }
@@ -44,9 +48,24 @@ public class KillEnemies : MonoBehaviour
 
     void Respawn()
     {
-        transform.position = lastSpawn.transform.position;
+        //transform.position = lastSpawn.transform.position;
+        //hook.CancelHook();
+        //player.velocity = Vector2.zero;
+        StartCoroutine(Explosion());
+    }
+
+    IEnumerator Explosion()
+    {
         hook.CancelHook();
+        playerSprite.gameObject.SetActive(false);
         player.velocity = Vector2.zero;
+        player.isKinematic = true;
+        ParticleSystem Death = Instantiate(deathParticle, transform.position, Quaternion.identity) as ParticleSystem;
+        yield return new WaitForSeconds(respawnDelay);
+        transform.position = lastSpawn.transform.position;
+        playerSprite.gameObject.SetActive(true);
+        player.isKinematic = false;
+        Destroy(Death);
     }
 
     private bool Flying()
