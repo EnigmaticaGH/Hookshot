@@ -167,7 +167,7 @@ public class HookshotControl : MonoBehaviour {
         IgnoreHookPlayerCollisions();
 
         // And spawn a rope to go with it
-        ropeObj = Instantiate(ropeFab);
+        ropeObj = (GameObject)Instantiate(ropeFab, hookPos, transform.rotation);
         rope = ropeObj.GetComponent<RopeControl>();
         rope.hookshot = this;
         rope.hook = hook;
