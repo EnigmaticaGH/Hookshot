@@ -157,7 +157,6 @@ public class LateralMovement : MonoBehaviour
         {
             Rope().MoveAlongWall(); //RopeControl
         }
-        //OrientVertical();
     }
 
     void Disabled(){ /* The player is unable to move */
