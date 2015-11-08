@@ -80,8 +80,8 @@ public class HookshotControl : MonoBehaviour {
     private void FindPlayerColliders()
     {
         playerColliders = new List<Collider2D>();
-        GameObject player = GameObject.Find("FrogSprite");
-        foreach(Collider2D shittyCollider in player.GetComponents<Collider2D>())
+        GameObject player = GameObject.FindGameObjectWithTag("Player Sprite");
+        foreach (Collider2D shittyCollider in player.GetComponents<Collider2D>())
             playerColliders.Add(shittyCollider);
     }
 
@@ -159,17 +159,14 @@ public class HookshotControl : MonoBehaviour {
 
     void FireHookAndRope()
     {
-        Vector2 hookPos = playerRenderer.transform.position + 
-            playerRenderer.transform.rotation * ropeFab.GetComponent<RopeControl>().anchorOffset;
-
         // Shoot out a hook instance
-        hook = (GameObject)Instantiate(hookFab, hookPos, transform.rotation);
+        hook = (GameObject)Instantiate(hookFab, transform.position, transform.rotation);
         hook.GetComponent<Hook>().hookGun = this;
 
         IgnoreHookPlayerCollisions();
 
         // And spawn a rope to go with it
-        ropeObj = (GameObject)Instantiate(ropeFab, hookPos, transform.rotation);
+        ropeObj = (GameObject)Instantiate(ropeFab, transform.position, transform.rotation);
         rope = ropeObj.GetComponent<RopeControl>();
         rope.hookshot = this;
         rope.hook = hook;
@@ -177,7 +174,7 @@ public class HookshotControl : MonoBehaviour {
 
     void IgnoreHookPlayerCollisions()
     {
-        Collider2D hookCollider = hook.GetComponent<PolygonCollider2D>();
+        Collider2D hookCollider = hook.GetComponent<CircleCollider2D>();
         foreach(Collider2D playerCollider in playerColliders)
             Physics2D.IgnoreCollision(hookCollider, playerCollider, true);
     }
