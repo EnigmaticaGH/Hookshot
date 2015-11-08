@@ -8,7 +8,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 438388}
-  - 120: {fileID: 12099772}
   - 114: {fileID: 11485138}
   - 212: {fileID: 21265410}
   m_Layer: 0
@@ -52,43 +51,6 @@ MonoBehaviour:
     minScale: .00100000005
     maxScale: 1.33000004
   anchorOffset: {x: .5, y: .379999995}
---- !u!120 &12099772
-LineRenderer:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 146786}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_Materials:
-  - {fileID: 2100000, guid: eecb33f278356ff49902ad3a17e6a309, type: 2}
-  m_SubsetIndices: 
-  m_StaticBatchRoot: {fileID: 0}
-  m_UseLightProbes: 1
-  m_ReflectionProbeUsage: 1
-  m_ProbeAnchor: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_PreserveUVs: 0
-  m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingOrder: 0
-  m_Positions:
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  m_Parameters:
-    startWidth: .0599999987
-    endWidth: .0599999987
-    m_StartColor:
-      serializedVersion: 2
-      rgba: 4278243536
-    m_EndColor:
-      serializedVersion: 2
-      rgba: 4278243536
-  m_UseWorldSpace: 1
 --- !u!212 &21265410
 SpriteRenderer:
   m_ObjectHideFlags: 1
