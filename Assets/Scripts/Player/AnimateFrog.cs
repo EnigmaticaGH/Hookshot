@@ -37,7 +37,7 @@ public class AnimateFrog : MonoBehaviour
 
     public IEnumerator PlayWallJump()
     {
-        string dir = player.getWallSensors()[0].IsWallCollide() ? "L" : "R";
+        string dir = player.getWallSensors()[0].IsWallCollide() ? "R" : "L";
         anim.Play("Wall Jump" + dir, 0, 0);
         anim.SetBool("WallJump", true);
 
