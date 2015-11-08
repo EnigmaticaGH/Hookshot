@@ -48,9 +48,9 @@ MonoBehaviour:
     minLength: .5
     maxLength: 10
     initialDistancePortion: .850000024
-    minScale: .00100000005
+    minScale: .0700000003
     maxScale: 1.33000004
-  anchorOffset: {x: .5, y: .379999995}
+  anchorOffset: {x: .620000005, y: .379999995}
 --- !u!212 &21265410
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -227,7 +227,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: anchorOffset.x
-      value: .5
+      value: .620000005
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: anchorOffset.y
@@ -251,7 +251,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: ropeProperties.minScale
-      value: .00100000005
+      value: .0700000003
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: ropeProperties.maxScale
