@@ -51,7 +51,7 @@ public class HitSplat : MonoBehaviour
         {
             float splatFactor = 1.6f;
             Vector2 destinSplat = new Vector2(frogSprite.localScale.x * splatFactor, frogSprite.localScale.y / splatFactor);
-            StartCoroutine(Splat(destinSplat, 1f));
+            //StartCoroutine(Splat(destinSplat, 1f));
         }
     }
 }
