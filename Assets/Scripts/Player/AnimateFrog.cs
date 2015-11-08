@@ -6,6 +6,7 @@ public class AnimateFrog : MonoBehaviour
     private LateralMovement player;
     private Animator anim;
     private Vector2 relativeVel;
+    private float horizontal;
 
     // Use this for initialization
     void Start()
@@ -17,11 +18,12 @@ public class AnimateFrog : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Time.time > 0.1f && !anim.GetBool("WallJump"))
+        if (Time.time > 0.1f && !anim.GetBool("WallJump"))
         {
+            horizontal = Input.GetAxisRaw("Horizontal");
             anim.SetBool("Grounded", player.isGrounded());
             anim.SetBool("Moving", relativeVel.magnitude > 0.01f);
-            anim.SetFloat("Horizontal", Input.GetAxisRaw("Horizontal"));
+            anim.SetFloat("Horizontal", horizontal);
         }
     }
 

@@ -47,7 +47,7 @@ public class LateralMovement : MonoBehaviour
     private WallSensor wallSensorLeft;
     private AnimateFrog frogAnim;
 
-    private const float AIR_STOP_TIME = 0.08f;
+    private const float AIR_STOP_TIME = 0.05f;
     private const float SPRITE_OFFSET_ANGLE = -5.73f;
     private const float TIME_BETWEEN_JUMPS = 0.2f;
     private bool canMove;
@@ -58,6 +58,7 @@ public class LateralMovement : MonoBehaviour
         regularSpeed = speed;
         horizontal = 0;
         canMove = true;
+        canJump = true;
         MapStateFunctions();
         player = GetComponent<Rigidbody2D>();
         jump = GetComponent<JumpControl>();

@@ -8,7 +8,7 @@ public class WallSensor : MonoBehaviour
 
     void OnTriggerStay2D(Collider2D c)
     {
-        wallCollide = c.CompareTag("Environment");
+        wallCollide = c.CompareTag("Environment") || c.CompareTag("Hookable");
     }
 
     void OnTriggerExit2D(Collider2D c)
