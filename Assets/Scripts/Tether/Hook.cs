@@ -36,7 +36,7 @@ public class Hook : MonoBehaviour
             hookBody.isKinematic = true;
             hookBody.velocity = Vector3.zero;
             hookGun.HookOn();
-            GetComponent<PolygonCollider2D>().enabled = false;
+            GetComponent<CircleCollider2D>().enabled = false;
         }
         else
         {
