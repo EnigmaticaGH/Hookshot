@@ -1,19 +1,19 @@
 fileFormatVersion: 2
-guid: 3c2f9718a65d7584eb912c2b93ba7301
-timeCreated: 1446941052
+guid: 7adf77dc705010646a50bc5dde5e1966
+timeCreated: 1446957674
 licenseType: Pro
 TextureImporter:
   fileIDToRecycleName:
-    21300000: FrogIdle_0
-    21300002: FrogIdle_1
-    21300004: FrogIdle_2
-    21300006: FrogIdle_3
-    21300008: FrogIdle_4
-    21300010: FrogIdle_5
+    21300000: FrogIdle 1_0
+    21300002: FrogIdle 1_1
+    21300004: FrogIdle 1_2
+    21300006: FrogIdle 1_3
+    21300008: FrogIdle 1_4
+    21300010: FrogIdle 1_5
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
-    enableMipMap: 0
+    enableMipMap: 1
     linearTexture: 0
     correctGamma: 0
     fadeOut: 0
@@ -56,7 +56,7 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     sprites:
-    - name: FrogIdle_0
+    - name: FrogIdle 1_0
       rect:
         serializedVersion: 2
         x: 20
@@ -64,57 +64,57 @@ TextureImporter:
         width: 132
         height: 94
       alignment: 0
-      pivot: {x: .5, y: .5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: FrogIdle_1
-      rect:
-        serializedVersion: 2
-        x: 224
-        y: 147
-        width: 134
-        height: 94
-      alignment: 0
-      pivot: {x: .5, y: .5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: FrogIdle_2
-      rect:
-        serializedVersion: 2
-        x: 432
-        y: 147
-        width: 132
-        height: 94
-      alignment: 0
-      pivot: {x: .5, y: .5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: FrogIdle_3
-      rect:
-        serializedVersion: 2
-        x: 20
-        y: 25
-        width: 132
-        height: 94
-      alignment: 0
-      pivot: {x: .5, y: .5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: FrogIdle_4
+    - name: FrogIdle 1_1
       rect:
         serializedVersion: 2
         x: 226
-        y: 25
-        width: 123
-        height: 105
+        y: 147
+        width: 132
+        height: 94
       alignment: 0
-      pivot: {x: .5, y: .5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: FrogIdle_5
+    - name: FrogIdle 1_2
       rect:
         serializedVersion: 2
         x: 432
-        y: 25
-        width: 121
-        height: 105
+        y: 147
+        width: 132
+        height: 94
       alignment: 0
-      pivot: {x: .5, y: .5}
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: FrogIdle 1_3
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 25
+        width: 132
+        height: 94
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: FrogIdle 1_4
+      rect:
+        serializedVersion: 2
+        x: 229
+        y: 25
+        width: 123
+        height: 95
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: FrogIdle 1_5
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 27
+        width: 121
+        height: 95
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 
