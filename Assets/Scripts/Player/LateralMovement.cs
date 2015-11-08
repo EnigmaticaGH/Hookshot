@@ -81,7 +81,7 @@ public class LateralMovement : MonoBehaviour
         horizontal = Input.GetAxisRaw("Horizontal");
         vertical = Input.GetAxisRaw("Vertical");
         stateProcesses[(int)state]();
-        Debug.Log(state.ToString());
+        //Debug.Log(state.ToString());
     }
 
     void OnTriggerStay2D(Collider2D c)
@@ -180,8 +180,6 @@ public class LateralMovement : MonoBehaviour
                 ChangeState(MovementState.DISABLED);
             }
         }
-
-        OrientHorizontal();
     }
 
     Transform HookPoint()
@@ -252,17 +250,6 @@ public class LateralMovement : MonoBehaviour
     public GameObject getSprite()
     {
         return characterSprite;
-    }
-
-    void OrientHorizontal()
-    {
-        if (horizontal != 0)
-        {
-            Quaternion rot = horizontal > 0 ?
-                Quaternion.Euler(0, 0, SPRITE_OFFSET_ANGLE) : 
-                Quaternion.Euler(0, 180, SPRITE_OFFSET_ANGLE);
-            characterSprite.transform.rotation = rot;
-        }
     }
 
     void OrientVertical()
