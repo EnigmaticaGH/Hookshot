@@ -43,6 +43,7 @@ public class HookshotControl : MonoBehaviour {
     private LateralMovement player;
     private GameObject playerRenderer;
     private JumpControl jumpControl;
+    private AnimateFrog frogAnim;
 
     private GameObject ropeObj;
     private bool hookEnabled;
@@ -69,6 +70,7 @@ public class HookshotControl : MonoBehaviour {
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<LateralMovement>();
         playerRenderer = player.getSprite();
+        frogAnim = playerRenderer.GetComponent<AnimateFrog>();
         jumpControl = player.GetComponent<JumpControl>();
         FindPlayerColliders();
         hand = transform.parent.gameObject;
@@ -105,7 +107,7 @@ public class HookshotControl : MonoBehaviour {
     }
 
     void Extend() { /* The hook object is traveling through the world. */
-        AimAtMouse();
+        StartCoroutine(frogAnim.PlayHooked());
     }
 
     void Hooked()
@@ -205,6 +207,11 @@ public class HookshotControl : MonoBehaviour {
     public bool IsHooked()
     {
         return state == HookshotState.HOOKED; 
+    }
+
+    public bool IsExtending()
+    {
+        return state == HookshotState.EXTENDING;
     }
 
     public bool IsFlying()

@@ -17,7 +17,7 @@ public class AnimateFrog : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Time.time > 0.1f)
+        if(Time.time > 0.1f && !anim.GetBool("WallJump"))
         {
             anim.SetBool("Grounded", player.isGrounded());
             anim.SetBool("Moving", relativeVel.magnitude > 0.01f);
@@ -37,12 +37,23 @@ public class AnimateFrog : MonoBehaviour
 
     public IEnumerator PlayWallJump()
     {
-        string dir = player.getWallSensors()[0].IsWallCollide() ? "L" : "R";
+        string dir = player.getWallSensors()[0].IsWallCollide() ? "R" : "L";
         anim.Play("Wall Jump" + dir, 0, 0);
         anim.SetBool("WallJump", true);
 
         yield return new WaitForSeconds(0.25f);
 
         anim.SetBool("WallJump", false);
+    }
+
+    public IEnumerator PlayHooked()
+    {
+        anim.Play("Hooked", 0, 0);
+        anim.SetBool("Hooked", true);
+
+        while (player.isHookedOrExtending())
+            yield return null;
+
+        anim.SetBool("Hooked", false);
     }
 }
