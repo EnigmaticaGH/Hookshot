@@ -1,0 +1,144 @@
+fileFormatVersion: 2
+guid: b87576ede65364748bd3581e4a3a40a7
+timeCreated: 1446951977
+licenseType: Pro
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: FrogWallJump_0
+    21300002: FrogWallJump_1
+    21300004: FrogWallJump_2
+    21300006: FrogWallJump_3
+    21300008: FrogWallJump_4
+    21300010: FrogWallJump_5
+    21300012: FrogWallJump_6
+    21300014: FrogWallJump_7
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: .25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 8
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: .5, y: .5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: FrogWallJump_0
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 359
+        width: 94
+        height: 133
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: FrogWallJump_1
+      rect:
+        serializedVersion: 2
+        x: 182
+        y: 367
+        width: 111
+        height: 125
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: FrogWallJump_2
+      rect:
+        serializedVersion: 2
+        x: 371
+        y: 367
+        width: 129
+        height: 129
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: FrogWallJump_3
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 181
+        width: 151
+        height: 150
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: FrogWallJump_4
+      rect:
+        serializedVersion: 2
+        x: 202
+        y: 203
+        width: 183
+        height: 128
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: FrogWallJump_5
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 8
+        width: 177
+        height: 153
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: FrogWallJump_6
+      rect:
+        serializedVersion: 2
+        x: 215
+        y: 36
+        width: 170
+        height: 125
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: FrogWallJump_7
+      rect:
+        serializedVersion: 2
+        x: 396
+        y: 28
+        width: 200
+        height: 140
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
