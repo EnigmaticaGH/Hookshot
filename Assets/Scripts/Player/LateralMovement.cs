@@ -81,7 +81,6 @@ public class LateralMovement : MonoBehaviour
         horizontal = Input.GetAxisRaw("Horizontal");
         vertical = Input.GetAxisRaw("Vertical");
         stateProcesses[(int)state]();
-        Debug.Log(state.ToString());
     }
 
     void OnTriggerStay2D(Collider2D c)
