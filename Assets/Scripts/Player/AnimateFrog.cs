@@ -32,11 +32,6 @@ public class AnimateFrog : MonoBehaviour
         relativeVel = c.relativeVelocity;
     }
 
-    void OnCollisionExit2D(Collision2D c)
-    {
-        relativeVel = Vector2.zero;
-    }
-
     public IEnumerator PlayWallJump()
     {
         string dir = player.getWallSensors()[0].IsWallCollide() ? "R" : "L";

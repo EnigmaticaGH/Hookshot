@@ -52,6 +52,7 @@ public class LateralMovement : MonoBehaviour
     private const float TIME_BETWEEN_JUMPS = 0.2f;
     private bool canMove;
     private bool canJump;
+    private Vector2 relativeVel;
 
     void Start()
     {
@@ -59,6 +60,7 @@ public class LateralMovement : MonoBehaviour
         horizontal = 0;
         canMove = true;
         canJump = true;
+        relativeVel = Vector2.zero;
         MapStateFunctions();
         player = GetComponent<Rigidbody2D>();
         jump = GetComponent<JumpControl>();
@@ -86,6 +88,11 @@ public class LateralMovement : MonoBehaviour
         horizontal = Input.GetAxisRaw("Horizontal");
         vertical = Input.GetAxisRaw("Vertical");
         stateProcesses[(int)state]();
+    }
+
+    void OnCollisionStay2D(Collision2D c)
+    {
+        relativeVel = c.relativeVelocity;
     }
 
     void OnTriggerStay2D(Collider2D c)
@@ -220,6 +227,11 @@ public class LateralMovement : MonoBehaviour
     Transform HookPoint()
     {
         return hookshotControl.HookPoint();
+    }
+
+    public Vector2 RelativeVelocity()
+    {
+        return relativeVel;
     }
 
     public bool isGrounded()
