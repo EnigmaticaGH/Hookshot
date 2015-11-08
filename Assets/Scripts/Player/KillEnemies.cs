@@ -4,13 +4,14 @@ using System.Collections;
 public class KillEnemies : MonoBehaviour
 {
     public float lethalVelocity;
-    public HookshotControl hook;
+    private HookshotControl hook;
     private Rigidbody2D player;
     private GameObject lastSpawn;
 
     void Start()
     {
         player = GetComponent<Rigidbody2D>();
+        hook = GetComponent<LateralMovement>().getHookScript();
     }
 
     void OnCollisionEnter2D(Collision2D c)

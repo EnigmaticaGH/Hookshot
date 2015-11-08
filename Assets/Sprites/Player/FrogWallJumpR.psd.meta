@@ -1,14 +1,17 @@
 fileFormatVersion: 2
-guid: 2b0c305b5e2fddf40ad59bbdaa75fa40
-timeCreated: 1444485330
-licenseType: Free
+guid: b87576ede65364748bd3581e4a3a40a7
+timeCreated: 1446951977
+licenseType: Pro
 TextureImporter:
   fileIDToRecycleName:
-    21300000: frogSpriteSheet_0
-    21300002: frogSpriteSheet_1
-    21300004: frogSpriteSheet_2
-    21300006: frogSpriteSheet_3
-    21300008: frogSpriteSheet_4
+    21300000: FrogWallJump_0
+    21300002: FrogWallJump_1
+    21300004: FrogWallJump_2
+    21300006: FrogWallJump_3
+    21300008: FrogWallJump_4
+    21300010: FrogWallJump_5
+    21300012: FrogWallJump_6
+    21300014: FrogWallJump_7
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -55,55 +58,85 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     sprites:
-    - name: frogSpriteSheet_0
+    - name: FrogWallJump_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 200
-        height: 200
+        x: 10
+        y: 359
+        width: 94
+        height: 133
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: frogSpriteSheet_1
+    - name: FrogWallJump_1
       rect:
         serializedVersion: 2
-        x: 200
-        y: 0
-        width: 200
-        height: 200
+        x: 182
+        y: 367
+        width: 111
+        height: 125
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: frogSpriteSheet_2
+    - name: FrogWallJump_2
       rect:
         serializedVersion: 2
-        x: 400
-        y: 0
-        width: 200
-        height: 200
+        x: 371
+        y: 367
+        width: 129
+        height: 129
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: frogSpriteSheet_3
+    - name: FrogWallJump_3
       rect:
         serializedVersion: 2
-        x: 600
-        y: 0
-        width: 200
-        height: 200
+        x: 10
+        y: 181
+        width: 151
+        height: 150
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: frogSpriteSheet_4
+    - name: FrogWallJump_4
       rect:
         serializedVersion: 2
-        x: 800
-        y: 0
-        width: 200
-        height: 200
+        x: 202
+        y: 203
+        width: 183
+        height: 128
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: FrogWallJump_5
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 8
+        width: 177
+        height: 153
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: FrogWallJump_6
+      rect:
+        serializedVersion: 2
+        x: 215
+        y: 36
+        width: 170
+        height: 125
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: FrogWallJump_7
+      rect:
+        serializedVersion: 2
+        x: 396
+        y: 28
+        width: 200
+        height: 140
+      alignment: 0
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 

@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Hook : MonoBehaviour {
+public class Hook : MonoBehaviour
+{
+    [HideInInspector]
     public HookshotControl hookGun;
     public float hookSpeed;
 
@@ -34,10 +36,16 @@ public class Hook : MonoBehaviour {
             hookBody.isKinematic = true;
             hookBody.velocity = Vector3.zero;
             hookGun.HookOn();
-            GetComponent<PolygonCollider2D>().enabled = false;
+            GetComponent<CircleCollider2D>().enabled = false;
         }
-        else 
+        else
         {
+            hookGun.CancelHook();
+        }
+
+        if (collision.collider.CompareTag("Edible"))
+        {
+            Destroy(collision.collider.gameObject);
             hookGun.CancelHook();
         }
     }

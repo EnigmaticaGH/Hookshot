@@ -23,6 +23,9 @@ TagManager:
   - Feet
   - KeyBinds
   - Hazard
+  - Hook
+  - Edible
+  - Player Sprite
   layers:
   - Default
   - TransparentFX

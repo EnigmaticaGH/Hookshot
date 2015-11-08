@@ -1,18 +1,17 @@
 fileFormatVersion: 2
-guid: 76d0976d2a4aacf4fbf0c8244f5cf121
-timeCreated: 1445554518
-licenseType: Free
+guid: 7cfb27cb7e9a11045be935d031103e3a
+timeCreated: 1446952297
+licenseType: Pro
 TextureImporter:
   fileIDToRecycleName:
-    21300000: frogspritesheet_2_0
-    21300002: frogspritesheet_2_1
-    21300004: frogspritesheet_2_2
-    21300006: frogspritesheet_2_3
-    21300008: frogspritesheet_2_4
-    21300010: frogspritesheet_2_6
-    21300012: frogspritesheet_2_7
-    21300014: frogspritesheet_2_8
-    21300016: frogspritesheet_2_9
+    21300000: FrogWallJumpL_0
+    21300002: FrogWallJumpL_1
+    21300004: FrogWallJumpL_2
+    21300006: FrogWallJumpL_3
+    21300008: FrogWallJumpL_4
+    21300010: FrogWallJumpL_5
+    21300012: FrogWallJumpL_6
+    21300014: FrogWallJumpL_7
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -59,93 +58,83 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     sprites:
-    - name: frogspritesheet_2_0
+    - name: FrogWallJumpL_0
       rect:
         serializedVersion: 2
-        x: 16
-        y: 877
-        width: 132
-        height: 105
+        x: 52
+        y: 367
+        width: 94
+        height: 133
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: frogspritesheet_2_1
+    - name: FrogWallJumpL_1
       rect:
         serializedVersion: 2
-        x: 181
-        y: 867
-        width: 124
-        height: 109
+        x: 302
+        y: 355
+        width: 111
+        height: 125
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: frogspritesheet_2_2
+    - name: FrogWallJumpL_2
       rect:
         serializedVersion: 2
-        x: 343
-        y: 847
-        width: 156
-        height: 135
+        x: 521
+        y: 355
+        width: 129
+        height: 129
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: frogspritesheet_2_3
+    - name: FrogWallJumpL_3
       rect:
         serializedVersion: 2
-        x: 544
-        y: 824
-        width: 197
-        height: 158
+        x: 113
+        y: 189
+        width: 151
+        height: 150
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: frogspritesheet_2_4
+    - name: FrogWallJumpL_4
       rect:
         serializedVersion: 2
-        x: 794
-        y: 848
-        width: 189
-        height: 96
+        x: 321
+        y: 189
+        width: 183
+        height: 128
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: frogspritesheet_2_6
+    - name: FrogWallJumpL_5
       rect:
         serializedVersion: 2
-        x: 16
-        y: 667
-        width: 132
-        height: 94
+        x: 11
+        y: 8
+        width: 177
+        height: 153
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: frogspritesheet_2_7
+    - name: FrogWallJumpL_6
       rect:
         serializedVersion: 2
-        x: 164
-        y: 667
-        width: 123
-        height: 105
+        x: 225
+        y: 8
+        width: 170
+        height: 125
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: frogspritesheet_2_8
+    - name: FrogWallJumpL_7
       rect:
         serializedVersion: 2
-        x: 300
-        y: 667
-        width: 121
-        height: 105
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: frogspritesheet_2_9
-      rect:
-        serializedVersion: 2
-        x: 462
-        y: 667
-        width: 132
-        height: 94
+        x: 421
+        y: 8
+        width: 200
+        height: 140
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
