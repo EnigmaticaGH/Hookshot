@@ -24,18 +24,12 @@ public class AnimateFrog : MonoBehaviour
             anim.SetBool("Grounded", player.isGrounded());
             anim.SetBool("Moving", relativeVel.magnitude > 0.01f);
             anim.SetFloat("Horizontal", horizontal);
-            Debug.Log(anim.GetBool("Grounded"));
         }
     }
 
     void OnCollisionStay2D(Collision2D c)
     {
         relativeVel = c.relativeVelocity;
-    }
-
-    void OnCollisionExit2D(Collision2D c)
-    {
-        relativeVel = Vector2.zero;
     }
 
     public IEnumerator PlayWallJump()

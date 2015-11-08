@@ -60,12 +60,12 @@ public class KillEnemies : MonoBehaviour
         playerSprite.gameObject.SetActive(false);
         player.velocity = Vector2.zero;
         player.isKinematic = true;
-        ParticleSystem Death = Instantiate(deathParticle, transform.position, Quaternion.identity) as ParticleSystem;
+        //ParticleSystem Death = Instantiate(deathParticle, transform.position, Quaternion.identity) as ParticleSystem;
         yield return new WaitForSeconds(respawnDelay);
         transform.position = lastSpawn.transform.position;
         playerSprite.gameObject.SetActive(true);
         player.isKinematic = false;
-        Destroy(Death);
+        //Destroy(Death);
     }
 
     private bool Flying()
