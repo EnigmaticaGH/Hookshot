@@ -48,6 +48,7 @@ public class RopeControl : MonoBehaviour {
         playerRenderer = player.getSprite();
         FindWallSensors();
         moveForce = player.moveForce;
+        RescaleY(0.0f);
     }
 
     void FindWallSensors() 
@@ -186,9 +187,7 @@ public class RopeControl : MonoBehaviour {
         float maxScale = ropeProperties.maxScale;
         float distance = hookshot.IsHooked() ? distance = rope.distance : Vector3.Distance(playerOffset, hookPos);
 
-        Vector3 scale = transform.localScale;
-        scale.y = minScale + (maxScale - minScale) * ((distance - ropeProperties.minLength) / (ropeProperties.maxLength - ropeProperties.minLength));
-        transform.localScale = scale;
+        RescaleY(minScale + (maxScale - minScale) * ((distance - ropeProperties.minLength) / (ropeProperties.maxLength - ropeProperties.minLength)));
     }
 
     private Vector2 GetPlayerOffset()
@@ -196,5 +195,12 @@ public class RopeControl : MonoBehaviour {
         return player.transform.position
               + playerRenderer.transform.localPosition
               + playerRenderer.transform.rotation * anchorOffset;
+    }
+
+    private void RescaleY(float y)
+    {
+        Vector3 scale = transform.localScale;
+        scale.y = y;
+        transform.localScale = scale;
     }
 }
