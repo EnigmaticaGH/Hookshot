@@ -10,6 +10,7 @@ public class LateralMovement : MonoBehaviour
         HOOKED,
         WALLJUMP,
         WALLWALK,
+        GROUNDWALLHOOK,
         DISABLED
     }
     private delegate void StateFunction();
@@ -24,6 +25,7 @@ public class LateralMovement : MonoBehaviour
             this.Hooked,
             this.WallJump,
             this.WallWalk,
+            this.GroundWallHook,
             this.Disabled
         };
     }
@@ -153,6 +155,9 @@ public class LateralMovement : MonoBehaviour
                 lateralForce *= horizontal * force / (player.velocity.magnitude + 1f);
                 player.AddForce(lateralForce);
             }
+
+            float yAngle = player.velocity.x > 0 ? 0 : 180;
+            transform.rotation = Quaternion.Euler(0, yAngle, transform.rotation.eulerAngles.z);
         }
     }
 
@@ -175,10 +180,20 @@ public class LateralMovement : MonoBehaviour
     {
         if (!isOnWall()) ChangeState(MovementState.HOOKED);
         if (!isHooked()) ChangeState(MovementState.AIR);
+        if (isGrounded()) ChangeState(MovementState.GROUNDWALLHOOK);
         if (HookPoint() != null)
         {
             Rope().MoveAlongWall(); //RopeControl
         }
+    }
+
+    void GroundWallHook() //A very rare state in which the player is on the ground, touching a wall, and hooked at the same time
+    {
+        if (!isGrounded()) ChangeState(MovementState.WALLWALK);
+        if (!isHooked()) ChangeState(MovementState.GROUND);
+        if (!isOnWall()) ChangeState(MovementState.HOOKED);
+        DoNormalMovement(true);
+        Rope().MoveAlongWall();
     }
 
     void Disabled(){ /* The player is unable to move */
@@ -269,6 +284,11 @@ public class LateralMovement : MonoBehaviour
     {
         return hookshotControl.Rope().GetComponent<RopeControl>() != null ?
             hookshotControl.Rope().GetComponent<RopeControl>() : null;
+    }
+
+    public GameObject Hook()
+    {
+        return hookshotControl.HookPoint().gameObject;
     }
 
     public HookshotControl getHookScript()

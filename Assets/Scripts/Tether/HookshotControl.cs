@@ -47,12 +47,15 @@ public class HookshotControl : MonoBehaviour {
 
     private GameObject ropeObj;
 
+    private bool playingHookAnim;
+
     void Start()
     {
         MapStateFunctions();
         keybinds = GameObject.FindGameObjectWithTag("KeyBinds").GetComponent<KeybindScript>();
         FindPlayerParts();
         ChangeState(HookshotState.READY);
+        playingHookAnim = false;
     }
 
     private void FindPlayerParts()
@@ -96,7 +99,11 @@ public class HookshotControl : MonoBehaviour {
     }
 
     void Extend() { /* The hook object is traveling through the world. */
-        StartCoroutine(frogAnim.PlayHooked());
+        if(player.isGrounded())
+        {
+            StartCoroutine(frogAnim.PlayHooked());
+            playingHookAnim = true;
+        }
     }
 
     void Hooked()
@@ -105,6 +112,16 @@ public class HookshotControl : MonoBehaviour {
         {
             DestroyHookAndRope();
             ChangeState(HookshotState.FLYING);
+        }
+
+        if(player.isGrounded())
+        {
+            StopCoroutine(frogAnim.PlayHooked());
+            playingHookAnim = false;
+        }
+        else if (playingHookAnim == false)
+        {
+            StartCoroutine(frogAnim.PlayHooked());
         }
 
         RotatGunToFaceHook();
@@ -152,7 +169,7 @@ public class HookshotControl : MonoBehaviour {
         hook = (GameObject)Instantiate(hookFab, transform.position, transform.rotation);
         hook.GetComponent<Hook>().hookGun = this;
 
-        IgnoreHookPlayerCollisions();
+        //IgnoreHookPlayerCollisions();
 
         // And spawn a rope to go with it
         ropeObj = (GameObject)Instantiate(ropeFab, transform.position, transform.rotation);

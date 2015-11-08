@@ -54,17 +54,17 @@ public class DynamicCollider : MonoBehaviour
             Vector3 center = sprite.bounds.center;
             Vector3 extents = sprite.bounds.extents;
 
-            Sensors[1].offset = new Vector2(0, extents.y - 0.15f);
-            Sensors[2].offset = new Vector2(extents.x - 0.2f, 0);
-            Sensors[3].offset = new Vector2(-extents.x + 0.2f, 0);
+            Sensors[1].offset = center + new Vector3(0, extents.y - 0.15f);
+            Sensors[2].offset = center + new Vector3(extents.x - 0.15f, 0);
+            Sensors[3].offset = center + new Vector3(-extents.x + 0.15f, 0);
 
             if(!player.isGrounded())
             {
-                Sensors[0].offset = new Vector2(0, -extents.y + 0.1f);
+                Sensors[0].offset = new Vector2(0, -extents.y + 0.15f);
                 Destroy(GetComponent<PolygonCollider2D>());
                 gameObject.AddComponent<PolygonCollider2D>();
             }
-            else if(!player.isHooked())
+            else
             {
                 ResetCollider();
             }

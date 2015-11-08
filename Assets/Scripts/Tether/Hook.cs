@@ -25,11 +25,11 @@ public class Hook : MonoBehaviour
         }
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
+    void OnTriggerEnter2D(Collider2D c)
     {
-        if (collision.collider.CompareTag("Hookable"))
+        if (c.CompareTag("Hookable"))
         {
-            hookedObject = collision.collider.gameObject;
+            hookedObject = c.gameObject;
             offsetToHookPoint = transform.position - hookedObject.transform.position;
             offsetToHookPoint = Quaternion.Inverse(hookedObject.transform.rotation) * offsetToHookPoint;
             Rigidbody2D hookBody = GetComponent<Rigidbody2D>();
@@ -38,15 +38,25 @@ public class Hook : MonoBehaviour
             hookGun.HookOn();
             GetComponent<CircleCollider2D>().enabled = false;
         }
-        else
+        else if(!TagsToIgnore(c))
         {
             hookGun.CancelHook();
         }
 
-        if (collision.collider.CompareTag("Edible"))
+        if (c.CompareTag("Edible"))
         {
-            Destroy(collision.collider.gameObject);
+            Destroy(c.gameObject);
             hookGun.CancelHook();
         }
+    }
+
+    bool TagsToIgnore(Collider2D c)
+    {
+        return c.CompareTag("Player Sprite") ||
+            c.CompareTag("Feet") ||
+            c.CompareTag("Back") ||
+            c.CompareTag("Mouth") ||
+            c.CompareTag("Ass") ||
+            c.CompareTag("Respawn");
     }
 }
