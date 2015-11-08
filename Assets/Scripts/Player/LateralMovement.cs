@@ -45,10 +45,12 @@ public class LateralMovement : MonoBehaviour
     private CeilingSensor ceilingSensor;
     private WallSensor wallSensorRight;
     private WallSensor wallSensorLeft;
+    private AnimateFrog frogAnim;
 
     private const float AIR_STOP_TIME = 0.08f;
     private const float SPRITE_OFFSET_ANGLE = -5.73f;
     private bool canMove;
+    private bool jumpPressed;
 
     void Start()
     {
@@ -59,6 +61,7 @@ public class LateralMovement : MonoBehaviour
         player = GetComponent<Rigidbody2D>();
         jump = GetComponent<JumpControl>();
         ChangeState(MovementState.GROUND);
+        jumpPressed = false;
     }
 
     void Awake()
@@ -69,11 +72,17 @@ public class LateralMovement : MonoBehaviour
     private void FindPlayerParts()
     {
         characterSprite = GetComponentInChildren<SpriteRenderer>().gameObject;
+        frogAnim = characterSprite.GetComponent<AnimateFrog>();
         hand = characterSprite.GetComponentInChildren<AimAtMouse>().gameObject;
         hookshotControl = hand.GetComponentInChildren<HookshotControl>();
         wallSensorRight = GameObject.Find("WallSensorR").GetComponent<WallSensor>();
         wallSensorLeft = GameObject.Find("WallSensorL").GetComponent<WallSensor>();
         ceilingSensor = GameObject.Find("CeilingSensor").GetComponent<CeilingSensor>();
+    }
+
+    void Update()
+    {
+        jumpPressed = Keybinds().GetButtonDown("Jump");
     }
 
     void FixedUpdate()
@@ -138,9 +147,10 @@ public class LateralMovement : MonoBehaviour
         if (!isOnWall()) ChangeState(MovementState.AIR);
         if (isHooked()) ChangeState(MovementState.HOOKED);
         DoNormalMovement(true);
-        if (Keybinds().GetButtonDown("Jump") && Time.timeScale > 0f)
+        if (jumpPressed && Time.timeScale > 0f)
         {
             jump.WallJump();
+            StartCoroutine(frogAnim.PlayWallJump());
             ChangeState(MovementState.DISABLED);
         }
         
@@ -204,6 +214,11 @@ public class LateralMovement : MonoBehaviour
     public bool isOnWall()
     {
         return wallSensorLeft.IsWallCollide() || wallSensorRight.IsWallCollide();
+    }
+
+    public bool IsNotTouchingAGodDamnThing()
+    {
+        return !isOnWall() && !isGrounded() && !isHooked();
     }
 
     public RopeControl Rope()

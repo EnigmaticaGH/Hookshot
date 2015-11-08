@@ -34,4 +34,15 @@ public class AnimateFrog : MonoBehaviour
     {
         relativeVel = Vector2.zero;
     }
+
+    public IEnumerator PlayWallJump()
+    {
+        string dir = player.getWallSensors()[0].IsWallCollide() ? "L" : "R";
+        anim.Play("Wall Jump" + dir, 0, 0);
+        anim.SetBool("WallJump", true);
+
+        yield return new WaitForSeconds(0.25f);
+
+        anim.SetBool("WallJump", false);
+    }
 }

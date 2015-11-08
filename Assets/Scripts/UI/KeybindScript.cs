@@ -61,6 +61,11 @@ public class KeybindScript : MonoBehaviour
         return Input.GetKeyDown(findKeyWithName(name).key);
     }
 
+    public bool GetButton(string name)
+    {
+        return Input.GetKey(findKeyWithName(name).key);
+    }
+
     public bool GetButtonUp(string name)
     {
         return Input.GetKeyUp(findKeyWithName(name).key);
