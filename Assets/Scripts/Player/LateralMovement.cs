@@ -51,7 +51,7 @@ public class LateralMovement : MonoBehaviour
 
     private const float AIR_STOP_TIME = 0.05f;
     private const float SPRITE_OFFSET_ANGLE = -5.73f;
-    private const float TIME_BETWEEN_JUMPS = 0.2f;
+    private const float TIME_BETWEEN_JUMPS = 0.08f;
     private bool canMove;
     private bool canJump;
     private Vector2 relativeVel;
@@ -166,7 +166,7 @@ public class LateralMovement : MonoBehaviour
         if (!isOnWall()) ChangeState(MovementState.AIR);
         if (isHooked()) ChangeState(MovementState.HOOKED);
         DoNormalMovement(true);
-        if (canJump && Keybinds().GetButton("Jump") && Time.timeScale > 0f)
+        if (CanWallJump())
         {
             jump.WallJump();
             StartCoroutine(frogAnim.PlayWallJump());
@@ -248,6 +248,11 @@ public class LateralMovement : MonoBehaviour
     public Vector2 RelativeVelocity()
     {
         return relativeVel;
+    }
+
+    private bool CanWallJump()
+    {
+        return jump.CanWallJump() && canJump && Keybinds().GetButton("Jump") && Time.timeScale > 0f;
     }
 
     public bool isGrounded()

@@ -15,6 +15,7 @@ public class JumpControl : MonoBehaviour
 
     private bool jump;
     private bool doubleJump;
+    private bool wallJump;
     public bool canDoubleJump;
 
     private bool grounded;
@@ -37,12 +38,18 @@ public class JumpControl : MonoBehaviour
             if (grounded)
             {
                 jump = true;
+                wallJump = false;
             }
             else if (doubleJump && canDoubleJump)
             {
                 jump = true;
+                wallJump = false;
                 doubleJump = false;
             }
+        }
+        else if(keybinds.GetButtonUp("Jump") && Time.timeScale > 0f)
+        {
+            wallJump = true;
         }
     }
 
@@ -91,6 +98,11 @@ public class JumpControl : MonoBehaviour
     public bool isGrounded()
     {
         return grounded;
+    }
+
+    public bool CanWallJump()
+    {
+        return wallJump;
     }
 
     public KeybindScript Keybinds()

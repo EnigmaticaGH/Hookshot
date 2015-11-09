@@ -99,7 +99,7 @@ public class HookshotControl : MonoBehaviour {
     }
 
     void Extend() { /* The hook object is traveling through the world. */
-        if(player.isGrounded())
+        if(!player.isGrounded())
         {
             StartCoroutine(frogAnim.PlayHooked());
             playingHookAnim = true;
