@@ -343,4 +343,13 @@ public class LateralMovement : MonoBehaviour
         yield return new WaitForSeconds(TIME_BETWEEN_JUMPS);
         canJump = true;
     }
+
+    public IEnumerator DebugFSMState()
+    {
+        while(true)
+        {
+            Debug.Log(state);
+            yield return new WaitForSeconds(0.1f);
+        }
+    }
 }
