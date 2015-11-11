@@ -165,6 +165,7 @@ public class LateralMovement : MonoBehaviour
     {
         if (!isOnWall()) ChangeState(MovementState.AIR);
         if (isHooked()) ChangeState(MovementState.HOOKED);
+        if (isGrounded()) ChangeState(MovementState.GROUND);
         DoNormalMovement(true);
         if (CanWallJump())
         {
