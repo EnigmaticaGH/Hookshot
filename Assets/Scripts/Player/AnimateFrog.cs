@@ -66,7 +66,7 @@ public class AnimateFrog : MonoBehaviour
 
     public IEnumerator PlayHooked()
     {
-        //anim.Play("Hooked", 0, 0);
+        anim.Play("Hooked", 0, 0);
         anim.SetBool("Hooked", true);
 
         while (player.isHookedOrExtending() && !player.isGrounded())

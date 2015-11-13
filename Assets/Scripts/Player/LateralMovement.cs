@@ -123,6 +123,7 @@ public class LateralMovement : MonoBehaviour
     void ChangeState(MovementState newState)
     {
         state = canMove ? newState : MovementState.DISABLED;
+        transform.rotation = Quaternion.Euler(0, 0, transform.rotation.eulerAngles.z);
     }
 
     void Ground()
