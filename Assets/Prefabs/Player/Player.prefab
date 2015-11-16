@@ -26,6 +26,7 @@ GameObject:
   - 4: {fileID: 489182}
   - 61: {fileID: 6163904}
   - 114: {fileID: 11471466}
+  - 114: {fileID: 11466014}
   m_Layer: 0
   m_Name: CeilingSensor
   m_TagString: Back
@@ -211,8 +212,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 149900}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: .384000003, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -3.88606262, y: .0574275889, z: 0}
+  m_LocalScale: {x: .5, y: .5, z: 1}
   m_Children:
   - {fileID: 424174}
   - {fileID: 494560}
@@ -488,7 +489,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lethalVelocity: 2
   respawnDelay: .5
-  deathParticle: {fileID: 0}
+  deathParticle: {fileID: 19839016, guid: 87ea72fd2e963954c851c47d0f46d916, type: 2}
 --- !u!114 &11465158
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -500,6 +501,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 798667631325c10438ad93783dba757b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &11466014
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 108970}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0291e96fb665264ba226fa4ea5e9b0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  submerged: 0
+  playerHealth: {fileID: 0}
+  timeForDrowning: 5
 --- !u!114 &11468090
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -558,7 +573,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 666
   m_Sprite: {fileID: 21300000, guid: 7adf77dc705010646a50bc5dde5e1966, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!212 &21252328
