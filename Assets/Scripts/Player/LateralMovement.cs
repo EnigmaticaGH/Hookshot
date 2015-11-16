@@ -123,6 +123,7 @@ public class LateralMovement : MonoBehaviour
     void ChangeState(MovementState newState)
     {
         state = canMove ? newState : MovementState.DISABLED;
+        transform.rotation = Quaternion.Euler(0, 0, transform.rotation.eulerAngles.z);
     }
 
     void Ground()
@@ -165,6 +166,7 @@ public class LateralMovement : MonoBehaviour
     {
         if (!isOnWall()) ChangeState(MovementState.AIR);
         if (isHooked()) ChangeState(MovementState.HOOKED);
+        if (isGrounded()) ChangeState(MovementState.GROUND);
         DoNormalMovement(true);
         if (CanWallJump())
         {
