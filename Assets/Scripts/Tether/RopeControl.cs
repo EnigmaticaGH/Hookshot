@@ -104,6 +104,7 @@ public class RopeControl : MonoBehaviour {
 
     private void FaceWall()
     {
+        player.transform.rotation = Quaternion.identity;
         player.transform.rotation = Quaternion.Euler(0, 
             leftWallSensor.IsWallCollide() ? 180f : 0f, 90f);
     }
@@ -147,15 +148,14 @@ public class RopeControl : MonoBehaviour {
 
         rope.anchor = anchorOffset;
 
-        if(isTouchingWall())
-            FaceWall();
+        //if(isTouchingWall())
+            //FaceWall();
     }
 
 
     public void AttachRope()
     {
         MakeRope();
-        //DrawRope();
     }
 
     private void MakeRope()
@@ -185,12 +185,12 @@ public class RopeControl : MonoBehaviour {
         // Track tongue!
         Vector3 playerOffset = GetPlayerOffset();
         Vector3 hookPos = hook.transform.position;
-        transform.position = Vector2.Lerp(playerOffset, hookPos, 0.5f); //playerOffset; //(playerOffset + hookPos) / 2.0f;
+        transform.position = Vector2.Lerp(playerOffset, hookPos, 0.5f);
         transform.rotation = Quaternion.Euler(0.0f, 0.0f, -90.0f) * Quaternion.FromToRotation(Vector3.right, hookPos - playerOffset);
 
         float minScale = ropeProperties.minScale;
         float maxScale = ropeProperties.maxScale;
-        float distance = hookshot.IsHooked() ? distance = rope.distance : Vector3.Distance(playerOffset, hookPos/* - playerOffset*/);
+        float distance = hookshot.IsHooked() ? distance = rope.distance : Vector3.Distance(playerOffset, hookPos);
 
         RescaleY(minScale + (maxScale - minScale) * ((distance - ropeProperties.minLength) / (ropeProperties.maxLength - ropeProperties.minLength)));
     }
@@ -198,9 +198,6 @@ public class RopeControl : MonoBehaviour {
     private Vector2 GetPlayerOffset()
     {
         return hand.position;
-        //return player.transform.position
-        //      + playerRenderer.transform.localPosition
-        //      + playerRenderer.transform.rotation * anchorOffset;
     }
 
     private void RescaleY(float y)
