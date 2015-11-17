@@ -29,6 +29,8 @@ public class RopeControl : MonoBehaviour {
 
     public Rope ropeProperties;
     private Vector2 anchorOffset;
+    private Vector2 handPos;
+    private Transform hand;
 
     private DistanceJoint2D rope;
     private SpringJoint2D spring;
@@ -41,7 +43,8 @@ public class RopeControl : MonoBehaviour {
 
     void Start() {
         boostEnabled = false;
-        anchorOffset = player.getSprite().GetComponentInChildren<AimAtMouse>().transform.localPosition;
+        hand = player.getSprite().GetComponentInChildren<AimAtMouse>().transform;
+        anchorOffset = hand.localPosition;
     }
 
     void Awake()
@@ -143,7 +146,7 @@ public class RopeControl : MonoBehaviour {
         Vector2 jointDirection = hook.transform.position - spriteTransform.position;
         spriteTransform.rotation = Quaternion.FromToRotation(Vector2.right, jointDirection);
 
-        rope.anchor = Vector2.zero; //playerRenderer.transform.localPosition + spriteTransform.rotation * anchorOffset;
+        rope.anchor = playerRenderer.transform.localPosition + spriteTransform.rotation * anchorOffset;
 
         if(isTouchingWall())
             FaceWall();
@@ -195,9 +198,10 @@ public class RopeControl : MonoBehaviour {
 
     private Vector2 GetPlayerOffset()
     {
-        return player.transform.position
-              + playerRenderer.transform.localPosition
-              + playerRenderer.transform.rotation * anchorOffset;
+        return hand.position;
+        //return player.transform.position
+        //      + playerRenderer.transform.localPosition
+        //      + playerRenderer.transform.rotation * anchorOffset;
     }
 
     private void RescaleY(float y)
