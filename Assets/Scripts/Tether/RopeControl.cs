@@ -29,7 +29,6 @@ public class RopeControl : MonoBehaviour {
 
     public Rope ropeProperties;
     private Vector2 anchorOffset;
-    private Vector2 handPos;
     private Transform hand;
 
     private DistanceJoint2D rope;
@@ -105,7 +104,7 @@ public class RopeControl : MonoBehaviour {
 
     private void FaceWall()
     {
-        playerRenderer.transform.rotation = Quaternion.Euler(0, 
+        player.transform.rotation = Quaternion.Euler(0, 
             leftWallSensor.IsWallCollide() ? 180f : 0f, 90f);
     }
 
@@ -141,12 +140,12 @@ public class RopeControl : MonoBehaviour {
     void RotateObjectTowardsRope()
     {
 
-        Transform spriteTransform = playerRenderer.gameObject.transform;
+        Transform spriteTransform = player.transform;
 
         Vector2 jointDirection = hook.transform.position - spriteTransform.position;
-        spriteTransform.rotation = Quaternion.FromToRotation(Vector2.right, jointDirection);
+        spriteTransform.rotation = Quaternion.FromToRotation(Vector2.up, jointDirection);
 
-        rope.anchor = playerRenderer.transform.localPosition + spriteTransform.rotation * anchorOffset;
+        rope.anchor = anchorOffset;
 
         if(isTouchingWall())
             FaceWall();
@@ -156,7 +155,7 @@ public class RopeControl : MonoBehaviour {
     public void AttachRope()
     {
         MakeRope();
-        DrawRope();
+        //DrawRope();
     }
 
     private void MakeRope()
@@ -176,7 +175,7 @@ public class RopeControl : MonoBehaviour {
     {
         if (hookshot.IsHooked())
         {
-            playerRenderer.gameObject.transform.rotation = Quaternion.identity;
+            player.transform.rotation = Quaternion.identity;
             DestroyObject(rope);
         }
     }
@@ -186,12 +185,12 @@ public class RopeControl : MonoBehaviour {
         // Track tongue!
         Vector3 playerOffset = GetPlayerOffset();
         Vector3 hookPos = hook.transform.position;
-        transform.position = (playerOffset + hookPos) / 2.0f;
+        transform.position = Vector2.Lerp(playerOffset, hookPos, 0.5f); //playerOffset; //(playerOffset + hookPos) / 2.0f;
         transform.rotation = Quaternion.Euler(0.0f, 0.0f, -90.0f) * Quaternion.FromToRotation(Vector3.right, hookPos - playerOffset);
 
         float minScale = ropeProperties.minScale;
         float maxScale = ropeProperties.maxScale;
-        float distance = hookshot.IsHooked() ? distance = rope.distance : Vector3.Distance(playerOffset, hookPos);
+        float distance = hookshot.IsHooked() ? distance = rope.distance : Vector3.Distance(playerOffset, hookPos/* - playerOffset*/);
 
         RescaleY(minScale + (maxScale - minScale) * ((distance - ropeProperties.minLength) / (ropeProperties.maxLength - ropeProperties.minLength)));
     }
