@@ -4,9 +4,20 @@ using System.Collections;
 public class Water : MonoBehaviour 
 {
     public int vertexCount;
+    public int propagationPasses;
+
+	[Range(0, 10)]
+    public float springConstant;
+
+	[Range(-10, 0)]
+    public float spread;
+
     public GameObject moleculePrefab;
 
     GameObject[] molecules;
+    Rigidbody2D[] moleculeBodies;
+
+    Mesh waterMesh;
 
     LineRenderer waterLine;
 
@@ -15,6 +26,7 @@ public class Water : MonoBehaviour
     float xLeft;
 
     float width;
+    float height;
 
 	void Start () 
     {
@@ -22,114 +34,168 @@ public class Water : MonoBehaviour
         waterLine.SetVertexCount(vertexCount);
         FindEquilibrium();
         SpawnWaterMolecules();
+        SpawnWaterMesh();
 	}
 
     void FindEquilibrium()
     {
         BoxCollider2D waterBox = GetComponent<BoxCollider2D>();
-        yBottom = waterBox.offset.y - waterBox.bounds.extents.y;
-        yTop = waterBox.offset.y + waterBox.bounds.extents.y;
-        xLeft = waterBox.offset.x - waterBox.bounds.extents.x;
+        yBottom = transform.position.y - waterBox.bounds.extents.y;
+        yTop = transform.position.y + waterBox.bounds.extents.y;
+        xLeft = transform.position.x - waterBox.bounds.extents.x;
         width = waterBox.bounds.size.x;
+        height = waterBox.bounds.size.y;
     }
 
     void SpawnWaterMolecules()
     {
         Vector2 spawnPos = new Vector2(0.0f, yTop);
         molecules = new GameObject[vertexCount];
+        moleculeBodies = new Rigidbody2D[vertexCount];
+        float particlePadding = (float)width / vertexCount;
+        float particleHalfPadding = particlePadding / 2.0f;
         for (int i = 0; i < vertexCount; i++)
         {
-            spawnPos.x = xLeft + (float)width / vertexCount * i;
+            spawnPos.x = xLeft + particlePadding * i + particleHalfPadding;
             molecules[i] = (GameObject)Instantiate(moleculePrefab, spawnPos, transform.rotation);
+            molecules[i].transform.parent = transform;
+            moleculeBodies[i] = molecules[i].GetComponent<Rigidbody2D>();
         }
     }
 
-    void Update()
+    void SpawnWaterMesh()
     {
-        DrawWater();
-        DrawWaterLine();
-    }
-	
-    void FixedUpdate()
-    {
-        PullMolecules();
+        waterMesh = new Mesh();
+        GetComponent<MeshFilter>().mesh = waterMesh;
+        waterMesh.vertices = GetMeshVertices();
+        waterMesh.triangles = GetMeshTriangles();
     }
 
-    private void PullMolecules()
+    private Vector3[] GetMeshVertices()
     {
-    }
-
-    private Material lineMaterial;
-
-    private void CreateLineMaterial()
-    {
-        if (!lineMaterial)
-        {
-            // Unity has a built-in shader that is useful for drawing
-            // simple colored things.
-            var shader = Shader.Find("Hidden/Internal-Colored");
-            lineMaterial = new Material(shader);
-            lineMaterial.hideFlags = HideFlags.HideAndDontSave;
-            // Turn on alpha blending
-            lineMaterial.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
-            lineMaterial.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
-            // Turn backface culling off
-            lineMaterial.SetInt("_Cull", (int)UnityEngine.Rendering.CullMode.Off);
-            // Turn off depth writes
-            lineMaterial.SetInt("_ZWrite", 0);
-        }
-    }
-
-    private void DrawWater()
-    {
-        CreateLineMaterial();
-
-        lineMaterial.SetPass(0);
-
-        GL.PushMatrix();
-
-        GL.MultMatrix(transform.localToWorldMatrix);
-        GL.Begin(GL.TRIANGLES);
-
-        Color midnightBlue = new Color(0, 15, 40) * 0.9f;
-        Color lightBlue = new Color(0.2f, 0.5f, 1f) * 0.8f;
+        Vector3[] vertices = new Vector3[2 * molecules.Length];
 
         float scale = width / (molecules.Length - 1f);
-
-
-        for (int i = 1; i < molecules.Length; i++ )
+        for (int i = 0; i < molecules.Length; i++ )
         {
-            Vector3 mol_i = molecules[i-1].transform.position;
-            Vector3 mol_i2 = molecules[i].transform.position;
-
-            Vector2 p1 = new Vector2(mol_i.x, mol_i.y);
-            Vector2 p2 = new Vector2(mol_i2.x, mol_i2.y);
-            Vector2 p3 = new Vector2(p2.x, yBottom);
-            Vector2 p4 = new Vector2(p1.x, yBottom);
-
-
-
-            GL.Color(lightBlue);
-            GL.Vertex(p1);
-            GL.Vertex(p2);
-            GL.Color(midnightBlue);
-            GL.Vertex(p3);
-
-            GL.Color(lightBlue);
-            GL.Vertex(p1);
-            GL.Color(midnightBlue);
-            GL.Vertex(p3);
-            GL.Vertex(p4);
+            vertices[i] = molecules[i].transform.localPosition;
+            vertices[i + molecules.Length] =
+                new Vector2(molecules[i].transform.localPosition.x,
+                            molecules[i].transform.localPosition.y - height);
         }
 
-        GL.End();
-
-        GL.PopMatrix();
+        return vertices;
     }
-
-    void DrawWaterLine()
+    
+    private int[] GetMeshTriangles()
     {
-        for (int i = 0; i < vertexCount; i++)
-            waterLine.SetPosition(i, molecules[i].transform.position);
+        int[] triangles = new int[6 * (molecules.Length - 1)];
+
+        for (int i = 0; i < molecules.Length - 1; i++)
+        {
+            triangles[6 * i] = i;
+            triangles[6 * i + 1] = i + 1;
+            triangles[6 * i + 2] = molecules.Length + i + 1;
+
+            triangles[6 * i + 3] = i;
+            triangles[6 * i + 4] = molecules.Length + i + 1;
+            triangles[6 * i + 5] = molecules.Length + i;
+        }
+
+        return triangles;
     }
+
+    void FixedUpdate()
+    {
+		try {
+	        ApplySpringForces();
+	        PropagateWaves();
+	        DrawWaterSurface();
+	        RepositionMesh();
+		} catch(UnityException ex) {
+			Debug.Log (ex.Message);
+			Debug.Log (ex.StackTrace);
+		}
+    }
+
+    void ApplySpringForces()
+    {
+        for(int i = 0; i < molecules.Length; i++) 
+        {
+            float x = yTop - molecules[i].transform.position.y;
+            float verticalForce = springConstant * x;
+            moleculeBodies[i].AddForce(
+                new Vector2(0.0f, verticalForce));
+        }
+    }
+
+    void PropagateWaves()
+    {
+        float[] leftDeltas = new float[molecules.Length];
+        float[] rightDeltas = new float[molecules.Length];
+
+        for (int j = 0; j < propagationPasses; j++)
+        {
+            for (int i = 0; i < molecules.Length; i++)
+            {
+                float k = yTop - molecules[i].transform.position.y;
+                if (i > 0)
+                {
+                    float k2 = yTop - molecules[i - 1].transform.position.y;
+                    leftDeltas[i] = spread * (k - k2);
+                    moleculeBodies[i - 1].velocity +=
+                        moleculeBodies[i - 1].velocity.normalized * leftDeltas[i] * Time.deltaTime;
+                }
+
+                if (i < molecules.Length - 1)
+                {
+                    float k2 = yTop - molecules[i + 1].transform.position.y;
+                    rightDeltas[i] = spread * (k - k2);
+                    moleculeBodies[i + 1].velocity +=
+                        moleculeBodies[i + 1].velocity.normalized * rightDeltas[i] * Time.deltaTime;
+                }
+            }
+
+            for (int i = 0; i < molecules.Length; i++)
+            {
+                float height = yTop - molecules[i].transform.position.y;
+
+                if (i > 0)
+                {
+                    Vector3 pos = molecules[i - 1].transform.position;
+                    pos.y += leftDeltas[i] * Time.fixedDeltaTime;
+					if(!float.IsInfinity (pos.y))
+                    	molecules[i - 1].transform.position = pos;
+					else
+						Debug.Log ("pos.y is infinity");
+                }
+
+                if (i < molecules.Length - 1)
+                {
+                    Vector3 pos = molecules[i + 1].transform.position;
+                    pos.y += rightDeltas[i] * Time.fixedDeltaTime;
+					if(!float.IsInfinity (pos.y))
+                    	molecules[i + 1].transform.position = pos;
+					else
+						Debug.Log ("pos.y is infinity");
+                }
+            }
+        }
+    }
+
+    void DrawWaterSurface()
+    {
+        for (int i = 0; i < vertexCount; i++) {
+			waterLine.SetPosition (i, molecules [i].transform.position);
+		}
+    }
+
+    void RepositionMesh()
+    {
+        Vector3[] vertices = waterMesh.vertices;
+        for (int i = 0; i < molecules.Length; i++)
+            vertices[i] = molecules[i].transform.localPosition;
+        waterMesh.vertices = vertices;
+    }
+
 }
