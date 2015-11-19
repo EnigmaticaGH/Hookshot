@@ -10,6 +10,9 @@ GameObject:
   - 4: {fileID: 414018}
   - 61: {fileID: 6182570}
   - 114: {fileID: 11443484}
+  - 120: {fileID: 12002424}
+  - 23: {fileID: 2309118}
+  - 33: {fileID: 3367354}
   m_Layer: 0
   m_Name: Water
   m_TagString: Untagged
@@ -24,11 +27,42 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 190054}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 29.9529991, y: -1.26999998, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!23 &2309118
+MeshRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 190054}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_Materials:
+  - {fileID: 2100000, guid: b4b7f401a4fce5e45a7b3a83eb038734, type: 2}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 1
+  m_ReflectionProbeUsage: 1
+  m_ProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_ImportantGI: 0
+  m_AutoUVMaxDistance: .5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!33 &3367354
+MeshFilter:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 190054}
+  m_Mesh: {fileID: 0}
 --- !u!61 &6182570
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -37,11 +71,11 @@ BoxCollider2D:
   m_GameObject: {fileID: 190054}
   m_Enabled: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Size: {x: 5, y: 1}
+  m_Size: {x: 3.6400001, y: 1}
 --- !u!114 &11443484
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -53,8 +87,48 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88d402962ebfe214b94acc99b133af33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vertexCount: 15
+  vertexCount: 45
+  propagationPasses: 8
+  springConstant: 3.63000011
+  spread: -6.67000008
   moleculePrefab: {fileID: 132264, guid: ea122a43bc406374aa62258631cc18b9, type: 2}
+--- !u!120 &12002424
+LineRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 190054}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_Materials:
+  - {fileID: 2100000, guid: b4b7f401a4fce5e45a7b3a83eb038734, type: 2}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 1
+  m_ReflectionProbeUsage: 1
+  m_ProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_ImportantGI: 0
+  m_AutoUVMaxDistance: .5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_Positions:
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 1}
+  m_Parameters:
+    startWidth: .0599999987
+    endWidth: .0599999987
+    m_StartColor:
+      serializedVersion: 2
+      rgba: 4291569422
+    m_EndColor:
+      serializedVersion: 2
+      rgba: 4291569422
+  m_UseWorldSpace: 1
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
@@ -68,7 +142,43 @@ Prefab:
       objectReference: {fileID: 132264, guid: ea122a43bc406374aa62258631cc18b9, type: 2}
     - target: {fileID: 0}
       propertyPath: vertexCount
-      value: 15
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_TagString
+      value: OpenGL
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Parameters.endWidth
+      value: .00999999978
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Parameters.startWidth
+      value: .00999999978
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: b4b7f401a4fce5e45a7b3a83eb038734, type: 2}
+    - target: {fileID: 0}
+      propertyPath: waterMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: b4b7f401a4fce5e45a7b3a83eb038734, type: 2}
+    - target: {fileID: 0}
+      propertyPath: propagationPasses
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: springConstant
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: spread
+      value: .25
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
