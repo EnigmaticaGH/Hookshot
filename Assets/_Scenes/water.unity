@@ -124,7 +124,8 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 11472410, guid: 5ac667e1644813c4b89a06c95035c0c2, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 5ac667e1644813c4b89a06c95035c0c2, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &551951900
@@ -183,7 +184,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: .300000012
+  near clip plane: -1
   far clip plane: 1000
   field of view: 60
   orthographic: 1
@@ -213,86 +214,14 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!1001 &936117120
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 416942, guid: ea122a43bc406374aa62258631cc18b9, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 416942, guid: ea122a43bc406374aa62258631cc18b9, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 416942, guid: ea122a43bc406374aa62258631cc18b9, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 416942, guid: ea122a43bc406374aa62258631cc18b9, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 416942, guid: ea122a43bc406374aa62258631cc18b9, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 416942, guid: ea122a43bc406374aa62258631cc18b9, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 416942, guid: ea122a43bc406374aa62258631cc18b9, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 416942, guid: ea122a43bc406374aa62258631cc18b9, type: 2}
-      propertyPath: m_RootOrder
-      value: 2
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: ea122a43bc406374aa62258631cc18b9, type: 2}
-  m_IsPrefabParent: 0
 --- !u!1 &1186143444 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 190054, guid: 5ac667e1644813c4b89a06c95035c0c2, type: 2}
   m_PrefabInternal: {fileID: 278140956}
---- !u!120 &1186143448
-LineRenderer:
+--- !u!33 &1186143445
+MeshFilter:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1186143444}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_Materials:
-  - {fileID: 2100000, guid: b4b7f401a4fce5e45a7b3a83eb038734, type: 2}
-  m_SubsetIndices: 
-  m_StaticBatchRoot: {fileID: 0}
-  m_UseLightProbes: 1
-  m_ReflectionProbeUsage: 1
-  m_ProbeAnchor: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_PreserveUVs: 0
-  m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingOrder: 0
-  m_Positions:
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 1}
-  m_Parameters:
-    startWidth: .0599999987
-    endWidth: .0599999987
-    m_StartColor:
-      serializedVersion: 2
-      rgba: 4291569422
-    m_EndColor:
-      serializedVersion: 2
-      rgba: 4291569422
-  m_UseWorldSpace: 1
+  m_Mesh: {fileID: 0}
