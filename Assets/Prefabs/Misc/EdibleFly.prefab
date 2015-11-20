@@ -11,7 +11,7 @@ GameObject:
   - 114: {fileID: 11428932}
   - 60: {fileID: 6063380}
   - 50: {fileID: 5079896}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: EdibleFly
   m_TagString: Edible
   m_Icon: {fileID: 0}
@@ -27,7 +27,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 412118}
   - 212: {fileID: 21244502}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -149,6 +149,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_TagString
       value: Edible
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Layer
+      value: 16
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
