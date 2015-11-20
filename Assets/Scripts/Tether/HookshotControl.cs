@@ -117,7 +117,6 @@ public class HookshotControl : MonoBehaviour {
         if(player.isGrounded())
         {
             StopCoroutine(frogAnim.PlayHooked());
-            frogAnim.PlayNextAnimation();
             playingHookAnim = false;
         }
         else if (playingHookAnim == false)
@@ -247,8 +246,6 @@ public class HookshotControl : MonoBehaviour {
             hook.transform.position - hand.transform.position
         );
     }
-
-    
 
     void AimAtMouse()
     {
