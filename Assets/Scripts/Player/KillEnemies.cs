@@ -51,9 +51,6 @@ public class KillEnemies : MonoBehaviour
 
     void Respawn()
     {
-        //transform.position = lastSpawn.transform.position;
-        //hook.CancelHook();
-        //player.velocity = Vector2.zero;
         StartCoroutine(Explosion());
     }
 
