@@ -1,0 +1,55 @@
+/*Valid object types:
+/ nonHookLeaf
+/ hookLeaf
+/ mushroom
+/ stem
+/ treeTrunk
+
+LevelPart
+{
+	x = 0
+	y = 0
+	Object
+	{
+		type = nonHookLeaf
+		x = -6.4
+		y = -0.4
+	}
+	Object
+	{
+		type = nonHookLeaf
+		x = 0
+		y = -0.4
+	}
+	Object
+	{
+		type = nonHookLeaf
+		x = 6.4
+		y = -0.4
+	}
+	difficulty = 0
+}
+LevelPart
+{
+	x = 0
+	y = 0
+	Object
+	{
+		type = hookLeaf
+		x = -9.6
+		y = 5
+	}
+	Object
+	{
+		type = hookLeaf
+		x = 0
+		y = 5
+	}
+	Object
+	{
+		type = hookLeaf
+		x = 9.6
+		y = 5
+	}
+	difficulty = 1
+}

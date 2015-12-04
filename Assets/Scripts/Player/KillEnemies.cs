@@ -65,8 +65,8 @@ public class KillEnemies : MonoBehaviour
         transform.position = lastSpawn.transform.position;
         playerSprite.gameObject.SetActive(true);
         player.isKinematic = false;
+        Destroy(Death.gameObject);
         OnRespawn();
-        //Destroy(Death);
     }
 
     private bool Flying()

@@ -7,13 +7,14 @@ class LevelPart
 {
     private GameObject levelPartFolder;
     private List<GameObject> parts;
+    private int difficulty;
     private static int numberOfParts = 0;
-
-    public LevelPart(Vector3 position, List<GameObject> levelParts)
+    public LevelPart(Vector3 position, List<GameObject> levelParts, int diff)
     {
-        levelPartFolder = new GameObject("Level Part #" + Count);
+        levelPartFolder = new GameObject("Level Part Reference");
         levelPartFolder.transform.position = position;
         parts = levelParts;
+        difficulty = diff;
         foreach(GameObject part in parts)
         {
             part.transform.position += levelPartFolder.transform.position;
@@ -23,41 +24,24 @@ class LevelPart
                 part.GetComponent<SpringJoint2D>().connectedAnchor = (Vector2)(part.transform.position) + (Vector2.up * 0.4f);
             }
         }
-        numberOfParts++;
+        levelPartFolder.SetActive(false);
     }
-    public LevelPart(Vector3 position, GameObject levelPart)
+    public static void Instantiate(LevelPart level, Vector2 position, Quaternion rotation)
     {
-        levelPartFolder = new GameObject("Level Part #" + Count);
-        levelPartFolder.transform.position = position;
-        parts = new List<GameObject>();
-        parts.Add(levelPart);
-        parts[0].transform.position += levelPartFolder.transform.position;
-        parts[0].transform.parent = levelPartFolder.transform;
+        GameObject copy;
+        copy = (GameObject)Object.Instantiate(level.levelPartFolder, position, rotation);
+        copy.name = "Level Part " + level.Count;
         numberOfParts++;
+        copy.SetActive(true);
+        foreach(Transform part in copy.transform)
+        {
+            //part.position = (Vector2)part.position + position;
+            if (part.GetComponent<SpringJoint2D>() != null)
+            {
+                part.GetComponent<SpringJoint2D>().connectedAnchor = (Vector2)(part.transform.position) + (Vector2.up * 0.4f);
+            }
+        }
     }
-    public LevelPart(Vector3 position)
-    {
-        parts = new List<GameObject>();
-        levelPartFolder = new GameObject("Level Part #" + Count);
-        levelPartFolder.transform.position = position;
-        numberOfParts++;
-    }
-
-    public LevelPart()
-    {
-        parts = new List<GameObject>();
-        levelPartFolder = new GameObject("Level Part #" + Count);
-        levelPartFolder.transform.position = Vector2.zero;
-        numberOfParts++;
-    }
-
-    public void AddPart(GameObject part)
-    {
-        parts.Add(part);
-        part.transform.position += levelPartFolder.transform.position;
-        part.transform.parent = levelPartFolder.transform;
-    }
-
     public List<GameObject> Parts
     {
         get
@@ -69,7 +53,17 @@ class LevelPart
             parts = Parts;
         }
     }
-
+    public int Difficulty
+    {
+        get
+        {
+            return difficulty;
+        }
+        private set
+        {
+            difficulty = Difficulty;
+        }
+    }
     public Vector2 Position
     {
         get
@@ -128,8 +122,8 @@ public class InfiniteRunGenerator : MonoBehaviour
 
         backgroundPos = new Vector2(-bgWidth, 0);
         deathBoxPos = backgroundPos + (Vector2.down * 5);
-        InitalizeEnvironment();
         CreateLevelParts();
+        InitalizeEnvironment();
     }
 
     void InitalizeEnvironment()
@@ -147,13 +141,19 @@ public class InfiniteRunGenerator : MonoBehaviour
 
     void CreateLevelParts()
     {
-        string path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments);
-        string folder = "\\Hookshot\\";
-        string[] files = Directory.GetFiles(path + folder);
+        //string path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments);
+        string path = Application.dataPath;
+        string folder = "\\Level Data\\";
+        string[] files = Directory.GetFiles(path + folder, "*.dat");
         foreach(string file in files)
         {
             ReadFile(file);
         }
+        LevelPart.Instantiate(levelParts[0], Vector2.zero, Quaternion.identity);
+        LevelPart.Instantiate(levelParts[1], Vector2.right * bgWidth, Quaternion.identity);
+        LevelPart.Instantiate(levelParts[1], Vector2.left * bgWidth, Quaternion.identity);
+        LevelPart.Instantiate(levelParts[0], Vector2.right * bgWidth * 2, Quaternion.identity);
+        LevelPart.Instantiate(levelParts[0], Vector2.left * bgWidth * 2, Quaternion.identity);
     }
 
     private void ReadFile(string file)
@@ -223,6 +223,7 @@ public class InfiniteRunGenerator : MonoBehaviour
                     catch (System.FormatException e)
                     {
                         Debug.LogError("Attempted to parse a number on line " + (i + 1) + " and failed.");
+                        Debug.LogException(e);
                     }
                 }
             }
@@ -242,6 +243,7 @@ public class InfiniteRunGenerator : MonoBehaviour
                     catch (System.FormatException e)
                     {
                         Debug.LogError("Attempted to parse a number on line " + (i + 1) + " and failed.");
+                        Debug.LogException(e);
                     }
                 }
             }
@@ -256,7 +258,7 @@ public class InfiniteRunGenerator : MonoBehaviour
             }
             i++;
         }
-        levelParts.Add(new LevelPart(new Vector2(x, y), objects));
+        levelParts.Add(new LevelPart(new Vector2(x, y), objects, difficulty));
     }
 
     int ParseObject(List<string> lines, int ObjectIndex, ref List<GameObject> objects)
@@ -285,6 +287,7 @@ public class InfiniteRunGenerator : MonoBehaviour
                     catch (System.FormatException e)
                     {
                         Debug.LogError("Attempted to parse a number on line " + (i + 1) + " and failed.");
+                        Debug.LogException(e);
                     }
                 }
             }
@@ -304,6 +307,7 @@ public class InfiniteRunGenerator : MonoBehaviour
                     catch (System.FormatException e)
                     {
                         Debug.LogError("Attempted to parse a number on line " + (i + 1) + " and failed.");
+                        Debug.LogException(e);
                     }
                 }
             }
