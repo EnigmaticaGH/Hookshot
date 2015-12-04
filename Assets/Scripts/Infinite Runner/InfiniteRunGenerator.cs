@@ -18,6 +18,10 @@ class LevelPart
         {
             part.transform.position += levelPartFolder.transform.position;
             part.transform.parent = levelPartFolder.transform;
+            if(part.GetComponent<SpringJoint2D>() != null)
+            {
+                part.GetComponent<SpringJoint2D>().connectedAnchor = (Vector2)(part.transform.position) + (Vector2.up * 0.4f);
+            }
         }
         numberOfParts++;
     }
@@ -59,6 +63,10 @@ class LevelPart
         get
         {
             return parts;
+        }
+        set
+        {
+            parts = Parts;
         }
     }
 
@@ -139,8 +147,6 @@ public class InfiniteRunGenerator : MonoBehaviour
 
     void CreateLevelParts()
     {
-        int lx;
-        int ly;
         string path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments);
         string folder = "\\Hookshot\\";
         string[] files = Directory.GetFiles(path + folder);
@@ -153,7 +159,6 @@ public class InfiniteRunGenerator : MonoBehaviour
     private void ReadFile(string file)
     {
         List<string> lines = new List<string>();
-        string dat;
         int numLeftBrackets = 0;
         int numRightBrackets = 0;
         try
@@ -171,35 +176,35 @@ public class InfiniteRunGenerator : MonoBehaviour
         {
             Debug.LogError(e);
         }
-        dat = Join(lines);
-        foreach (char c in dat)
+        foreach (char c in Join(lines))
         {
             if (c == '{') numLeftBrackets++;
             if (c == '}') numRightBrackets++;
         }
         if (numLeftBrackets != numRightBrackets)
             Debug.LogError("Error parsing " + file + ", brackets don't match up");
-
-        for(int i = 0; i < lines.Count; i++)
+        else
         {
-            string s = lines[i];
-            if (s == "LevelPart")
+            for (int i = 0; i < lines.Count; i++)
             {
-                Debug.Log("Found LevelPart");
-                ParseLevelPart(lines, i);
-                i++;
+                string s = lines[i];
+                if (s == "LevelPart")
+                {
+                    ParseLevelPart(lines, i);
+                    i++;
+                }
             }
         }
     }
 
     void ParseLevelPart(List<string> lines, int levelPartIndex)
     {
-        int failSafe = 0;
         int i = levelPartIndex + 1;
         float x = 0;
         float y = 0;
         int difficulty = 0;
-        while(i < lines.Count && lines[i] != "LevelPart" && failSafe < 10000)
+        List<GameObject> objects = new List<GameObject>();
+        while (i < lines.Count && lines[i] != "LevelPart")
         {
             string s = lines[i];
             if (s.Contains("x = "))
@@ -247,26 +252,21 @@ public class InfiniteRunGenerator : MonoBehaviour
             }
             else if (s.Contains("Object"))
             {
-                Debug.Log("Found Object");
-                i = ParseObject(lines, i);
+                i = ParseObject(lines, i, ref objects);
             }
             i++;
-            failSafe++;
         }
-        Debug.Log("Lpt x: " + x);
-        Debug.Log("Lpt y: " + y);
-        Debug.Log("Lpt difficulty: " + difficulty);
-        return;
+        levelParts.Add(new LevelPart(new Vector2(x, y), objects));
     }
 
-    int ParseObject(List<string> lines, int ObjectIndex)
+    int ParseObject(List<string> lines, int ObjectIndex, ref List<GameObject> objects)
     {
-        int failSafe = 0;
         int i = ObjectIndex + 1;
         float x = 0;
         float y = 0;
         string type = "";
-        while (i < lines.Count && lines[i].Trim().Substring(0) != "}" && failSafe < 10000)
+        
+        while (i < lines.Count && lines[i].Trim().Substring(0) != "}")
         {
             string s = lines[i];
             if (s.Contains("x = "))
@@ -312,18 +312,41 @@ public class InfiniteRunGenerator : MonoBehaviour
                 string[] line = s.Split(' ');
                 type = line[line.Length - 1];
             }
-            else if (s[s.Length - 1] == '}')
-            {
-                return i;
-            }
             i++;
-            failSafe++;
         }
-        Debug.Log("Obj x: " + x);
-        Debug.Log("Obj y: " + y);
-        Debug.Log("Obj type: " + type);
+        objects.Add(InstantiateObject(x, y, type));
         return i;
     }
+
+    GameObject InstantiateObject(float x, float y, string type)
+    {
+        GameObject g;
+        if (type == "nonHookLeaf")
+        {
+            g = (GameObject)Instantiate(nonHookLeafPrefab, new Vector2(x, y), Quaternion.identity);
+        }
+        else if (type == "hookLeaf")
+        {
+            g = (GameObject)Instantiate(hookLeafPrefab, new Vector2(x, y), Quaternion.identity);
+        }
+        else if (type == "mushroom")
+        {
+            g = (GameObject)Instantiate(mushroomPrefab, new Vector2(x, y), Quaternion.identity);
+        }
+        else if (type == "stem")
+        {
+            g = (GameObject)Instantiate(stemPrefab, new Vector2(x, y), Quaternion.identity);
+        }
+        else if (type == "treeTrunk")
+        {
+            g = (GameObject)Instantiate(treeTrunkPrefab, new Vector2(x, y), Quaternion.identity);
+        }
+        else
+        {
+            g = new GameObject("Unknown Type (" + type + ")");
+        }
+        return g;
+}
 
     string Join(List<string> info)
     {
