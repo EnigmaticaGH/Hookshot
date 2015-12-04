@@ -235,6 +235,10 @@ MonoBehaviour:
   backgroundPrefab: {fileID: 176652, guid: c42afb4c5fe576f43aa6b742ce365aca, type: 2}
   deathBoxPrefab: {fileID: 153022, guid: a4e9e4a9651e53c4594e27a811dba819, type: 2}
   nonHookLeafPrefab: {fileID: 199736, guid: 396fa737cce44cc4ca3de87d8659f34f, type: 2}
+  hookLeafPrefab: {fileID: 197004, guid: 4dfdbb8ec351ad64cba3726ea8db84ac, type: 2}
+  mushroomPrefab: {fileID: 130688, guid: b8da0c69b0133c945bcd467c32394b50, type: 2}
+  stemPrefab: {fileID: 0}
+  treeTrunkPrefab: {fileID: 139688, guid: 080e28ddcd15c6b4a956648379995cd8, type: 2}
 --- !u!1 &864162649
 GameObject:
   m_ObjectHideFlags: 0
@@ -257,7 +261,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 864162649}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -19.2000008, y: 4, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -373,7 +377,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 5085378, guid: aaf4623c4e3e92d428182c163275ccac, type: 2}
       propertyPath: m_GravityScale
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: aaf4623c4e3e92d428182c163275ccac, type: 2}
