@@ -90,10 +90,13 @@ public class RopeControl : MonoBehaviour {
         if (!isTouchingWall())
         {
             float vertical = boostEnabled ? ropeProperties.boostSpeed : Input.GetAxis("Vertical");
-            float distance = vertical * ropeProperties.climbSpeed * Time.fixedDeltaTime;
-            rope.distance = Mathf.Clamp(rope.distance - distance,
-                                        ropeProperties.minLength,
-                                        ropeProperties.maxLength);
+            if (!obstacleBlocking(vertical))
+            {
+                float distance = vertical * ropeProperties.climbSpeed * Time.fixedDeltaTime;
+                rope.distance = Mathf.Clamp(rope.distance - distance,
+                                            ropeProperties.minLength,
+                                            ropeProperties.maxLength);
+            }
         }
     }
 
@@ -190,14 +193,23 @@ public class RopeControl : MonoBehaviour {
 
         float minScale = ropeProperties.minScale;
         float maxScale = ropeProperties.maxScale;
-        float distance = hookshot.IsHooked() ? distance = rope.distance : Vector3.Distance(playerOffset, hookPos);
+        //float distance = hookshot.IsHooked() ? distance = rope.distance : Vector3.Distance(playerOffset, hookPos);
+        float distance = Vector3.Distance(playerOffset, hookPos);
 
-        RescaleY(minScale + (maxScale - minScale) * ((distance - ropeProperties.minLength) / (ropeProperties.maxLength - ropeProperties.minLength)));
+        RescaleY(minScale + ((maxScale - minScale) * ((distance - ropeProperties.minLength)) / (ropeProperties.maxLength - ropeProperties.minLength)));
+        //RescaleY(distance / 7);
     }
 
     private Vector2 GetPlayerOffset()
     {
+        //Debug.Log(hand.position);
         return hand.position;
+    }
+
+    private void setRopeSensors(Vector3 angle)
+    {
+        Transform sensor = hand.GetComponent<AimAtMouse>().frontSensor;
+        sensor.rotation = Quaternion.Euler(angle);
     }
 
     private void RescaleY(float y)
@@ -205,5 +217,21 @@ public class RopeControl : MonoBehaviour {
         Vector3 scale = transform.localScale;
         scale.y = y;
         transform.localScale = scale;
+    }
+
+    private bool obstacleBlocking(float a)
+    {
+        if (a > 0)
+        {
+            setRopeSensors(new Vector3(transform.rotation.x, transform.rotation.y, transform.rotation.z + 90));
+            return hand.GetComponent<AimAtMouse>().frontSensor.GetComponent<ObstacleSensor>().obstacleDetected();
+        }
+        else if (a < 0)
+        {
+            setRopeSensors(new Vector3(transform.rotation.x, transform.rotation.y, transform.rotation.z - 90));
+            return hand.GetComponent<AimAtMouse>().frontSensor.GetComponent<ObstacleSensor>().obstacleDetected();
+        }
+        else
+            return false;
     }
 }

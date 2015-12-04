@@ -4,6 +4,8 @@ using System.Collections;
 public class AimAtMouse : MonoBehaviour {
     private bool aimingEnabled;
 
+    public Transform frontSensor;
+
     void Start()
     {
         aimingEnabled = true;
@@ -37,6 +39,9 @@ public class AimAtMouse : MonoBehaviour {
             {
                 transform.rotation = Quaternion.FromToRotation(Vector3.right, direction);
             }
+
+            //I should check if I can do this outside of this script
+            //frontSensor.rotation = transform.rotation;
         }
     }
 

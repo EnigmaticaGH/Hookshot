@@ -105,6 +105,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &176322
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 411786}
+  - 58: {fileID: 5880942}
+  - 114: {fileID: 11444552}
+  m_Layer: 14
+  m_Name: FrontSensorR
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &184664
 GameObject:
   m_ObjectHideFlags: 0
@@ -155,6 +172,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 476450}
   m_RootOrder: 3
+--- !u!4 &411786
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 176322}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 476450}
+  m_RootOrder: 5
 --- !u!4 &422932
 Transform:
   m_ObjectHideFlags: 1
@@ -212,7 +241,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 149900}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.88606262, y: .0574275889, z: 0}
+  m_LocalPosition: {x: 0, y: .384000003, z: 0}
   m_LocalScale: {x: .5, y: .5, z: 1}
   m_Children:
   - {fileID: 424174}
@@ -220,6 +249,7 @@ Transform:
   - {fileID: 489182}
   - {fileID: 411614}
   - {fileID: 423042}
+  - {fileID: 411786}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!4 &489182
@@ -262,6 +292,19 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
+--- !u!58 &5880942
+CircleCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 176322}
+  m_Enabled: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_Offset: {x: .5, y: 0}
+  serializedVersion: 2
+  m_Radius: .150000006
 --- !u!60 &6024722
 PolygonCollider2D:
   m_ObjectHideFlags: 1
@@ -405,6 +448,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hookFab: {fileID: 150264, guid: 65cc786417315ce46afa45ba4e6f6fe1, type: 2}
   ropeFab: {fileID: 146786, guid: 342c817da3ed73444a65c5654b900747, type: 2}
+  frontSensor: {fileID: 411786}
+  backSensor: {fileID: 0}
   retractTime: .25
 --- !u!114 &11414272
 MonoBehaviour:
@@ -451,6 +496,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0af00c8167ad0540a47cdfd56a0ed8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &11444552
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 176322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f3c28195c7c5354f994b868c3f00c59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Obstacle: 0
 --- !u!114 &11444918
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -462,6 +519,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c35ef580d7602994f953ca1f66ab8f5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  frontSensor: {fileID: 411786}
 --- !u!114 &11448862
 MonoBehaviour:
   m_ObjectHideFlags: 1
