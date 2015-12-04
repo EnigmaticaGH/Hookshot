@@ -35,7 +35,6 @@ class LevelPart
         copy.SetActive(true);
         foreach(Transform part in copy.transform)
         {
-            //part.position = (Vector2)part.position + position;
             if (part.GetComponent<SpringJoint2D>() != null)
             {
                 part.GetComponent<SpringJoint2D>().connectedAnchor = (Vector2)(part.transform.position) + (Vector2.up * 0.4f);
@@ -141,13 +140,18 @@ public class InfiniteRunGenerator : MonoBehaviour
 
     void CreateLevelParts()
     {
-        //string path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments);
-        string path = Application.dataPath;
-        string folder = "\\Level Data\\";
-        string[] files = Directory.GetFiles(path + folder, "*.dat");
-        foreach(string file in files)
+        string file = Read("LevelParts");
+        string[] fileLines = file.Replace("\r\n", "\n").Replace("\r", "\n").Split('\n');
+        List<string> lines = new List<string>();
+        lines.AddRange(fileLines);
+        for (int i = 0; i < lines.Count; i++)
         {
-            ReadFile(file);
+            string s = lines[i];
+            if (s == "LevelPart")
+            {
+                ParseLevelPart(lines, i);
+                i++;
+            }
         }
         LevelPart.Instantiate(levelParts[0], Vector2.zero, Quaternion.identity);
         LevelPart.Instantiate(levelParts[1], Vector2.right * bgWidth, Quaternion.identity);
@@ -156,45 +160,12 @@ public class InfiniteRunGenerator : MonoBehaviour
         LevelPart.Instantiate(levelParts[0], Vector2.left * bgWidth * 2, Quaternion.identity);
     }
 
-    private void ReadFile(string file)
+    public static string Read(string filename)
     {
-        List<string> lines = new List<string>();
-        int numLeftBrackets = 0;
-        int numRightBrackets = 0;
-        try
-        {
-            string line;
-            using (StreamReader levelPartsReader = new StreamReader(file))
-            {
-                while((line = levelPartsReader.ReadLine()) != null)
-                {
-                    lines.Add(line);
-                }
-            }
-        }
-        catch(IOException e)
-        {
-            Debug.LogError(e);
-        }
-        foreach (char c in Join(lines))
-        {
-            if (c == '{') numLeftBrackets++;
-            if (c == '}') numRightBrackets++;
-        }
-        if (numLeftBrackets != numRightBrackets)
-            Debug.LogError("Error parsing " + file + ", brackets don't match up");
-        else
-        {
-            for (int i = 0; i < lines.Count; i++)
-            {
-                string s = lines[i];
-                if (s == "LevelPart")
-                {
-                    ParseLevelPart(lines, i);
-                    i++;
-                }
-            }
-        }
+        TextAsset theTextFile = Resources.Load<TextAsset>(filename);
+        if (theTextFile != null)
+            return theTextFile.text;
+        return string.Empty;
     }
 
     void ParseLevelPart(List<string> lines, int levelPartIndex)

@@ -39,11 +39,11 @@ public class KillEnemies : MonoBehaviour
         {
             c.gameObject.GetComponent<SpriteRenderer>().color = Color.black;
         }
-        if (c.CompareTag("Respawn"))
+        else if (c.CompareTag("Respawn"))
         {
             lastSpawn = c.gameObject;
         }
-        if ((c.CompareTag("Boundary")))
+        else if ((c.CompareTag("Boundary")))
         {
             Respawn();
         }
@@ -60,12 +60,12 @@ public class KillEnemies : MonoBehaviour
         playerSprite.gameObject.SetActive(false);
         player.velocity = Vector2.zero;
         player.isKinematic = true;
-        ParticleSystem Death = Instantiate(deathParticle, transform.position, Quaternion.identity) as ParticleSystem;
+        //ParticleSystem Death = Instantiate(deathParticle, transform.position, Quaternion.identity) as ParticleSystem;
         yield return new WaitForSeconds(respawnDelay);
         transform.position = lastSpawn.transform.position;
         playerSprite.gameObject.SetActive(true);
         player.isKinematic = false;
-        Destroy(Death.gameObject);
+        //Destroy(Death.gameObject);
         OnRespawn();
     }
 
