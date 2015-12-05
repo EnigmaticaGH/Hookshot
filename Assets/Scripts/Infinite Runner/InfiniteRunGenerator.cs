@@ -2,87 +2,11 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Collections;
-
-class LevelPart
+struct IndexedGameObject
 {
-    private GameObject levelPartFolder;
-    private List<GameObject> parts;
-    private int difficulty;
-    private static int numberOfParts = 0;
-    public LevelPart(Vector3 position, List<GameObject> levelParts, int diff)
-    {
-        levelPartFolder = new GameObject("Level Part Reference");
-        levelPartFolder.transform.position = position;
-        parts = levelParts;
-        difficulty = diff;
-        foreach(GameObject part in parts)
-        {
-            part.transform.position += levelPartFolder.transform.position;
-            part.transform.parent = levelPartFolder.transform;
-            if(part.GetComponent<SpringJoint2D>() != null)
-            {
-                part.GetComponent<SpringJoint2D>().connectedAnchor = (Vector2)(part.transform.position) + (Vector2.up * 0.4f);
-            }
-        }
-        levelPartFolder.SetActive(false);
-    }
-    public static void Instantiate(LevelPart level, Vector2 position, Quaternion rotation)
-    {
-        GameObject copy;
-        copy = (GameObject)Object.Instantiate(level.levelPartFolder, position, rotation);
-        copy.name = "Level Part " + level.Count;
-        numberOfParts++;
-        copy.SetActive(true);
-        foreach(Transform part in copy.transform)
-        {
-            if (part.GetComponent<SpringJoint2D>() != null)
-            {
-                part.GetComponent<SpringJoint2D>().connectedAnchor = (Vector2)(part.transform.position) + (Vector2.up * 0.4f);
-            }
-        }
-    }
-    public List<GameObject> Parts
-    {
-        get
-        {
-            return parts;
-        }
-        set
-        {
-            parts = Parts;
-        }
-    }
-    public int Difficulty
-    {
-        get
-        {
-            return difficulty;
-        }
-        private set
-        {
-            difficulty = Difficulty;
-        }
-    }
-    public Vector2 Position
-    {
-        get
-        {
-            return levelPartFolder.transform.position;
-        }
-        set
-        {
-            levelPartFolder.transform.position = Position;
-        }
-    }
-    private int Count
-    {
-        get
-        {
-            return numberOfParts;
-        }
-    }
+    public int index;
+    public GameObject gameObject;
 }
-
 public class InfiniteRunGenerator : MonoBehaviour
 {
     public GameObject backgroundPrefab;
@@ -92,10 +16,11 @@ public class InfiniteRunGenerator : MonoBehaviour
     public GameObject mushroomPrefab;
     public GameObject stemPrefab;
     public GameObject treeTrunkPrefab;
-    
+
     private List<GameObject> backgrounds;
     private List<GameObject> deathBoxes;
     private List<LevelPart> levelParts;
+    private List<IndexedGameObject> generatedSections;
 
     private Vector2 deathBoxPos;
     private Vector2 backgroundPos;
@@ -106,19 +31,16 @@ public class InfiniteRunGenerator : MonoBehaviour
     float bgWidth;
     float bgHeight;
 
-    // Use this for initialization
     void Start()
     {
         backgrounds = new List<GameObject>();
         deathBoxes = new List<GameObject>();
         levelParts = new List<LevelPart>();
-
+        generatedSections = new List<IndexedGameObject>();
         envFolder = GameObject.Find("Environment");
         bgFolder = GameObject.Find("Background");
-
         bgWidth = backgroundPrefab.GetComponent<SpriteRenderer>().sprite.bounds.extents.x * 2;
         bgHeight = backgroundPrefab.GetComponent<SpriteRenderer>().sprite.bounds.extents.y * 2;
-
         backgroundPos = new Vector2(-bgWidth, 0);
         deathBoxPos = backgroundPos + (Vector2.down * 5);
         CreateLevelParts();
@@ -153,11 +75,76 @@ public class InfiniteRunGenerator : MonoBehaviour
                 i++;
             }
         }
-        LevelPart.Instantiate(levelParts[0], Vector2.zero, Quaternion.identity);
-        LevelPart.Instantiate(levelParts[1], Vector2.right * bgWidth, Quaternion.identity);
-        LevelPart.Instantiate(levelParts[1], Vector2.left * bgWidth, Quaternion.identity);
-        LevelPart.Instantiate(levelParts[0], Vector2.right * bgWidth * 2, Quaternion.identity);
-        LevelPart.Instantiate(levelParts[0], Vector2.left * bgWidth * 2, Quaternion.identity);
+        GameObject initialPart1 = LevelPart.Instantiate(levelParts[1], Vector2.left * bgWidth, Quaternion.identity, -1);
+        GameObject initialPart2 = LevelPart.Instantiate(levelParts[0], Vector2.zero, Quaternion.identity, 0);
+        GameObject initialPart3 = LevelPart.Instantiate(levelParts[1], Vector2.right * bgWidth, Quaternion.identity, 1);
+        IndexedGameObject i1;
+        IndexedGameObject i2;
+        IndexedGameObject i3;
+        i1.index = -1;
+        i2.index = 0;
+        i3.index = 1;
+        i1.gameObject = initialPart1;
+        i2.gameObject = initialPart2;
+        i3.gameObject = initialPart3;
+        generatedSections.Add(i1);
+        generatedSections.Add(i2);
+        generatedSections.Add(i3);
+    }
+    void Update()
+    {
+        oldSection = section;
+        bool canGenerate = true;
+        bool canGenerateAhead = true;
+        float pos = Mathf.Floor(transform.position.x);
+        section = (int)(pos / bgWidth);
+        if (section > oldSection || section < oldSection)
+        {
+            int direction = section - oldSection;
+            MoveSection();
+            foreach (IndexedGameObject i in generatedSections)
+            {
+                canGenerate = canGenerate && section != i.index;
+                canGenerateAhead = canGenerateAhead && section + direction != i.index;
+            }
+            if(canGenerate)
+            {
+                GenerateSection(direction, section);
+            }
+            if (canGenerateAhead)
+            {
+                GenerateSection(direction, section + direction);
+            }
+        }
+    }
+
+    void MoveSection()
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            Vector2 offset = Vector2.right * bgWidth * (i + section);
+            backgrounds[i].transform.position = backgroundPos + offset;
+            deathBoxes[i].transform.position = deathBoxPos + offset;
+        }
+        DetermineVisibleSections();
+    }
+
+    void GenerateSection(int direction, int sec)
+    {
+        int i = Mathf.RoundToInt(Random.value * (LevelPart.Count - 1));
+        IndexedGameObject ir1;
+        GameObject randomPart1 = LevelPart.Instantiate(levelParts[i], Vector2.right * bgWidth * sec, Quaternion.identity, sec);
+        ir1.index = sec;
+        ir1.gameObject = randomPart1;
+        generatedSections.Add(ir1);
+    }
+
+    void DetermineVisibleSections()
+    {
+        foreach(IndexedGameObject ig in generatedSections)
+        {
+            ig.gameObject.SetActive(Mathf.Abs(ig.index - section) <= 1);
+        }
     }
 
     public static string Read(string filename)
@@ -181,41 +168,27 @@ public class InfiniteRunGenerator : MonoBehaviour
             if (s.Contains("x = "))
             {
                 string[] line = s.Split(' ');
-                if (line[line.Length - 1] == "BGWIDTH")
+                try
                 {
-                    x = bgWidth;
+                    x = float.Parse((line[line.Length - 1]));
                 }
-                else
+                catch (System.FormatException e)
                 {
-                    try
-                    {
-                        x = float.Parse((line[line.Length - 1]));
-                    }
-                    catch (System.FormatException e)
-                    {
-                        Debug.LogError("Attempted to parse a number on line " + (i + 1) + " and failed.");
-                        Debug.LogException(e);
-                    }
+                    Debug.LogError("Attempted to parse a number on line " + (i + 1) + " and failed.");
+                    Debug.LogException(e);
                 }
             }
-            else if (s.Contains("\ty"))
+            else if (s.Contains("\ty = "))
             {
                 string[] line = s.Split(' ');
-                if (line[line.Length - 1] == "BGHEIGHT")
+                try
                 {
-                    y = bgHeight;
+                    y = float.Parse((line[line.Length - 1]));
                 }
-                else
+                catch (System.FormatException e)
                 {
-                    try
-                    {
-                        y = float.Parse((line[line.Length - 1]));
-                    }
-                    catch (System.FormatException e)
-                    {
-                        Debug.LogError("Attempted to parse a number on line " + (i + 1) + " and failed.");
-                        Debug.LogException(e);
-                    }
+                    Debug.LogError("Attempted to parse a number on line " + (i + 1) + " and failed.");
+                    Debug.LogException(e);
                 }
             }
             else if (s.Contains("difficulty = "))
@@ -238,48 +211,33 @@ public class InfiniteRunGenerator : MonoBehaviour
         float x = 0;
         float y = 0;
         string type = "";
-        
+
         while (i < lines.Count && lines[i].Trim().Substring(0) != "}")
         {
             string s = lines[i];
             if (s.Contains("x = "))
             {
-                string[] line = s.Split(' ');
-                if (line[line.Length - 1] == "BGWIDTH")
+                string[] line = s.Split(' '); try
                 {
-                    x = bgWidth;
+                    x = float.Parse((line[line.Length - 1]));
                 }
-                else
+                catch (System.FormatException e)
                 {
-                    try
-                    {
-                        x = float.Parse((line[line.Length - 1]));
-                    }
-                    catch (System.FormatException e)
-                    {
-                        Debug.LogError("Attempted to parse a number on line " + (i + 1) + " and failed.");
-                        Debug.LogException(e);
-                    }
+                    Debug.LogError("Attempted to parse a number on line " + (i + 1) + " and failed.");
+                    Debug.LogException(e);
                 }
             }
             else if (s.Contains("\ty = "))
             {
                 string[] line = s.Split(' ');
-                if (line[line.Length - 1] == "BGHEIGHT")
+                try
                 {
-                    y = bgHeight;
+                    y = float.Parse((line[line.Length - 1]));
                 }
-                else
+                catch (System.FormatException e)
                 {
-                    try
-                    {
-                        y = float.Parse((line[line.Length - 1]));
-                    }
-                    catch (System.FormatException e)
-                    {
-                        Debug.LogError("Attempted to parse a number on line " + (i + 1) + " and failed.");
-                        Debug.LogException(e);
-                    }
+                    Debug.LogError("Attempted to parse a number on line " + (i + 1) + " and failed.");
+                    Debug.LogException(e);
                 }
             }
             else if (s.Contains("type = "))
@@ -321,37 +279,15 @@ public class InfiniteRunGenerator : MonoBehaviour
             g = new GameObject("Unknown Type (" + type + ")");
         }
         return g;
-}
+    }
 
     string Join(List<string> info)
     {
         string r = "";
-        foreach(string s in info)
+        foreach (string s in info)
         {
             r += s;
         }
         return r;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        oldSection = section;
-        float pos = Mathf.Floor(transform.position.x);
-        section = (int)(pos / bgWidth);
-        if (section > oldSection || section < oldSection)
-        {
-            MoveSection();
-        }
-    }
-
-    void MoveSection()
-    {
-        for (int i = 0; i < 3; i++)
-        {
-            Vector2 offset = Vector2.right * bgWidth * (i + section);
-            backgrounds[i].transform.position = backgroundPos + offset;
-            deathBoxes[i].transform.position = deathBoxPos + offset;
-        }
     }
 }

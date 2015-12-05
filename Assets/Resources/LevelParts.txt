@@ -12,7 +12,13 @@ LevelPart
 	Object
 	{
 		type = nonHookLeaf
-		x = -6.4
+		x = -9.6
+		y = -0.4
+	}
+	Object
+	{
+		type = nonHookLeaf
+		x = -4.8
 		y = -0.4
 	}
 	Object
@@ -24,7 +30,7 @@ LevelPart
 	Object
 	{
 		type = nonHookLeaf
-		x = 6.4
+		x = 4.8
 		y = -0.4
 	}
 	difficulty = 0
@@ -47,9 +53,9 @@ LevelPart
 	}
 	Object
 	{
-		type = hookLeaf
-		x = 9.6
-		y = 5
+		type = nonHookLeaf
+		x = 4.8
+		y = -0.4
 	}
 	difficulty = 1
 }
