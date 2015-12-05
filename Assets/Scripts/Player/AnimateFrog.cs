@@ -7,7 +7,6 @@ public class AnimateFrog : MonoBehaviour
     private Animator anim;
     private float horizontal;
 
-    // Use this for initialization
     void Start()
     {
         player = GetComponentInParent<LateralMovement>();

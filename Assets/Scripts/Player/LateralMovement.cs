@@ -32,11 +32,9 @@ public class LateralMovement : MonoBehaviour
 
     public float speed;
     public float speedInWater;
-    //private float regularSpeed;
     public float force;
     public float moveForce;
     private float horizontal;
-    //private float vertical;
 
     private GameObject hand;
     private HookshotControl hookshotControl;
@@ -65,7 +63,6 @@ public class LateralMovement : MonoBehaviour
 
     void Start()
     {
-        //regularSpeed = speed;
         horizontal = 0;
         canMove = true;
         canJump = true;
@@ -96,7 +93,6 @@ public class LateralMovement : MonoBehaviour
     void FixedUpdate()
     {
         horizontal = Input.GetAxisRaw("Horizontal");
-        //vertical = Input.GetAxisRaw("Vertical");
         stateProcesses[(int)state]();
     }
 

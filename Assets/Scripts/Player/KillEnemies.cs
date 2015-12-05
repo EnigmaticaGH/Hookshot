@@ -39,12 +39,10 @@ public class KillEnemies : MonoBehaviour
         hook.CancelHook();
         player.velocity = Vector2.zero;
         player.isKinematic = true;
-        //ParticleSystem Death = Instantiate(deathParticle, transform.position, Quaternion.identity) as ParticleSystem;
         yield return new WaitForSeconds(respawnDelay);
         player.isKinematic = false;
         transform.position = Vector2.up;
         playerSprite.SetActive(true);
-        //Destroy(Death.gameObject);
         if(OnRespawn != null)
             OnRespawn();
     }
