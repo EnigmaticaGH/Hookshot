@@ -99,7 +99,6 @@ GameObject:
   - 50: {fileID: 5085378}
   - 114: {fileID: 11492046}
   - 114: {fileID: 11410268}
-  - 114: {fileID: 11413136}
   - 114: {fileID: 11415722}
   - 114: {fileID: 11435374}
   m_Layer: 0
@@ -605,18 +604,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c35ef580d7602994f953ca1f66ab8f5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &11413136
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 142750}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c622e38440859748b969e9095699585, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lethalVelocity: 9
 --- !u!114 &11415722
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -656,6 +643,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 317b72d5517eb6147b51f33b6bc4f15f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parallaxBackgroundSpeed: 2
   backgroundPrefab: {fileID: 176652, guid: c42afb4c5fe576f43aa6b742ce365aca, type: 2}
   deathBoxPrefab: {fileID: 153022, guid: a4e9e4a9651e53c4594e27a811dba819, type: 2}
   nonHookLeafPrefab: {fileID: 199736, guid: 396fa737cce44cc4ca3de87d8659f34f, type: 2}

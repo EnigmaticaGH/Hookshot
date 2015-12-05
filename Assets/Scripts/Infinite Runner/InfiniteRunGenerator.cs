@@ -9,6 +9,8 @@ struct IndexedGameObject
 }
 public class InfiniteRunGenerator : MonoBehaviour
 {
+    public float parallaxBackgroundSpeed;
+
     public GameObject backgroundPrefab;
     public GameObject deathBoxPrefab;
     public GameObject nonHookLeafPrefab;
@@ -28,6 +30,8 @@ public class InfiniteRunGenerator : MonoBehaviour
     private bool doneRespawning;
     int oldSection = 0;
     int section = 0;
+    int oldParallaxSection = 0;
+    int parallaxSection = 0;
     float bgWidth;
 
     public delegate void RespawnAction();
@@ -94,21 +98,26 @@ public class InfiniteRunGenerator : MonoBehaviour
     }
     void Update()
     {
+        UpdateLevelParts();
+        ParallaxBackground();
+        CheckForDeath();
+    }
+    void UpdateLevelParts()
+    {
         oldSection = section;
         bool canGenerate = true;
         bool canGenerateAhead = true;
-        float pos = Mathf.Floor(transform.position.x);
+        float pos = transform.position.x;
         section = (int)(pos / bgWidth);
-        if (section > oldSection || section < oldSection)
+        if (section != oldSection)
         {
             int direction = section - oldSection;
-            MoveSection();
             foreach (IndexedGameObject i in generatedSections)
             {
                 canGenerate = canGenerate && section != i.index;
                 canGenerateAhead = canGenerateAhead && section + direction != i.index;
             }
-            if(canGenerate)
+            if (canGenerate)
             {
                 GenerateSection(direction, section);
             }
@@ -116,18 +125,30 @@ public class InfiniteRunGenerator : MonoBehaviour
             {
                 GenerateSection(direction, section + direction);
             }
+            DetermineVisibleSections();
         }
-        CheckForDeath();
     }
-
+    void ParallaxBackground()
+    {
+        foreach(GameObject bg in backgrounds)
+        {
+            bg.GetComponent<Rigidbody2D>().velocity = Vector2.right * (GetComponent<Rigidbody2D>().velocity.x / GetComponent<LateralMovement>().speed) * parallaxBackgroundSpeed;
+        }
+        oldParallaxSection = parallaxSection;
+        float positionXFromCenter = transform.position.x - backgrounds[1].transform.position.x;
+        parallaxSection = (int)(positionXFromCenter / bgWidth);
+        if(parallaxSection != oldParallaxSection)
+        {
+            MoveSection();
+        }
+    }
     void MoveSection()
     {
         for (int i = 0; i < 3; i++)
         {
-            Vector2 offset = Vector2.right * bgWidth * (i + section);
-            backgrounds[i].transform.position = backgroundPos + offset;
+            Vector2 offset = Vector2.right * bgWidth * parallaxSection;
+            backgrounds[i].transform.position += (Vector3)offset;
         }
-        DetermineVisibleSections();
     }
 
     void GenerateSection(int direction, int sec)
