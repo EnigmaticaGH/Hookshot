@@ -23,7 +23,7 @@ public class CeilingSensor : MonoBehaviour {
     {
         if (other.CompareTag("Environment") || other.CompareTag("Hookable"))
         {
-            inTrigger--;
+            inTrigger = 0;
         }
     }
 

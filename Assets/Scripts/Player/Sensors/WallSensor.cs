@@ -12,7 +12,7 @@ public class WallSensor : MonoBehaviour
 
     void OnTriggerExit2D(Collider2D c)
     {
-        wallCollide = c.CompareTag("Environment") || c.CompareTag("Hookable") ? --wallCollide : wallCollide;
+        wallCollide = c.CompareTag("Environment") || c.CompareTag("Hookable") ? (sbyte)0 : wallCollide;
     }
 
     public bool IsWallCollide()

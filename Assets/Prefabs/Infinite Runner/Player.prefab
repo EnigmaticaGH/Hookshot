@@ -77,10 +77,10 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 447806}
-  - 61: {fileID: 6117328}
   - 61: {fileID: 6159288}
   - 61: {fileID: 6192738}
   - 114: {fileID: 11403708}
+  - 61: {fileID: 6148586}
   m_Layer: 0
   m_Name: GroundColliders
   m_TagString: Player Sprite
@@ -394,19 +394,6 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Size: {x: .200000003, y: .5}
---- !u!61 &6117328
-BoxCollider2D:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 138132}
-  m_Enabled: 1
-  m_Material: {fileID: 6200000, guid: 784af44ee49d815438714b00650f5e24, type: 2}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_Offset: {x: .0299999993, y: -.310000002}
-  serializedVersion: 2
-  m_Size: {x: .850000024, y: .310000002}
 --- !u!61 &6121034
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -485,6 +472,19 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Size: {x: .5, y: .200000003}
+--- !u!61 &6148586
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 138132}
+  m_Enabled: 1
+  m_Material: {fileID: 6200000, guid: 784af44ee49d815438714b00650f5e24, type: 2}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_Offset: {x: .0299999993, y: -.300000012}
+  serializedVersion: 2
+  m_Size: {x: .860000014, y: .300000012}
 --- !u!61 &6159288
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -651,6 +651,10 @@ MonoBehaviour:
   mushroomPrefab: {fileID: 130688, guid: b8da0c69b0133c945bcd467c32394b50, type: 2}
   stemPrefab: {fileID: 178632, guid: 18c876a801c67c348883d5f3e152da6b, type: 2}
   treeTrunkPrefab: {fileID: 139688, guid: 080e28ddcd15c6b4a956648379995cd8, type: 2}
+  stemSidewaysPrefab: {fileID: 173538, guid: e4a53e3c8d0ecf7488e2088068678564, type: 2}
+  treeTrunkSidewaysPrefab: {fileID: 177374, guid: d1144b297f3dc034aaef6a485525c85d,
+    type: 2}
+  levelPartWidth: 100
 --- !u!114 &11443494
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -755,7 +759,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 666
-  m_Sprite: {fileID: 21300014, guid: 9b7dc52857697464daf586e386488574, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7adf77dc705010646a50bc5dde5e1966, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!212 &21263956
 SpriteRenderer:

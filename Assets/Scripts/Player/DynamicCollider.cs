@@ -85,7 +85,6 @@ public class DynamicCollider : MonoBehaviour
             sprite = GetComponent<SpriteRenderer>().sprite;
             Vector3 center = sprite.bounds.center;
             Vector3 extents = sprite.bounds.extents;
-
             Sensors[1].offset = center + new Vector3(0, extents.y - 0.15f);
             Sensors[2].offset = center + new Vector3(extents.x - 0.15f, 0);
             Sensors[3].offset = center + new Vector3(-extents.x + 0.15f, 0);

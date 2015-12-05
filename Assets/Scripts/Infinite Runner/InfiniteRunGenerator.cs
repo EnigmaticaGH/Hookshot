@@ -18,6 +18,8 @@ public class InfiniteRunGenerator : MonoBehaviour
     public GameObject mushroomPrefab;
     public GameObject stemPrefab;
     public GameObject treeTrunkPrefab;
+    public GameObject stemSidewaysPrefab;
+    public GameObject treeTrunkSidewaysPrefab;
 
     private List<GameObject> backgrounds;
     private List<LevelPart> levelParts;
@@ -33,6 +35,7 @@ public class InfiniteRunGenerator : MonoBehaviour
     int oldParallaxSection = 0;
     int parallaxSection = 0;
     float bgWidth;
+    public float levelPartWidth;
 
     public delegate void RespawnAction();
     public static event RespawnAction Respawn;
@@ -74,15 +77,16 @@ public class InfiniteRunGenerator : MonoBehaviour
         for (int i = 0; i < lines.Count; i++)
         {
             string s = lines[i];
-            if (s == "LevelPart")
+            if (s.Split(' ')[0] == "LevelPart")
             {
-                ParseLevelPart(lines, i);
+                string name = s.Split('=')[1].Trim();
+                ParseLevelPart(lines, i, name);
                 i++;
             }
         }
-        GameObject initialPart1 = LevelPart.Instantiate(levelParts[1], Vector2.left * bgWidth, Quaternion.identity, -1);
+        GameObject initialPart1 = LevelPart.Instantiate(levelParts[1], Vector2.left * levelPartWidth, Quaternion.identity, -1);
         GameObject initialPart2 = LevelPart.Instantiate(levelParts[0], Vector2.zero, Quaternion.identity, 0);
-        GameObject initialPart3 = LevelPart.Instantiate(levelParts[1], Vector2.right * bgWidth, Quaternion.identity, 1);
+        GameObject initialPart3 = LevelPart.Instantiate(levelParts[1], Vector2.right * levelPartWidth, Quaternion.identity, 1);
         IndexedGameObject i1;
         IndexedGameObject i2;
         IndexedGameObject i3;
@@ -108,7 +112,7 @@ public class InfiniteRunGenerator : MonoBehaviour
         bool canGenerate = true;
         bool canGenerateAhead = true;
         float pos = transform.position.x;
-        section = (int)(pos / bgWidth);
+        section = (int)(pos / levelPartWidth);
         if (section != oldSection)
         {
             int direction = section - oldSection;
@@ -155,7 +159,7 @@ public class InfiniteRunGenerator : MonoBehaviour
     {
         int i = Mathf.RoundToInt(Random.value * (LevelPart.Count - 1));
         IndexedGameObject ir1;
-        GameObject randomPart1 = LevelPart.Instantiate(levelParts[i], Vector2.right * bgWidth * sec, Quaternion.identity, sec);
+        GameObject randomPart1 = LevelPart.Instantiate(levelParts[i], Vector2.right * levelPartWidth * sec, Quaternion.identity, sec);
         ir1.index = sec;
         ir1.gameObject = randomPart1;
         generatedSections.Add(ir1);
@@ -192,14 +196,14 @@ public class InfiniteRunGenerator : MonoBehaviour
         return string.Empty;
     }
 
-    void ParseLevelPart(List<string> lines, int levelPartIndex)
+    void ParseLevelPart(List<string> lines, int levelPartIndex, string name)
     {
         int i = levelPartIndex + 1;
         float x = 0;
         float y = 0;
         int difficulty = 0;
         List<GameObject> objects = new List<GameObject>();
-        while (i < lines.Count && lines[i] != "LevelPart")
+        while (i < lines.Count && lines[i].Split(' ')[0] != "LevelPart")
         {
             string s = lines[i];
             if (s.Contains("x = "))
@@ -239,7 +243,7 @@ public class InfiniteRunGenerator : MonoBehaviour
             }
             i++;
         }
-        levelParts.Add(new LevelPart(new Vector2(x, y), objects, difficulty));
+        levelParts.Add(new LevelPart(new Vector2(x, y), objects, difficulty, name));
     }
 
     int ParseObject(List<string> lines, int ObjectIndex, ref List<GameObject> objects)
@@ -310,6 +314,14 @@ public class InfiniteRunGenerator : MonoBehaviour
         else if (type == "treeTrunk")
         {
             g = (GameObject)Instantiate(treeTrunkPrefab, new Vector2(x, y), Quaternion.identity);
+        }
+        else if (type == "stemSideways")
+        {
+            g = (GameObject)Instantiate(stemSidewaysPrefab, new Vector2(x, y), Quaternion.identity);
+        }
+        else if (type == "treeTrunkSideways")
+        {
+            g = (GameObject)Instantiate(treeTrunkSidewaysPrefab, new Vector2(x, y), Quaternion.identity);
         }
         else
         {

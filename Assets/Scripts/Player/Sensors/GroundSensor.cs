@@ -33,7 +33,7 @@ public class GroundSensor : MonoBehaviour {
     {
         if (other.CompareTag("Environment") || other.CompareTag("Hookable"))
         {
-            grounded--;
+            grounded = 0;
         }
     }
     void Reset()

@@ -8,13 +8,15 @@ class LevelPart
     private List<GameObject> parts;
     private int difficulty;
     private int section;
+    private string name;
     private static int numberOfParts = 0;
-    public LevelPart(Vector3 position, List<GameObject> levelParts, int diff)
+    public LevelPart(Vector3 position, List<GameObject> levelParts, int partDifficulty, string partName)
     {
-        levelPartFolder = new GameObject("Level Part Reference " + Count);
+        name = partName;
+        levelPartFolder = new GameObject("Reference " + Count + ": " + name);
         levelPartFolder.transform.position = position;
         parts = levelParts;
-        difficulty = diff;
+        difficulty = partDifficulty;
         foreach (GameObject part in parts)
         {
             part.transform.position += levelPartFolder.transform.position;
