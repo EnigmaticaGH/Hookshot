@@ -39,7 +39,8 @@ public class InfiniteRunGenerator : MonoBehaviour
 
     public delegate void RespawnAction();
     public static event RespawnAction Respawn;
-
+    public delegate void UpdateScore(int score);
+    public static event UpdateScore Score;
     void Start()
     {
         KillEnemies.OnRespawn += DoneRespawning;
@@ -105,6 +106,7 @@ public class InfiniteRunGenerator : MonoBehaviour
         UpdateLevelParts();
         ParallaxBackground();
         CheckForDeath();
+        Score((int)Mathf.Abs(transform.position.x * 10));
     }
     void UpdateLevelParts()
     {

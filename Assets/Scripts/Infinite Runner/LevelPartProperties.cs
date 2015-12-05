@@ -14,7 +14,7 @@ class LevelPart
     {
         name = partName;
         levelPartFolder = new GameObject("Reference " + Count + ": " + name);
-        levelPartFolder.transform.position = position;
+        levelPartFolder.transform.position = (Vector2)position + Vector2.up * 20;
         parts = levelParts;
         difficulty = partDifficulty;
         foreach (GameObject part in parts)
