@@ -20,7 +20,7 @@ public struct Rope
 public class RopeControl : MonoBehaviour {
     private LateralMovement player;
     private Rigidbody2D playerBody;
-    private GameObject playerRenderer;
+    //private GameObject playerRenderer;
 
     [HideInInspector]
     public HookshotControl hookshot;
@@ -50,7 +50,7 @@ public class RopeControl : MonoBehaviour {
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<LateralMovement>();
         playerBody = player.getRigidBody();
-        playerRenderer = player.getSprite();
+        //playerRenderer = player.getSprite();
         FindWallSensors();
         moveForce = player.moveForce;
         RescaleY(0.0f);

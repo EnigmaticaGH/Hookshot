@@ -6,15 +6,22 @@ public class DynamicCollider : MonoBehaviour
     private BoxCollider2D[] Sensors;
     private Sprite sprite;
     private LateralMovement player;
-    private Vector2[] defaultCollider;
+    private GameObject GroundColliders;
+    private GameObject JumpColliders;
+    private GameObject HookColliders;
     private bool running = true;
-    private const float COLLIDER_UPDATE_DELTA = 0.1f;
+    private const float SENSOR_UPDATE_DELTA = 0.1f;
 
     void Start()
     {
         KillEnemies.OnRespawn += ResetCollider;
+        LateralMovement.GroundState += Ground;
+        LateralMovement.JumpState += Jump;
+        LateralMovement.HookState += Hook;
         player = GetComponentInParent<LateralMovement>();
-        defaultCollider = GetComponent<PolygonCollider2D>().points;
+        GroundColliders = GameObject.Find("GroundColliders");
+        JumpColliders = GameObject.Find("JumpColliders");
+        HookColliders = GameObject.Find("HookColliders");
         Sensors = new BoxCollider2D[4]
         {
             GameObject.Find("GroundSensor").GetComponent<BoxCollider2D>(),
@@ -22,12 +29,42 @@ public class DynamicCollider : MonoBehaviour
             GameObject.Find("WallSensorR").GetComponent<BoxCollider2D>(),
             GameObject.Find("WallSensorL").GetComponent<BoxCollider2D>()
         };
-        StartCoroutine(UpdateCollider());
+        Ground();
+        StartCoroutine(UpdateSensors());
+    }
+
+    void OnDestroy()
+    {
+        LateralMovement.GroundState -= Ground;
+        LateralMovement.JumpState -= Jump;
+        LateralMovement.HookState -= Hook;
+        KillEnemies.OnRespawn -= ResetCollider;
+    }
+
+    void Ground()
+    {
+        GroundColliders.SetActive(true);
+        JumpColliders.SetActive(false);
+        HookColliders.SetActive(false);
+    }
+
+    void Jump()
+    {
+        GroundColliders.SetActive(false);
+        JumpColliders.SetActive(true);
+        HookColliders.SetActive(false);
+    }
+
+    void Hook()
+    {
+        GroundColliders.SetActive(false);
+        JumpColliders.SetActive(false);
+        HookColliders.SetActive(true);
     }
 
     void OnEnable()
     {
-        if (!running) StartCoroutine(UpdateCollider());
+        if (!running) StartCoroutine(UpdateSensors());
     }
 
     void OnDisable()
@@ -36,17 +73,12 @@ public class DynamicCollider : MonoBehaviour
         StopAllCoroutines();
     }
 
-    void OnDestroy()
-    {
-        KillEnemies.OnRespawn -= ResetCollider;
-    }
-
     void ResetCollider()
     {
-        GetComponent<PolygonCollider2D>().points = defaultCollider;
+        Ground();
     }
 
-    IEnumerator UpdateCollider()
+    IEnumerator UpdateSensors()
     {
         while (true)
         {
@@ -61,14 +93,8 @@ public class DynamicCollider : MonoBehaviour
             if(!player.isGrounded())
             {
                 Sensors[0].offset = new Vector2(0, -extents.y + 0.15f);
-                Destroy(GetComponent<PolygonCollider2D>());
-                gameObject.AddComponent<PolygonCollider2D>();
             }
-            else
-            {
-                ResetCollider();
-            }
-            yield return new WaitForSeconds(COLLIDER_UPDATE_DELTA);
+            yield return new WaitForSeconds(SENSOR_UPDATE_DELTA);
         }
     }
 }

@@ -1,38 +1,56 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class StopGettingStuckOnWalls : MonoBehaviour
 {
-    private JumpControl jump;
-    private HookshotControl hook;
-    private PolygonCollider2D playerCollider;
+    private BoxCollider2D[] GroundColliders;
+    private BoxCollider2D[] JumpColliders;
+    private BoxCollider2D[] HookColliders;
+    private List<BoxCollider2D> playerColliders;
     public PhysicsMaterial2D friction;
     public PhysicsMaterial2D noFriction;
-    private PhysicsMaterial2D temp;
     // Use this for initialization
     void Start()
     {
-        hook = GetComponentInParent<LateralMovement>().getHookScript();
-        jump = GetComponentInParent<JumpControl>();
+        LateralMovement.GroundState += Ground;
+        LateralMovement.JumpState += Air;
+        LateralMovement.HookState += Air;
+        GroundColliders = GameObject.Find("GroundColliders").GetComponents<BoxCollider2D>();
+        JumpColliders = GameObject.Find("JumpColliders").GetComponents<BoxCollider2D>();
+        HookColliders = GameObject.Find("HookColliders").GetComponents<BoxCollider2D>();
+        playerColliders = new List<BoxCollider2D>();
+        playerColliders.AddRange(GroundColliders);
+        playerColliders.AddRange(JumpColliders);
+        playerColliders.AddRange(HookColliders);
+        Ground();
     }
 
-    // Update is called once per frame
-    void Update()
+    void OnDestroy()
     {
-        playerCollider = GetComponent<PolygonCollider2D>();
-        temp = playerCollider.sharedMaterial;
-        playerCollider.sharedMaterial = IsGrounded() ? friction : noFriction;
+        LateralMovement.GroundState -= Ground;
+        LateralMovement.JumpState -= Air;
+        LateralMovement.HookState -= Air;
+    }
 
-        if (playerCollider.sharedMaterial != temp)
+    void Ground()
+    {
+        foreach(BoxCollider2D c in playerColliders)
         {
+            c.sharedMaterial = friction;
             //Force an update to the collider's physics material
-            playerCollider.enabled = false;
-            playerCollider.enabled = true;
+            c.enabled = false;
+            c.enabled = true;
         }
     }
-
-    private bool IsGrounded()
+    void Air()
     {
-        return !hook.IsHooked() && jump.isGrounded();
+        foreach (BoxCollider2D c in playerColliders)
+        {
+            c.sharedMaterial = noFriction;
+            //Force an update to the collider's physics material
+            c.enabled = false;
+            c.enabled = true;
+        }
     }
 }

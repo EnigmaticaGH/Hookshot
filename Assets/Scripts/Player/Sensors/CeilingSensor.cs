@@ -4,18 +4,18 @@ using System.Collections;
 public class CeilingSensor : MonoBehaviour {
 
     private bool canControlRope;
-    private bool inTrigger;
+    private sbyte inTrigger = 0;
 
     void Update()
     {
-        canControlRope = (Input.GetAxis("Vertical") <= 0 && inTrigger) || !inTrigger;
+        canControlRope = (Input.GetAxis("Vertical") <= 0 && inTrigger > 0) || inTrigger <= 0;
     }
 
-    void OnTriggerStay2D(Collider2D other)
+    void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Environment") || other.CompareTag("Hookable"))
         {
-            inTrigger = true;
+            inTrigger++;
         }
     }
 
@@ -23,13 +23,13 @@ public class CeilingSensor : MonoBehaviour {
     {
         if (other.CompareTag("Environment") || other.CompareTag("Hookable"))
         {
-            inTrigger = false;
+            inTrigger--;
         }
     }
 
     public bool onCeiling()
     {
-        return inTrigger;
+        return inTrigger > 0;
     }
 
     public bool CanControlRope()

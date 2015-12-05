@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.IO;
 
 public class Hook : MonoBehaviour
 {
@@ -27,6 +28,11 @@ public class Hook : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D c)
     {
+        StreamWriter f;
+        using (f = new StreamWriter(Application.dataPath + "\\file4.txt"))
+        {
+            f.WriteLine(c.name + ", " + c.transform.position);
+        }
         if (c.CompareTag("Hookable"))
         {
             hookedObject = c.gameObject;

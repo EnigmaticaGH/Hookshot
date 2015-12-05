@@ -18,7 +18,6 @@ public class InfiniteRunGenerator : MonoBehaviour
     public GameObject treeTrunkPrefab;
 
     private List<GameObject> backgrounds;
-    private List<GameObject> deathBoxes;
     private List<LevelPart> levelParts;
     private List<IndexedGameObject> generatedSections;
 
@@ -26,37 +25,39 @@ public class InfiniteRunGenerator : MonoBehaviour
     private Vector2 backgroundPos;
     private GameObject envFolder;
     private GameObject bgFolder;
+    private bool doneRespawning;
     int oldSection = 0;
     int section = 0;
     float bgWidth;
-    float bgHeight;
+
+    public delegate void RespawnAction();
+    public static event RespawnAction Respawn;
 
     void Start()
     {
+        KillEnemies.OnRespawn += DoneRespawning;
+        doneRespawning = true;
         backgrounds = new List<GameObject>();
-        deathBoxes = new List<GameObject>();
         levelParts = new List<LevelPart>();
         generatedSections = new List<IndexedGameObject>();
-        envFolder = GameObject.Find("Environment");
         bgFolder = GameObject.Find("Background");
         bgWidth = backgroundPrefab.GetComponent<SpriteRenderer>().sprite.bounds.extents.x * 2;
-        bgHeight = backgroundPrefab.GetComponent<SpriteRenderer>().sprite.bounds.extents.y * 2;
         backgroundPos = new Vector2(-bgWidth, 0);
         deathBoxPos = backgroundPos + (Vector2.down * 5);
         CreateLevelParts();
         InitalizeEnvironment();
     }
-
+    void OnDestroy()
+    {
+        KillEnemies.OnRespawn -= DoneRespawning;
+    }
     void InitalizeEnvironment()
     {
         for (int i = 0; i <3; i++)
         {
             GameObject background = (GameObject)Instantiate(backgroundPrefab, backgroundPos + (Vector2.right * bgWidth * i), Quaternion.identity);
-            GameObject deathBox = (GameObject)Instantiate(deathBoxPrefab, deathBoxPos + (Vector2.right * bgWidth * i), Quaternion.identity);
             backgrounds.Add(background);
-            deathBoxes.Add(deathBox);
             backgrounds[i].transform.parent = bgFolder.transform;
-            deathBoxes[i].transform.parent = envFolder.transform;
         }
     }
 
@@ -116,6 +117,7 @@ public class InfiniteRunGenerator : MonoBehaviour
                 GenerateSection(direction, section + direction);
             }
         }
+        CheckForDeath();
     }
 
     void MoveSection()
@@ -124,7 +126,6 @@ public class InfiniteRunGenerator : MonoBehaviour
         {
             Vector2 offset = Vector2.right * bgWidth * (i + section);
             backgrounds[i].transform.position = backgroundPos + offset;
-            deathBoxes[i].transform.position = deathBoxPos + offset;
         }
         DetermineVisibleSections();
     }
@@ -147,6 +148,21 @@ public class InfiniteRunGenerator : MonoBehaviour
         }
     }
 
+    void CheckForDeath()
+    {
+        if (transform.position.y < deathBoxPos.y && doneRespawning)
+        {
+            if (Respawn != null)
+            {
+                Respawn();
+                doneRespawning = false;
+            }
+        }
+    }
+    void DoneRespawning()
+    {
+        doneRespawning = true;
+    }
     public static string Read(string filename)
     {
         TextAsset theTextFile = Resources.Load<TextAsset>(filename);

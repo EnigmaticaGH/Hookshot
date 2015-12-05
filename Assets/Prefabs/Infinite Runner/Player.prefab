@@ -65,6 +65,7 @@ GameObject:
   - 114: {fileID: 11410268}
   - 114: {fileID: 11413136}
   - 114: {fileID: 11415722}
+  - 114: {fileID: 11435374}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -150,7 +151,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 142750}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0, y: 1, z: 0}
+  m_LocalPosition: {x: -0, y: 1.58000004, z: 0}
   m_LocalScale: {x: .5, y: .5, z: 1}
   m_Children:
   - {fileID: 461626}
@@ -443,6 +444,24 @@ MonoBehaviour:
   hookFab: {fileID: 150264, guid: 65cc786417315ce46afa45ba4e6f6fe1, type: 2}
   ropeFab: {fileID: 146786, guid: 342c817da3ed73444a65c5654b900747, type: 2}
   retractTime: .25
+--- !u!114 &11435374
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 142750}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 317b72d5517eb6147b51f33b6bc4f15f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  backgroundPrefab: {fileID: 176652, guid: c42afb4c5fe576f43aa6b742ce365aca, type: 2}
+  deathBoxPrefab: {fileID: 153022, guid: a4e9e4a9651e53c4594e27a811dba819, type: 2}
+  nonHookLeafPrefab: {fileID: 199736, guid: 396fa737cce44cc4ca3de87d8659f34f, type: 2}
+  hookLeafPrefab: {fileID: 196124, guid: e3f19cbf73b01ae43b4137b97828c19b, type: 2}
+  mushroomPrefab: {fileID: 130688, guid: b8da0c69b0133c945bcd467c32394b50, type: 2}
+  stemPrefab: {fileID: 178632, guid: 18c876a801c67c348883d5f3e152da6b, type: 2}
+  treeTrunkPrefab: {fileID: 139688, guid: 080e28ddcd15c6b4a956648379995cd8, type: 2}
 --- !u!114 &11443494
 MonoBehaviour:
   m_ObjectHideFlags: 1

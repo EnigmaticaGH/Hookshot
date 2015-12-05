@@ -1,12 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.IO;
 
 public class KillEnemies : MonoBehaviour
 {
     public float lethalVelocity;
     public float respawnDelay = 0.5f;
     public ParticleSystem deathParticle;
-    private Transform playerSprite;
+    private GameObject playerSprite;
     private HookshotControl hook;
     private Rigidbody2D player;
     private GameObject lastSpawn;
@@ -16,57 +17,36 @@ public class KillEnemies : MonoBehaviour
 
     void Start()
     {
-        playerSprite = gameObject.transform.Find("FrogSprite");
+        InfiniteRunGenerator.Respawn += Respawn;
+        playerSprite = GameObject.Find("FrogSprite");
         player = GetComponent<Rigidbody2D>();
         hook = GetComponent<LateralMovement>().getHookScript();
     }
 
-    void OnCollisionEnter2D(Collision2D c)
+    void OnDestroy()
     {
-        if (c.collider.CompareTag("Enemy") && c.relativeVelocity.magnitude >= lethalVelocity && Flying())
-        {
-            Destroy(c.gameObject);
-        }
-        else if (c.collider.CompareTag("Enemy") || c.collider.CompareTag("Hazard"))
-        {
-            Respawn();
-        }
+        InfiniteRunGenerator.Respawn -= Respawn;
     }
 
-    void OnTriggerEnter2D(Collider2D c)
-    {
-        if (c.CompareTag("Win Condition"))
-        {
-            c.gameObject.GetComponent<SpriteRenderer>().color = Color.black;
-        }
-        else if (c.CompareTag("Respawn"))
-        {
-            lastSpawn = c.gameObject;
-        }
-        else if ((c.CompareTag("Boundary")))
-        {
-            Respawn();
-        }
-    }
-
-    void Respawn()
+    private void Respawn()
     {
         StartCoroutine(Explosion());
     }
 
     IEnumerator Explosion()
     {
+        playerSprite.SetActive(false);
         hook.CancelHook();
-        playerSprite.gameObject.SetActive(false);
         player.velocity = Vector2.zero;
         player.isKinematic = true;
         //ParticleSystem Death = Instantiate(deathParticle, transform.position, Quaternion.identity) as ParticleSystem;
         yield return new WaitForSeconds(respawnDelay);
-        transform.position = lastSpawn.transform.position;
-        playerSprite.gameObject.SetActive(true);
         player.isKinematic = false;
+        transform.position = Vector2.up;
+        playerSprite.SetActive(true);
         //Destroy(Death.gameObject);
-        OnRespawn();
+        if(OnRespawn != null)
+            OnRespawn();
     }
 
     private bool Flying()

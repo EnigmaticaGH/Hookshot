@@ -3,21 +3,20 @@ using System.Collections;
 
 public class WallSensor : MonoBehaviour
 {
+    private sbyte wallCollide = 0;
 
-    private bool wallCollide;
-
-    void OnTriggerStay2D(Collider2D c)
+    void OnTriggerEnter2D(Collider2D c)
     {
-        wallCollide = c.CompareTag("Environment") || c.CompareTag("Hookable");
+        wallCollide = c.CompareTag("Environment") || c.CompareTag("Hookable") ? ++wallCollide : wallCollide;
     }
 
     void OnTriggerExit2D(Collider2D c)
     {
-        wallCollide = false;
+        wallCollide = c.CompareTag("Environment") || c.CompareTag("Hookable") ? --wallCollide : wallCollide;
     }
 
     public bool IsWallCollide()
     {
-        return wallCollide;
+        return wallCollide > 0;
     }
 }

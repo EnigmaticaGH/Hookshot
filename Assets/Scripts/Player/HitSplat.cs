@@ -3,7 +3,7 @@ using System.Collections;
 
 public class HitSplat : MonoBehaviour
 {
-    public float lethalVelocity;
+    /*public float lethalVelocity;
     private Transform frogSprite;
     private Rigidbody2D player;
     private bool lethalHit;
@@ -53,5 +53,5 @@ public class HitSplat : MonoBehaviour
             Vector2 destinSplat = new Vector2(frogSprite.localScale.x * splatFactor, frogSprite.localScale.y / splatFactor);
             //StartCoroutine(Splat(destinSplat, 1f));
         }
-    }
+    }*/
 }
