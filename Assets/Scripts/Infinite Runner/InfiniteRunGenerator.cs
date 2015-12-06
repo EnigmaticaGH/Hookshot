@@ -30,20 +30,27 @@ public class InfiniteRunGenerator : MonoBehaviour
     private GameObject envFolder;
     private GameObject bgFolder;
     private bool doneRespawning;
-    int oldSection = 0;
-    int section = 0;
-    int oldParallaxSection = 0;
-    int parallaxSection = 0;
-    float bgWidth;
+    private int oldSection = 0;
+    private int section = 0;
+    private int oldParallaxSection = 0;
+    private int parallaxSection = 0;
+    private float bgWidth;
+    private float oldPositionX;
+    private float positionX;
     public float levelPartWidth;
+
+    private Rigidbody2D player;
+    private LateralMovement movement;
 
     public delegate void RespawnAction();
     public static event RespawnAction Respawn;
-    public delegate void UpdateScore(int score);
+    public delegate void UpdateScore(double score);
     public static event UpdateScore Score;
     void Start()
     {
         KillEnemies.OnRespawn += DoneRespawning;
+        player = GetComponent<Rigidbody2D>();
+        movement = GetComponent<LateralMovement>();
         doneRespawning = true;
         backgrounds = new List<GameObject>();
         levelParts = new List<LevelPart>();
@@ -54,6 +61,8 @@ public class InfiniteRunGenerator : MonoBehaviour
         deathBoxPos = backgroundPos + (Vector2.down * 5);
         CreateLevelParts();
         InitalizeEnvironment();
+        oldPositionX = 0;
+        positionX = 0;
     }
     void OnDestroy()
     {
@@ -103,10 +112,13 @@ public class InfiniteRunGenerator : MonoBehaviour
     }
     void Update()
     {
+        oldPositionX = positionX;
         UpdateLevelParts();
         ParallaxBackground();
         CheckForDeath();
-        Score((int)Mathf.Abs(transform.position.x * 10));
+        positionX = transform.position.x;
+        double score = Mathf.Abs(positionX - oldPositionX) * (player.velocity.x / movement.speed) * 10;
+        Score(score);
     }
     void UpdateLevelParts()
     {
