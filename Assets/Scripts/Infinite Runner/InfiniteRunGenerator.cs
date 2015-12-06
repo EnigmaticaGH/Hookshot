@@ -70,7 +70,7 @@ public class InfiniteRunGenerator : MonoBehaviour
     }
     void InitalizeEnvironment()
     {
-        for (int i = 0; i <3; i++)
+        for (int i = 0; i < 4; i++)
         {
             GameObject background = (GameObject)Instantiate(backgroundPrefab, backgroundPos + (Vector2.right * bgWidth * i), Quaternion.identity);
             backgrounds.Add(background);
@@ -153,7 +153,7 @@ public class InfiniteRunGenerator : MonoBehaviour
             bg.GetComponent<Rigidbody2D>().velocity = Vector2.right * (GetComponent<Rigidbody2D>().velocity.x / GetComponent<LateralMovement>().speed) * parallaxBackgroundSpeed;
         }
         oldParallaxSection = parallaxSection;
-        float positionXFromCenter = transform.position.x - backgrounds[0].transform.position.x;
+        float positionXFromCenter = transform.position.x - backgrounds[1].transform.position.x;
         parallaxSection = (int)(positionXFromCenter / bgWidth);
         if(parallaxSection != oldParallaxSection)
         {
@@ -162,7 +162,7 @@ public class InfiniteRunGenerator : MonoBehaviour
     }
     void MoveSection()
     {
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < backgrounds.Count; i++)
         {
             Vector2 offset = Vector2.right * bgWidth * parallaxSection;
             backgrounds[i].transform.position += (Vector3)offset;
