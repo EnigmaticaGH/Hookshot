@@ -12,6 +12,7 @@ public class JumpControl : MonoBehaviour
     private KeybindScript keybinds;
     private WallSensor wallSensorRight;
     private WallSensor wallSensorLeft;
+    private GroundSensor groundSensor;
 
     private bool jump;
     private bool doubleJump;
@@ -26,6 +27,7 @@ public class JumpControl : MonoBehaviour
     {
         keybinds = GameObject.FindGameObjectWithTag("KeyBinds").GetComponent<KeybindScript>();
         body = GetComponent<Rigidbody2D>();
+        groundSensor = GameObject.Find("GroundSensor").GetComponent<GroundSensor>();
         FindWallSensors();
         touchingRight = false;
         touchingLeft = false;
@@ -33,6 +35,7 @@ public class JumpControl : MonoBehaviour
 
     void Update()
     {
+        grounded = groundSensor.isGrounded();
         if (keybinds.GetButtonDown("Jump") && Time.timeScale > 0f)
         {
             if (grounded)
@@ -87,12 +90,6 @@ public class JumpControl : MonoBehaviour
         body.velocity = Vector2.zero;
         body.AddForce(new Vector2(wallJumpForce * direction, jumpForce), ForceMode2D.Impulse);
         StartCoroutine(GetComponent<LateralMovement>().DisableMovement(0.5f));
-    }
-
-    public void SetGrounded(bool flag)
-    {
-        grounded = flag;
-        doubleJump = flag || doubleJump;
     }
 
     public bool isGrounded()

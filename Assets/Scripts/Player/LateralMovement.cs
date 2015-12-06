@@ -32,11 +32,9 @@ public class LateralMovement : MonoBehaviour
 
     public float speed;
     public float speedInWater;
-    private float regularSpeed;
     public float force;
     public float moveForce;
     private float horizontal;
-    private float vertical;
 
     private GameObject hand;
     private HookshotControl hookshotControl;
@@ -48,21 +46,26 @@ public class LateralMovement : MonoBehaviour
     private WallSensor wallSensorRight;
     private WallSensor wallSensorLeft;
     private AnimateFrog frogAnim;
+    private RelativeVelocity relative;
 
     private const float AIR_STOP_TIME = 0.05f;
     private const float SPRITE_OFFSET_ANGLE = -5.73f;
     private const float TIME_BETWEEN_JUMPS = 0.08f;
     private bool canMove;
     private bool canJump;
-    private Vector2 relativeVel;
+
+    public delegate void GroundStateDelegate();
+    public delegate void JumpStateDelegate();
+    public delegate void HookStateDelegate();
+    public static event GroundStateDelegate GroundState;
+    public static event JumpStateDelegate JumpState;
+    public static event HookStateDelegate HookState;
 
     void Start()
     {
-        regularSpeed = speed;
         horizontal = 0;
         canMove = true;
         canJump = true;
-        relativeVel = Vector2.zero;
         MapStateFunctions();
         player = GetComponent<Rigidbody2D>();
         
@@ -84,41 +87,14 @@ public class LateralMovement : MonoBehaviour
         wallSensorRight = GameObject.Find("WallSensorR").GetComponent<WallSensor>();
         wallSensorLeft = GameObject.Find("WallSensorL").GetComponent<WallSensor>();
         ceilingSensor = GameObject.Find("CeilingSensor").GetComponent<CeilingSensor>();
+        relative = GameObject.Find("GroundColliders").GetComponent<RelativeVelocity>();
     }
 
     void FixedUpdate()
     {
         horizontal = Input.GetAxisRaw("Horizontal");
-        vertical = Input.GetAxisRaw("Vertical");
         stateProcesses[(int)state]();
     }
-
-    void OnCollisionStay2D(Collision2D c)
-    {
-        relativeVel = c.relativeVelocity;
-    }
-
-    void OnTriggerStay2D(Collider2D c)
-    {
-        if (c.CompareTag("Water"))
-            speed = speedInWater;
-    }
-
-    void OnTriggerExit2D(Collider2D c)
-    {
-        if (c.CompareTag("Water"))
-            speed = regularSpeed;
-    }
-
-    /*
-    ////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////
-    /////////////////////////////          State Machine          //////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////
-    */
 
     void ChangeState(MovementState newState)
     {
@@ -131,6 +107,8 @@ public class LateralMovement : MonoBehaviour
         if (!isGrounded()) ChangeState(MovementState.AIR);
         if (isHooked()) ChangeState(MovementState.HOOKED);
         DoNormalMovement(isGrounded());
+        if(GroundState != null)
+            GroundState();
     }
 
     void Air()
@@ -139,6 +117,8 @@ public class LateralMovement : MonoBehaviour
         if (isOnWall()) ChangeState(MovementState.WALLJUMP);
         if (isHooked()) ChangeState(MovementState.HOOKED);
         DoNormalMovement(isGrounded());
+        if (JumpState != null)
+            JumpState();
     }
 
     void Hooked()
@@ -160,6 +140,8 @@ public class LateralMovement : MonoBehaviour
             float yAngle = player.velocity.x > 0 ? 0 : 180;
             transform.rotation = Quaternion.Euler(0, yAngle, transform.rotation.eulerAngles.z);
         }
+        if (HookState != null)
+            HookState();
     }
 
     void WallJump()
@@ -175,7 +157,8 @@ public class LateralMovement : MonoBehaviour
             StartCoroutine(TimeBetweenJumps());
             ChangeState(MovementState.DISABLED);
         }
-        
+        if (JumpState != null)
+            JumpState();
     }
 
     void WallWalk()
@@ -187,6 +170,8 @@ public class LateralMovement : MonoBehaviour
         {
             Rope().MoveAlongWall(); //RopeControl
         }
+        if (HookState != null)
+            HookState();
     }
 
     void GroundWallHook() //A very rare state in which the player is on the ground, touching a wall, and hooked at the same time
@@ -196,21 +181,13 @@ public class LateralMovement : MonoBehaviour
         if (!isOnWall()) ChangeState(MovementState.HOOKED);
         DoNormalMovement(true);
         Rope().MoveAlongWall();
+        if (GroundState != null)
+            GroundState();
     }
 
     void Disabled(){ /* The player is unable to move */
         if (canMove) ChangeState(MovementState.AIR);
     }
-
-    /*
-    ////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////
-    ///////////////////////////          DoStuff Functions          ////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////
-    */
 
     void DoNormalMovement(bool onTheGround)
     {
@@ -232,16 +209,6 @@ public class LateralMovement : MonoBehaviour
         }
     }
 
-    /*
-    ////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////
-    /////////////////////////////          Get Functions          //////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////
-    */
-
     Transform HookPoint()
     {
         return hookshotControl.HookPoint();
@@ -249,7 +216,7 @@ public class LateralMovement : MonoBehaviour
 
     public Vector2 RelativeVelocity()
     {
-        return relativeVel;
+        return relative.GetRelativeVelocity;
     }
 
     private bool CanWallJump()

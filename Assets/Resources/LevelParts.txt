@@ -1,0 +1,337 @@
+/*Valid object types:
+/ nonHookLeaf
+/ hookLeaf
+/ mushroom
+/ stem
+/ treeTrunk
+/ stemSideways
+/ treeTrunkSideways
+
+LevelPart = Start
+{
+	x = 0
+	y = 0
+	Object
+	{
+		type = nonHookLeaf
+		x = -50
+		y = -0.4
+	}
+	Object
+	{
+		type = treeTrunkSideways
+		x = -40
+		y = 0
+	}
+	Object
+	{
+		type = nonHookLeaf
+		x = -30
+		y = -0.4
+	}
+	Object
+	{
+		type = treeTrunkSideways
+		x = -20
+		y = 0
+	}
+	Object
+	{
+		type = nonHookLeaf
+		x = -10
+		y = -0.4
+	}
+	Object
+	{
+		type = treeTrunkSideways
+		x = 0
+		y = 0
+	}
+	Object
+	{
+		type = nonHookLeaf
+		x = 10
+		y = -0.4
+	}
+	Object
+	{
+		type = treeTrunkSideways
+		x = 20
+		y = 0
+	}
+	Object
+	{
+		type = nonHookLeaf
+		x = 30
+		y = -0.4
+	}
+	Object
+	{
+		type = treeTrunkSideways
+		x = 40
+		y = 0
+	}
+	difficulty = 0
+}
+LevelPart = Simple Hook
+{
+	x = 0
+	y = 0
+	Object
+	{
+		type = stemSideways
+		x = -47.5
+		y = -0.4
+	}
+	Object
+	{
+		type = hookLeaf
+		x = -40
+		y = 5
+	}
+	Object
+	{
+		type = hookLeaf
+		x = -30
+		y = 5
+	}
+	Object
+	{
+		type = stemSideways
+		x = -20
+		y = -0.4
+	}
+	Object
+	{
+		type = hookLeaf
+		x = -10
+		y = 5
+	}
+	Object
+	{
+		type = hookLeaf
+		x = 0
+		y = 5
+	}
+	Object
+	{
+		type = stemSideways
+		x = 10
+		y = -0.4
+	}
+	Object
+	{
+		type = hookLeaf
+		x = 20
+		y = 5
+	}
+	Object
+	{
+		type = hookLeaf
+		x = 30
+		y = 5
+	}
+	Object
+	{
+		type = stemSideways
+		x = 40
+		y = -0.4
+	}
+	difficulty = 1
+}
+LevelPart = Wall Jump
+{
+	x = 0
+	y = 0
+	Object
+	{
+		type = treeTrunkSideways
+		x = -47
+		y = -0.4
+	}
+	Object
+	{
+		type = stem
+		x = -45
+		y = 5.4
+	}
+	Object
+	{
+		type = stem
+		x = -42
+		y = 0
+	}
+	Object
+	{
+		type = nonHookLeaf
+		x = -38
+		y = -0.4
+	}
+	Object
+	{
+		type = nonHookLeaf
+		x = -34
+		y = -0.4
+	}
+	Object
+	{
+		type = treeTrunkSideways
+		x = -25
+		y = -0.4
+	}
+	Object
+	{
+		type = stem
+		x = -23
+		y = 5.4
+	}
+	Object
+	{
+		type = stem
+		x = -20
+		y = 0
+	}
+	Object
+	{
+		type = nonHookLeaf
+		x = -15
+		y = -0.4
+	}
+	Object
+	{
+		type = nonHookLeaf
+		x = -9
+		y = -0.4
+	}
+	Object
+	{
+		type = hookLeaf
+		x = 0
+		y = 5
+	}
+	Object
+	{
+		type = stemSideways
+		x = 10
+		y = -0.4
+	}
+	Object
+	{
+		type = hookLeaf
+		x = 20
+		y = 5
+	}
+	Object
+	{
+		type = hookLeaf
+		x = 30
+		y = 5
+	}
+	Object
+	{
+		type = stemSideways
+		x = 40
+		y = -0.4
+	}
+	difficulty = 2
+}
+LevelPart = Stairs of Doom
+{
+	Object
+	{
+		type = nonHookLeaf
+		x = -50
+		y = -1.4
+	}
+	Object
+	{
+		type = nonHookLeaf
+		x = -45
+		y = -0.4
+	}
+	Object
+	{
+		type = nonHookLeaf
+		x = -40
+		y = 1.4
+	}
+	Object
+	{
+		type = nonHookLeaf
+		x = -35
+		y = 2.4
+	}
+	Object
+	{
+		type = stemSideways
+		x = -25
+		y = 1
+	}
+	Object
+	{
+		type = hookLeaf
+		x = -17
+		y = 5
+	}
+	Object
+	{
+		type = nonHookLeaf
+		x = -10
+		y = -0.4
+	}
+	Object
+	{
+		type = nonHookLeaf
+		x = -5
+		y = -1.4
+	}
+	Object
+	{
+		type = nonHookLeaf
+		x = 0
+		y = -1.4
+	}
+	Object
+	{
+		type = nonHookLeaf
+		x = 5
+		y = -0.4
+	}
+	Object
+	{
+		type = nonHookLeaf
+		x = 10
+		y = 1.4
+	}
+	Object
+	{
+		type = nonHookLeaf
+		x = 15
+		y = 2.4
+	}
+	Object
+	{
+		type = stemSideways
+		x = 22
+		y = 1
+	}
+	Object
+	{
+		type = hookLeaf
+		x = 30
+		y = 5
+	}
+	Object
+	{
+		type = nonHookLeaf
+		x = 40
+		y = -0.4
+	}
+	Object
+	{
+		type = nonHookLeaf
+		x = 45
+		y = -0.4
+	}
+	difficulty = 3
+}
