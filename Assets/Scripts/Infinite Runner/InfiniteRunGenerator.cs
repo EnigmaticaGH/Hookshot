@@ -57,7 +57,7 @@ public class InfiniteRunGenerator : MonoBehaviour
         generatedSections = new List<IndexedGameObject>();
         bgFolder = GameObject.Find("Background");
         bgWidth = backgroundPrefab.GetComponent<SpriteRenderer>().sprite.bounds.extents.x * 2;
-        backgroundPos = new Vector2(-bgWidth, 0);
+        backgroundPos = Vector2.zero;
         deathBoxPos = backgroundPos + (Vector2.down * 5);
         CreateLevelParts();
         InitalizeEnvironment();
@@ -153,7 +153,7 @@ public class InfiniteRunGenerator : MonoBehaviour
             bg.GetComponent<Rigidbody2D>().velocity = Vector2.right * (GetComponent<Rigidbody2D>().velocity.x / GetComponent<LateralMovement>().speed) * parallaxBackgroundSpeed;
         }
         oldParallaxSection = parallaxSection;
-        float positionXFromCenter = transform.position.x - backgrounds[1].transform.position.x;
+        float positionXFromCenter = transform.position.x - backgrounds[0].transform.position.x;
         parallaxSection = (int)(positionXFromCenter / bgWidth);
         if(parallaxSection != oldParallaxSection)
         {
