@@ -4,6 +4,8 @@ using System.Collections;
 public class GroundSensor : MonoBehaviour {
     private bool canControlRope;
     private sbyte grounded;
+    public delegate void GroundSensorEvent(bool sensorState);
+    public static event GroundSensorEvent GroundSensorChange;
 
     void Awake()
     {
@@ -26,6 +28,7 @@ public class GroundSensor : MonoBehaviour {
         if (other.CompareTag("Environment") || other.CompareTag("Hookable"))
         {
             grounded++;
+            GroundSensorChange(grounded > 0);
         }
     }
 
@@ -33,7 +36,8 @@ public class GroundSensor : MonoBehaviour {
     {
         if (other.CompareTag("Environment") || other.CompareTag("Hookable"))
         {
-            grounded = 0;
+            grounded--;
+            GroundSensorChange(grounded > 0);
         }
     }
     void Reset()

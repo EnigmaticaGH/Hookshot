@@ -471,7 +471,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Size: {x: .5, y: .200000003}
+  m_Size: {x: .5, y: .319999993}
 --- !u!61 &6148586
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -604,6 +604,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c35ef580d7602994f953ca1f66ab8f5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  frontSensor: {fileID: 0}
 --- !u!114 &11415722
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -631,6 +632,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hookFab: {fileID: 150264, guid: 65cc786417315ce46afa45ba4e6f6fe1, type: 2}
   ropeFab: {fileID: 146786, guid: 342c817da3ed73444a65c5654b900747, type: 2}
+  frontSensor: {fileID: 0}
+  backSensor: {fileID: 0}
   retractTime: .25
 --- !u!114 &11435374
 MonoBehaviour:
@@ -753,7 +756,9 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_MinimumChartSize: 4
   m_AutoUVMaxDistance: .5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
@@ -779,7 +784,9 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_MinimumChartSize: 4
   m_AutoUVMaxDistance: .5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}

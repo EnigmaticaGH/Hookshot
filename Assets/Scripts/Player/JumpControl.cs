@@ -5,6 +5,7 @@ using UnityEngine.UI;
 [RequireComponent(typeof(KeybindScript))]
 public class JumpControl : MonoBehaviour
 {
+    private const float JUMP_INTERVAL = 0.15f;
     public float jumpForce;
     public float wallJumpForce;
 
@@ -18,25 +19,32 @@ public class JumpControl : MonoBehaviour
     private bool doubleJump;
     private bool wallJump;
     public bool canDoubleJump;
+    private bool readyForJump;
 
     private bool grounded;
+    private bool isRunning;
     private bool touchingRight;
     private bool touchingLeft;
 
     void Start()
     {
+        GroundSensor.GroundSensorChange += Grounded;
         keybinds = GameObject.FindGameObjectWithTag("KeyBinds").GetComponent<KeybindScript>();
         body = GetComponent<Rigidbody2D>();
         groundSensor = GameObject.Find("GroundSensor").GetComponent<GroundSensor>();
         FindWallSensors();
         touchingRight = false;
         touchingLeft = false;
+        isRunning = false;
+        readyForJump = true;
     }
-
+    void OnDestroy()
+    {
+        GroundSensor.GroundSensorChange -= Grounded;
+    }
     void Update()
     {
-        grounded = groundSensor.isGrounded();
-        if (keybinds.GetButtonDown("Jump") && Time.timeScale > 0f)
+        if (readyForJump && keybinds.GetButton("Jump") && Time.timeScale > 0f)
         {
             if (grounded)
             {
@@ -64,6 +72,7 @@ public class JumpControl : MonoBehaviour
         {
             body.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
             jump = false;
+            StartCoroutine(JumpInterval());
         }
     }
 
@@ -91,7 +100,6 @@ public class JumpControl : MonoBehaviour
         body.AddForce(new Vector2(wallJumpForce * direction, jumpForce), ForceMode2D.Impulse);
         StartCoroutine(GetComponent<LateralMovement>().DisableMovement(0.5f));
     }
-
     public bool isGrounded()
     {
         return grounded;
@@ -105,5 +113,30 @@ public class JumpControl : MonoBehaviour
     public KeybindScript Keybinds()
     {
         return keybinds;
+    }
+    void Grounded(bool isGrounded)
+    {
+        if (isGrounded)
+        {
+            grounded = true;
+        }
+        else
+        {
+            if (!isRunning) StartCoroutine(SetGrounded(isGrounded));
+        }
+    }
+    IEnumerator SetGrounded(bool groundSensorState)
+    {
+        isRunning = true;
+        grounded = true;
+        yield return new WaitForSeconds(0.1f);
+        grounded = groundSensorState;
+        isRunning = false;
+    }
+    IEnumerator JumpInterval()
+    {
+        readyForJump = false;
+        yield return new WaitForSeconds(JUMP_INTERVAL);
+        readyForJump = true;
     }
 }
