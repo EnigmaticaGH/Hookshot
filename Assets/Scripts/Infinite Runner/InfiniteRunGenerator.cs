@@ -56,7 +56,8 @@ public class InfiniteRunGenerator : MonoBehaviour
         levelParts = new List<LevelPart>();
         generatedSections = new List<IndexedGameObject>();
         bgFolder = GameObject.Find("Background");
-        bgWidth = backgroundPrefab.GetComponent<SpriteRenderer>().sprite.bounds.extents.x * 2;
+        //Make the backgrounds overlap just a little bit, to prevent the white back-background from showing
+        bgWidth = (backgroundPrefab.GetComponent<SpriteRenderer>().sprite.bounds.extents.x * 2) - 0.01f;
         backgroundPos = Vector2.zero;
         deathBoxPos = backgroundPos + (Vector2.down * 5);
         CreateLevelParts();
