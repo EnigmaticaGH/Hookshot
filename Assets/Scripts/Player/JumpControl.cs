@@ -8,12 +8,13 @@ public class JumpControl : MonoBehaviour
     private const float JUMP_INTERVAL = 0.15f;
     public float jumpForce;
     public float wallJumpForce;
+    public float jumpSpeed;
+    public float wallJumpSpeed;
 
     private Rigidbody2D body;
     private KeybindScript keybinds;
     private WallSensor wallSensorRight;
     private WallSensor wallSensorLeft;
-    private GroundSensor groundSensor;
 
     private bool jump;
     private bool doubleJump;
@@ -31,7 +32,6 @@ public class JumpControl : MonoBehaviour
         GroundSensor.GroundSensorChange += Grounded;
         keybinds = GameObject.FindGameObjectWithTag("KeyBinds").GetComponent<KeybindScript>();
         body = GetComponent<Rigidbody2D>();
-        groundSensor = GameObject.Find("GroundSensor").GetComponent<GroundSensor>();
         FindWallSensors();
         touchingRight = false;
         touchingLeft = false;
@@ -44,7 +44,7 @@ public class JumpControl : MonoBehaviour
     }
     void Update()
     {
-        if (readyForJump && keybinds.GetButton("Jump") && Time.timeScale > 0f)
+        if (readyForJump && keybinds.GetButtonDown("Jump") && Time.timeScale > 0f)
         {
             if (grounded)
             {
@@ -70,7 +70,8 @@ public class JumpControl : MonoBehaviour
         touchingLeft = wallSensorLeft.IsWallCollide();
         if (jump)
         {
-            body.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
+            //body.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
+            body.velocity = new Vector2(body.velocity.x, jumpSpeed);
             jump = false;
             StartCoroutine(JumpInterval());
         }
@@ -97,7 +98,8 @@ public class JumpControl : MonoBehaviour
         else if (touchingLeft) direction = 1;
 
         body.velocity = Vector2.zero;
-        body.AddForce(new Vector2(wallJumpForce * direction, jumpForce), ForceMode2D.Impulse);
+        //body.AddForce(new Vector2(wallJumpForce * direction, jumpForce), ForceMode2D.Impulse);
+        body.velocity = new Vector2(wallJumpSpeed * direction, jumpSpeed);
         StartCoroutine(GetComponent<LateralMovement>().DisableMovement(0.5f));
     }
     public bool isGrounded()

@@ -393,7 +393,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Size: {x: .200000003, y: .5}
+  m_Size: {x: .25, y: .5}
 --- !u!61 &6121034
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -406,7 +406,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Size: {x: .200000003, y: .5}
+  m_Size: {x: .25, y: .5}
 --- !u!61 &6121906
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -737,6 +737,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   jumpForce: 90
   wallJumpForce: 50
+  jumpSpeed: 10
+  wallJumpSpeed: 6
   canDoubleJump: 0
 --- !u!212 &21226224
 SpriteRenderer:
@@ -756,9 +758,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_MinimumChartSize: 4
   m_AutoUVMaxDistance: .5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
@@ -784,9 +784,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_MinimumChartSize: 4
   m_AutoUVMaxDistance: .5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}

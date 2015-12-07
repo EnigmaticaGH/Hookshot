@@ -27,8 +27,8 @@ public class GroundSensor : MonoBehaviour {
     {
         if (other.CompareTag("Environment") || other.CompareTag("Hookable"))
         {
-            grounded++;
-            GroundSensorChange(grounded > 0);
+            grounded = 1;
+            GroundSensorChange(true);
         }
     }
 
@@ -36,17 +36,13 @@ public class GroundSensor : MonoBehaviour {
     {
         if (other.CompareTag("Environment") || other.CompareTag("Hookable"))
         {
-            grounded--;
-            GroundSensorChange(grounded > 0);
+            grounded = 0;
+            GroundSensorChange(false);
         }
     }
     void Reset()
     {
         grounded = 0;
-    }
-    public bool isGrounded()
-    {
-        return grounded > 0;
     }
     public bool CanControlRope()
     {

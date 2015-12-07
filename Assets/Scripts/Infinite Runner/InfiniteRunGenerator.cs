@@ -21,6 +21,7 @@ public class InfiniteRunGenerator : MonoBehaviour
     public GameObject stemSidewaysPrefab;
     public GameObject treeTrunkSidewaysPrefab;
 
+    private GameObject backgroundFolder;
     private List<GameObject> backgrounds;
     private List<LevelPart> levelParts;
     private List<IndexedGameObject> generatedSections;
@@ -49,21 +50,32 @@ public class InfiniteRunGenerator : MonoBehaviour
     void Start()
     {
         KillEnemies.OnRespawn += DoneRespawning;
-        player = GetComponent<Rigidbody2D>();
-        movement = GetComponent<LateralMovement>();
-        doneRespawning = true;
+        InitalizeVariables();
+        FindObjects();
+        CreateLevelParts();
+        InitalizeEnvironment();
+        
+    }
+    void InitalizeVariables()
+    {
+        backgroundFolder = new GameObject("Background");
+        backgroundFolder.transform.position = Vector2.zero;
         backgrounds = new List<GameObject>();
         levelParts = new List<LevelPart>();
         generatedSections = new List<IndexedGameObject>();
-        bgFolder = GameObject.Find("Background");
         //Make the backgrounds overlap just a little bit, to prevent the white back-background from showing
         bgWidth = (backgroundPrefab.GetComponent<SpriteRenderer>().sprite.bounds.extents.x * 2) - 0.01f;
         backgroundPos = Vector2.zero;
         deathBoxPos = backgroundPos + (Vector2.down * 5);
-        CreateLevelParts();
-        InitalizeEnvironment();
+        doneRespawning = true;
         oldPositionX = 0;
         positionX = 0;
+    }
+    void FindObjects()
+    {
+        player = GetComponent<Rigidbody2D>();
+        movement = GetComponent<LateralMovement>();
+        bgFolder = GameObject.Find("Background");
     }
     void OnDestroy()
     {
@@ -95,9 +107,14 @@ public class InfiniteRunGenerator : MonoBehaviour
                 i++;
             }
         }
-        GameObject initialPart1 = LevelPart.Instantiate(levelParts[1], Vector2.left * levelPartWidth, Quaternion.identity, -1);
+        if (levelParts.Count > 0)
+            InitalizeLevel();
+    }
+    void InitalizeLevel()
+    {
+        GameObject initialPart1 = LevelPart.Instantiate(levelParts[(int)(Random.value * LevelPart.Count)], Vector2.left * levelPartWidth, Quaternion.identity, -1);
         GameObject initialPart2 = LevelPart.Instantiate(levelParts[0], Vector2.zero, Quaternion.identity, 0);
-        GameObject initialPart3 = LevelPart.Instantiate(levelParts[1], Vector2.right * levelPartWidth, Quaternion.identity, 1);
+        GameObject initialPart3 = LevelPart.Instantiate(levelParts[2], Vector2.right * levelPartWidth, Quaternion.identity, 1);
         IndexedGameObject i1;
         IndexedGameObject i2;
         IndexedGameObject i3;
@@ -170,9 +187,23 @@ public class InfiniteRunGenerator : MonoBehaviour
         }
     }
 
+    void TestRandom()
+    {
+        int[] n = new int[4] { 0, 0, 0, 0 };
+        for(int x = 0; x < 10000; x++)
+        {
+            int i = (int)(Random.value * 4);
+            n[i]++;
+        }
+        for(int i = 0; i < 4; i++)
+        {
+            Debug.Log(n[i]);
+        }
+    }
+
     void GenerateSection(int direction, int sec)
     {
-        int i = Mathf.RoundToInt(Random.value * (LevelPart.Count - 1));
+        int i = (int)(Random.value * LevelPart.Count);
         IndexedGameObject ir1;
         GameObject randomPart1 = LevelPart.Instantiate(levelParts[i], Vector2.right * levelPartWidth * sec, Quaternion.identity, sec);
         ir1.index = sec;
