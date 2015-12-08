@@ -30,8 +30,11 @@ public class ScoreTracker : MonoBehaviour {
     }
     void UpdateBest()
     {
+        bestText.text = "Best: " + best.ToString("0");
+    }
+    public static void ResetScore()
+    {
         totalScore = 0;
         currentScore = 0;
-        bestText.text = "Best: " + best.ToString("0");
     }
 }

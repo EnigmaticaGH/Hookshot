@@ -130,12 +130,12 @@ public class InfiniteRunGenerator : MonoBehaviour
     }
     void Update()
     {
-        oldPositionX = positionX;
         UpdateLevelParts();
         ParallaxBackground();
         CheckForDeath();
+        oldPositionX = positionX;
         positionX = transform.position.x;
-        double score = Mathf.Abs(positionX - oldPositionX) * (player.velocity.x / movement.speed) * 10;
+        double score = Mathf.Abs(positionX - oldPositionX) * Mathf.Pow((player.velocity.x / movement.speed) + 1, 2) * Mathf.Sign(player.velocity.x);
         Score(score);
     }
     void UpdateLevelParts()
@@ -233,6 +233,9 @@ public class InfiniteRunGenerator : MonoBehaviour
     void DoneRespawning()
     {
         doneRespawning = true;
+        ScoreTracker.ResetScore();
+        positionX = 0;
+        oldPositionX = 0;
     }
     public static string Read(string filename)
     {
