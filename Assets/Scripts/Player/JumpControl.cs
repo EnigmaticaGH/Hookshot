@@ -15,6 +15,7 @@ public class JumpControl : MonoBehaviour
     private KeybindScript keybinds;
     private WallSensor wallSensorRight;
     private WallSensor wallSensorLeft;
+    public SoundEffectHelper soundPlayer;
 
     private bool jump;
     private bool doubleJump;
@@ -37,6 +38,7 @@ public class JumpControl : MonoBehaviour
         touchingLeft = false;
         isRunning = false;
         readyForJump = true;
+        soundPlayer = GameObject.Find("soundEffects").GetComponent<SoundEffectHelper>();
     }
     void OnDestroy()
     {
@@ -48,6 +50,9 @@ public class JumpControl : MonoBehaviour
         {
             if (grounded)
             {
+                //int []CS = new int[]{1, 2};
+                //soundPlayer.playSoundRandom(transform.position, soundPlayer.jumpSound, 3, CS, 2);
+                soundPlayer.playSound(transform.position, soundPlayer.jumpSound[1]);
                 jump = true;
                 wallJump = false;
             }
@@ -91,6 +96,7 @@ public class JumpControl : MonoBehaviour
 
     public void WallJump()
     {
+        soundPlayer.playSound(transform.position, soundPlayer.jumpSound[0]);
         int direction = 0;
 
         if (touchingLeft && touchingRight) direction = 0;
