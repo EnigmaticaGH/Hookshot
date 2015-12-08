@@ -7,12 +7,12 @@ public class ObstacleSensor : MonoBehaviour {
 
     void OnTriggerStay2D(Collider2D c)
     {
-        if (c.CompareTag("Environment"))
+        if (c.CompareTag("Environment") || c.CompareTag("Hookable"))
             Obstacle = true;
     }
     void OnTriggerExit2D(Collider2D c)
     {
-        if (c.CompareTag("Environment"))
+        if (c.CompareTag("Environment") || c.CompareTag("Hookable"))
             Obstacle = false;
     }
 

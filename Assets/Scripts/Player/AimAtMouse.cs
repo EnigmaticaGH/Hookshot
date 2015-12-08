@@ -4,11 +4,12 @@ using System.Collections;
 public class AimAtMouse : MonoBehaviour {
     private bool aimingEnabled;
 
-    public Transform frontSensor;
+    public GameObject frontSensor;
 
     void Start()
     {
         aimingEnabled = true;
+        frontSensor = GameObject.Find("FrontSensorR");
     }
 
     void Update()

@@ -28,6 +28,7 @@ public class RopeControl : MonoBehaviour {
 
     public Rope ropeProperties;
     private Vector2 anchorOffset;
+    private Vector3 frontSensorAngle;
     private Transform hand;
 
     private DistanceJoint2D rope;
@@ -80,6 +81,8 @@ public class RopeControl : MonoBehaviour {
             RotateObjectTowardsRope();
         }
         DrawRope();
+        //frontSensorAngle = Quaternion.FromToRotation(hand.gameObject.transform.position, hook.transform.position).eulerAngles;
+        //frontSensorAngle.z += 90;
     }
 
     void ControlRope()
@@ -206,8 +209,8 @@ public class RopeControl : MonoBehaviour {
 
     private void setRopeSensors(Vector3 angle)
     {
-        Transform sensor = hand.GetComponent<AimAtMouse>().frontSensor;
-        sensor.rotation = Quaternion.Euler(angle);
+        Transform sensor = hand.GetComponent<AimAtMouse>().frontSensor.transform;
+        sensor.localRotation = Quaternion.Euler(angle);
     }
 
     private void RescaleY(float y)
@@ -221,12 +224,13 @@ public class RopeControl : MonoBehaviour {
     {
         if (a > 0)
         {
-            setRopeSensors(new Vector3(transform.rotation.x, transform.rotation.y, transform.rotation.z + 90));
+            //setRopeSensors(new Vector3(transform.rotation.x, transform.rotation.y, transform.rotation.z + 90));
+            setRopeSensors(new Vector3(0, 0, 90));
             return hand.GetComponent<AimAtMouse>().frontSensor.GetComponent<ObstacleSensor>().obstacleDetected();
         }
         else if (a < 0)
         {
-            setRopeSensors(new Vector3(transform.rotation.x, transform.rotation.y, transform.rotation.z - 90));
+            setRopeSensors(new Vector3(0, 0, -90));
             return hand.GetComponent<AimAtMouse>().frontSensor.GetComponent<ObstacleSensor>().obstacleDetected();
         }
         else
