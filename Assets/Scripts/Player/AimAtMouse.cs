@@ -26,10 +26,6 @@ public class AimAtMouse : MonoBehaviour {
             Vector3 direction = coords - pivotPos;
             direction = new Vector3(direction.x, direction.y, 0);
 
-            //Vector3 p = Camera.main.ScreenToWorldPoint(pivotPos);
-            //Vector3 c = Camera.main.ScreenToWorldPoint(coords);
-            //Debug.DrawLine(p, c, Color.red, Time.deltaTime);
-
             if (direction.x < 0)
             {
                 direction.x = -direction.x;
@@ -40,9 +36,6 @@ public class AimAtMouse : MonoBehaviour {
             {
                 transform.rotation = Quaternion.FromToRotation(Vector3.right, direction);
             }
-
-            //I should check if I can do this outside of this script
-            //frontSensor.rotation = transform.rotation;
         }
     }
 
