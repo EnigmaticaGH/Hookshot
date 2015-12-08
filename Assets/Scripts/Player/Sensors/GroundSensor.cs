@@ -2,26 +2,33 @@
 using System.Collections;
 
 public class GroundSensor : MonoBehaviour {
-    private JumpControl player;
     private bool canControlRope;
-    private bool inTrigger;
+    private sbyte grounded;
+    public delegate void GroundSensorEvent(bool sensorState);
+    public static event GroundSensorEvent GroundSensorChange;
 
     void Awake()
     {
-        player = transform.parent.gameObject.GetComponent<JumpControl>();
+        KillEnemies.OnRespawn += Reset;
+        grounded = 0;
+    }
+
+    void OnDestroy()
+    {
+        KillEnemies.OnRespawn -= Reset;
     }
 
     void Update()
     {
-        canControlRope = (Input.GetAxis("Vertical") >= 0 && inTrigger) || !inTrigger;
+        canControlRope = (Input.GetAxis("Vertical") >= 0 && grounded > 0) || !(grounded > 0);
     }
 
-    void OnTriggerStay2D(Collider2D other)
+    void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Environment") || other.CompareTag("Hookable"))
         {
-            player.SetGrounded(true);
-            inTrigger = true;
+            grounded = 1;
+            GroundSensorChange(true);
         }
     }
 
@@ -29,11 +36,14 @@ public class GroundSensor : MonoBehaviour {
     {
         if (other.CompareTag("Environment") || other.CompareTag("Hookable"))
         {
-            player.SetGrounded(false);
-            inTrigger = false;
+            grounded = 0;
+            GroundSensorChange(false);
         }
     }
-
+    void Reset()
+    {
+        grounded = 0;
+    }
     public bool CanControlRope()
     {
         return canControlRope;

@@ -5,10 +5,8 @@ public class AnimateFrog : MonoBehaviour
 {
     private LateralMovement player;
     private Animator anim;
-    private Vector2 relativeVel;
     private float horizontal;
 
-    // Use this for initialization
     void Start()
     {
         player = GetComponentInParent<LateralMovement>();
@@ -21,21 +19,15 @@ public class AnimateFrog : MonoBehaviour
         KillEnemies.OnRespawn -= ResetAnim;
     }
 
-    // Update is called once per frame
     void Update()
     {
         horizontal = Input.GetAxisRaw("Horizontal");
-        if (Time.time > 0.1f && !anim.GetBool("WallJump"))
+        if (Time.time > 0.01f && !anim.GetBool("WallJump"))
         {
             anim.SetBool("Grounded", player.isGrounded());
-            anim.SetBool("Moving", relativeVel.magnitude > 0.01f);
+            anim.SetBool("Moving", player.RelativeVelocity().magnitude > 0.01f);
             anim.SetFloat("Horizontal", horizontal);
         }
-    }
-
-    void OnCollisionStay2D(Collision2D c)
-    {
-        relativeVel = c.relativeVelocity;
     }
 
     void ResetAnim()

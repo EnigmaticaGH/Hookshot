@@ -33,6 +33,6 @@ public class PauseScript : MonoBehaviour
 
     public void QuitToMenu()
     {
-        Application.LoadLevel("MainMenu");
+        Application.LoadLevel(0);
     }
 }

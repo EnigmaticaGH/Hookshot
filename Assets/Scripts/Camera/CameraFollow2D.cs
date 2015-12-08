@@ -3,7 +3,10 @@ using System.Collections;
 
 public class CameraFollow2D : MonoBehaviour
 {
+    public int numberOfBgLayers;
     public float dampTime;
+    public Transform[] Layers;
+    public float[] speedOfLayers;
     private Vector3 velocity = Vector3.zero;
     private Transform target;
     public float zoomSpeed;
@@ -15,17 +18,19 @@ public class CameraFollow2D : MonoBehaviour
     public bool LimitCameraPos;
     public Vector2 minPos;
     public Vector2 maxPos;
+    private float cameraScreenWidth;
 
     void Start()
     {
         target = GameObject.FindGameObjectWithTag("Player").transform;
+        cameraScreenWidth = GetComponent<Camera>().orthographicSize;
     }
 
-    // Update is called once per frame
     void Update()
     {
         Vector3 point = GetComponent<Camera>().WorldToViewportPoint(target.position);
-        Vector3 delta = target.position - GetComponent<Camera>().ViewportToWorldPoint(new Vector3(0.5f, 0.5f, point.z));
+        Vector3 delta = target.position - GetComponent<Camera>().ViewportToWorldPoint(new Vector3(0.5f, 0.5f, point.z)) + Vector3.right * cameraScreenWidth;
+
         float yCoordinate = 0;
         float xCoordinate = 0;
         Vector3 destination = Vector3.zero;

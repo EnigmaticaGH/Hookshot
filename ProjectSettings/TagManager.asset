@@ -6,26 +6,16 @@ TagManager:
   tags:
   - Environment
   - Enemy
-  - Bullet
   - Hookable
-  - Win Condition
   - Rope
-  - Platform
   - Water
   - Boundary
-  - Bottom
-  - Top
-  - Left
-  - Right
-  - Back
-  - Mouth
-  - Ass
-  - Feet
   - KeyBinds
   - Hazard
   - Hook
   - Edible
   - Player Sprite
+  - Sensor
   layers:
   - Default
   - TransparentFX

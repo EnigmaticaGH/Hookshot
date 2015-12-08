@@ -53,10 +53,7 @@ public class Hook : MonoBehaviour
     bool TagsToIgnore(Collider2D c)
     {
         return c.CompareTag("Player Sprite") ||
-            c.CompareTag("Feet") ||
-            c.CompareTag("Back") ||
-            c.CompareTag("Mouth") ||
-            c.CompareTag("Ass") ||
+            c.CompareTag("Sensor") ||
             c.CompareTag("Respawn");
     }
 }

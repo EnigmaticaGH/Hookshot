@@ -26,6 +26,8 @@ public class HookshotControl : MonoBehaviour {
 
     public GameObject hookFab;
     public GameObject ropeFab;
+    public Transform frontSensor;
+    public Transform backSensor;
 
     public float retractTime;
 
