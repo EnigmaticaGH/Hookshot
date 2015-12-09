@@ -12,10 +12,10 @@ GameObject:
   - 114: {fileID: 11443484}
   - 120: {fileID: 12002424}
   - 23: {fileID: 2309118}
-  - 33: {fileID: 3367354}
+  - 33: {fileID: 3378166}
   m_Layer: 0
   m_Name: Water
-  m_TagString: Untagged
+  m_TagString: Water
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -27,7 +27,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 190054}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 29.9529991, y: -1.26999998, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -56,7 +56,7 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
---- !u!33 &3367354
+--- !u!33 &3378166
 MeshFilter:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -89,8 +89,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   vertexCount: 45
   propagationPasses: 8
-  springConstant: 3.63000011
-  spread: -6.67000008
+  springConstant: 2.24000001
+  dampening: .180000007
+  spread: -9.68999958
   moleculePrefab: {fileID: 132264, guid: ea122a43bc406374aa62258631cc18b9, type: 2}
 --- !u!120 &12002424
 LineRenderer:

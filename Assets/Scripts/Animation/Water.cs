@@ -1,6 +1,21 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+public struct WaterColumn
+{
+    public GameObject surfaceParticle;
+    public Transform transform;
+    public Rigidbody2D body;
+
+    public void Update(float targetHeight, float dampening, float tension)
+    {
+        float x = targetHeight - transform.position.y;
+        Vector2 speed = body.velocity;
+        speed.y += tension * x - speed.y * dampening;
+        body.velocity = speed;
+    }
+}
+
 public class Water : MonoBehaviour 
 {
     public int vertexCount;
@@ -9,13 +24,14 @@ public class Water : MonoBehaviour
 	[Range(0, 10)]
     public float springConstant;
 
+    public float dampening;
+
 	[Range(-10, 0)]
     public float spread;
 
     public GameObject moleculePrefab;
 
-    GameObject[] molecules;
-    Rigidbody2D[] moleculeBodies;
+    WaterColumn[] molecules;
 
     Mesh waterMesh;
 
@@ -49,18 +65,28 @@ public class Water : MonoBehaviour
 
     void SpawnWaterMolecules()
     {
-        Vector2 spawnPos = new Vector2(0.0f, yTop);
-        molecules = new GameObject[vertexCount];
-        moleculeBodies = new Rigidbody2D[vertexCount];
+        molecules = new WaterColumn[vertexCount+2];
         float particlePadding = (float)width / vertexCount;
         float particleHalfPadding = particlePadding / 2.0f;
-        for (int i = 0; i < vertexCount; i++)
+
+        SpawnMolecule(0, new Vector2(xLeft, yTop));
+
+        Vector2 spawnPos = new Vector2(0.0f, yTop);
+        for (int i = 1; i < vertexCount+2; i++)
         {
             spawnPos.x = xLeft + particlePadding * i + particleHalfPadding;
-            molecules[i] = (GameObject)Instantiate(moleculePrefab, spawnPos, transform.rotation);
-            molecules[i].transform.parent = transform;
-            moleculeBodies[i] = molecules[i].GetComponent<Rigidbody2D>();
+            SpawnMolecule(i, spawnPos);
         }
+
+    }
+
+    void SpawnMolecule(int i, Vector2 spawnPos)
+    {
+        molecules[i] = new WaterColumn();
+        molecules[i].surfaceParticle = (GameObject)Instantiate(moleculePrefab, spawnPos, transform.rotation);
+        molecules[i].transform = molecules[i].surfaceParticle.transform;
+        molecules[i].transform.parent = transform;
+        molecules[i].body = molecules[i].surfaceParticle.GetComponent<Rigidbody2D>();
     }
 
     void SpawnWaterMesh()
@@ -120,12 +146,9 @@ public class Water : MonoBehaviour
 
     void ApplySpringForces()
     {
-        for(int i = 0; i < molecules.Length; i++) 
+        foreach(WaterColumn molecule in molecules) 
         {
-            float x = yTop - molecules[i].transform.position.y;
-            float verticalForce = springConstant * x;
-            moleculeBodies[i].AddForce(
-                new Vector2(0.0f, verticalForce));
+            molecule.Update(yTop, dampening, springConstant);
         }
     }
 
@@ -143,16 +166,16 @@ public class Water : MonoBehaviour
                 {
                     float k2 = yTop - molecules[i - 1].transform.position.y;
                     leftDeltas[i] = spread * (k - k2);
-                    moleculeBodies[i - 1].velocity +=
-                        moleculeBodies[i - 1].velocity.normalized * leftDeltas[i] * Time.deltaTime;
+                    molecules[i - 1].body.velocity +=
+                        molecules[i - 1].body.velocity.normalized * leftDeltas[i] * Time.deltaTime;
                 }
 
                 if (i < molecules.Length - 1)
                 {
                     float k2 = yTop - molecules[i + 1].transform.position.y;
                     rightDeltas[i] = spread * (k - k2);
-                    moleculeBodies[i + 1].velocity +=
-                        moleculeBodies[i + 1].velocity.normalized * rightDeltas[i] * Time.deltaTime;
+                    molecules[i + 1].body.velocity +=
+                        molecules[i + 1].body.velocity.normalized * rightDeltas[i] * Time.deltaTime;
                 }
             }
 
@@ -164,20 +187,14 @@ public class Water : MonoBehaviour
                 {
                     Vector3 pos = molecules[i - 1].transform.position;
                     pos.y += leftDeltas[i] * Time.fixedDeltaTime;
-					if(!float.IsInfinity (pos.y))
-                    	molecules[i - 1].transform.position = pos;
-					else
-						Debug.Log ("pos.y is infinity");
+                   	molecules[i - 1].transform.position = pos;
                 }
 
                 if (i < molecules.Length - 1)
                 {
                     Vector3 pos = molecules[i + 1].transform.position;
                     pos.y += rightDeltas[i] * Time.fixedDeltaTime;
-					if(!float.IsInfinity (pos.y))
-                    	molecules[i + 1].transform.position = pos;
-					else
-						Debug.Log ("pos.y is infinity");
+                    molecules[i + 1].transform.position = pos;
                 }
             }
         }
