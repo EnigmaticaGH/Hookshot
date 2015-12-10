@@ -20,7 +20,6 @@ public class ScoreTracker : MonoBehaviour {
     public Transform player;
     void Awake()
     {
-        InfiniteRunGenerator.Score += UpdateScore;
         InfiniteRunGenerator.Respawn += UpdateBest;
         bestText.text = "Best: " + best;
         player = GameObject.FindGameObjectWithTag("Player").transform;
@@ -28,7 +27,6 @@ public class ScoreTracker : MonoBehaviour {
     }
     void OnDestroy()
     {
-        InfiniteRunGenerator.Score -= UpdateScore;
         InfiniteRunGenerator.Respawn -= UpdateBest;
     }
 
@@ -44,15 +42,8 @@ public class ScoreTracker : MonoBehaviour {
         score *= distanceScoreFactor;
         score -= timePenaltyFactor * (Time.time - startTime);
         scoreText.text = "Score: " + score.ToString("0");
-    }
-    void UpdateScore(double score)
-    {
-        /*
-        currentScore += score;
-        if (currentScore > best) best = currentScore;
-        if (currentScore > totalScore) totalScore = currentScore;
-        scoreText.text = "Score: " + totalScore.ToString("0");
-        */
+
+        if (score > best) best = score;
     }
     void UpdateBest()
     {
