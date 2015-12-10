@@ -2,79 +2,64 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Collections;
-struct IndexedGameObject
-{
-    public int index;
-    public GameObject gameObject;
-}
+
 public class InfiniteRunGenerator : MonoBehaviour
 {
     public float parallaxBackgroundSpeed;
 
     public GameObject backgroundPrefab;
-    public GameObject deathBoxPrefab;
-    public GameObject nonHookLeafPrefab;
-    public GameObject hookLeafPrefab;
-    public GameObject mushroomPrefab;
-    public GameObject stemPrefab;
-    public GameObject treeTrunkPrefab;
-    public GameObject stemSidewaysPrefab;
-    public GameObject treeTrunkSidewaysPrefab;
+
+    private Dictionary<string, GameObject> prefabs;
+    private Dictionary<int, string> indexes;
+    private Dictionary<int, GameObject> indexedGameObjects;
 
     private GameObject backgroundFolder;
     private List<GameObject> backgrounds;
-    private List<LevelPart> levelParts;
-    private List<IndexedGameObject> generatedSections;
 
     private Vector2 deathBoxPos;
     private Vector2 backgroundPos;
-    private GameObject envFolder;
     private GameObject bgFolder;
+
     private bool doneRespawning;
+
     private int oldSection = 0;
     private int section = 0;
     private int oldParallaxSection = 0;
     private int parallaxSection = 0;
-    private float bgWidth;
-    private float oldPositionX;
-    private float positionX;
-    public float levelPartWidth;
 
-    private Rigidbody2D player;
-    private LateralMovement movement;
+    private float bgWidth;
+    public float levelPartWidth;
 
     public delegate void RespawnAction();
     public static event RespawnAction Respawn;
-    public delegate void UpdateScore(double score);
-    public static event UpdateScore Score;
     void Start()
     {
         KillEnemies.OnRespawn += DoneRespawning;
         InitalizeVariables();
         FindObjects();
-        CreateLevelParts();
+        //LoadAssets();
         InitalizeEnvironment();
         
     }
     void InitalizeVariables()
     {
+        prefabs = new Dictionary<string, GameObject>();
+        indexes = new Dictionary<int, string>();
+        indexedGameObjects = new Dictionary<int, GameObject>();
+
         backgroundFolder = new GameObject("Background");
         backgroundFolder.transform.position = Vector2.zero;
         backgrounds = new List<GameObject>();
-        levelParts = new List<LevelPart>();
-        generatedSections = new List<IndexedGameObject>();
+
         //Make the backgrounds overlap just a little bit, to prevent the white back-background from showing
         bgWidth = (backgroundPrefab.GetComponent<SpriteRenderer>().sprite.bounds.extents.x * 2) - 0.01f;
         backgroundPos = Vector2.zero;
         deathBoxPos = backgroundPos + (Vector2.down * 5);
+
         doneRespawning = true;
-        oldPositionX = 0;
-        positionX = 0;
     }
     void FindObjects()
     {
-        player = GetComponent<Rigidbody2D>();
-        movement = GetComponent<LateralMovement>();
         bgFolder = GameObject.Find("Background");
     }
     void OnDestroy()
@@ -90,53 +75,34 @@ public class InfiniteRunGenerator : MonoBehaviour
             backgrounds[i].transform.parent = bgFolder.transform;
         }
     }
-
-    void CreateLevelParts()
-    {
-        string file = Read("LevelParts");
-        string[] fileLines = file.Replace("\r\n", "\n").Replace("\r", "\n").Split('\n');
-        List<string> lines = new List<string>();
-        lines.AddRange(fileLines);
-        for (int i = 0; i < lines.Count; i++)
-        {
-            string s = lines[i];
-            if (s.Split(' ')[0] == "LevelPart")
-            {
-                string name = s.Split('=')[1].Trim();
-                ParseLevelPart(lines, i, name);
-                i++;
-            }
-        }
-        if (levelParts.Count > 0)
-            InitalizeLevel();
-    }
     void InitalizeLevel()
     {
-        GameObject initialPart1 = LevelPart.Instantiate(levelParts[(int)(Random.value * LevelPart.Count)], Vector2.left * levelPartWidth, Quaternion.identity, -1);
-        GameObject initialPart2 = LevelPart.Instantiate(levelParts[0], Vector2.zero, Quaternion.identity, 0);
-        GameObject initialPart3 = LevelPart.Instantiate(levelParts[2], Vector2.right * levelPartWidth, Quaternion.identity, 1);
-        IndexedGameObject i1;
-        IndexedGameObject i2;
-        IndexedGameObject i3;
-        i1.index = -1;
-        i2.index = 0;
-        i3.index = 1;
-        i1.gameObject = initialPart1;
-        i2.gameObject = initialPart2;
-        i3.gameObject = initialPart3;
-        generatedSections.Add(i1);
-        generatedSections.Add(i2);
-        generatedSections.Add(i3);
+        indexedGameObjects.Add(-1, (GameObject)Instantiate(prefabs[indexes[(int)(Random.value * prefabs.Count)]],
+            Vector2.left * levelPartWidth, Quaternion.identity));
+
+        indexedGameObjects.Add(0, (GameObject)Instantiate(prefabs["Start"],
+            Vector2.zero, Quaternion.identity));
+
+        indexedGameObjects.Add(1, (GameObject)Instantiate(prefabs[indexes[(int)(Random.value * prefabs.Count)]], 
+            Vector2.right * levelPartWidth, Quaternion.identity));
+
+        foreach (KeyValuePair<int, GameObject> pair in indexedGameObjects)
+        {
+            foreach (Transform part in pair.Value.transform)
+            {
+                if (part.GetComponent<SpringJoint2D>() != null)
+                {
+                    part.GetComponent<SpringJoint2D>().connectedAnchor 
+                        = (Vector2)(part.transform.position) + (Vector2.up * 0.4f);
+                }
+            }
+        }
     }
     void Update()
     {
         UpdateLevelParts();
         ParallaxBackground();
         CheckForDeath();
-        oldPositionX = positionX;
-        positionX = transform.position.x;
-        double score = Mathf.Abs(positionX - oldPositionX) * Mathf.Pow((player.velocity.x / movement.speed) + 1, 2);
-        Score(score);
     }
     void UpdateLevelParts()
     {
@@ -148,22 +114,36 @@ public class InfiniteRunGenerator : MonoBehaviour
         if (section != oldSection)
         {
             int direction = section - oldSection;
-            foreach (IndexedGameObject i in generatedSections)
-            {
-                canGenerate = canGenerate && section != i.index;
-                canGenerateAhead = canGenerateAhead && section + direction != i.index;
-            }
+            canGenerate = !indexedGameObjects.ContainsKey(section);
+            canGenerateAhead = !indexedGameObjects.ContainsKey(section + direction);
             if (canGenerate)
             {
-                GenerateSection(direction, section);
+                GenerateSection(section);
             }
             if (canGenerateAhead)
             {
-                GenerateSection(direction, section + direction);
+                GenerateSection(section + direction);
             }
             DetermineVisibleSections();
         }
     }
+
+    void GenerateSection(int index)
+    {
+        int i = (int)(Random.value * prefabs.Count);
+        indexedGameObjects.Add(index, (GameObject)Instantiate(prefabs[indexes[i]],
+            Vector2.right * levelPartWidth * index, Quaternion.identity));
+
+        foreach (Transform part in indexedGameObjects[index].transform)
+        {
+            if (part.GetComponent<SpringJoint2D>() != null)
+            {
+                part.GetComponent<SpringJoint2D>().connectedAnchor
+                    = (Vector2)(part.transform.position) + (Vector2.up * 0.4f);
+            }
+        }
+    }
+
     void ParallaxBackground()
     {
         foreach(GameObject bg in backgrounds)
@@ -187,35 +167,11 @@ public class InfiniteRunGenerator : MonoBehaviour
         }
     }
 
-    void TestRandom()
-    {
-        int[] n = new int[4] { 0, 0, 0, 0 };
-        for(int x = 0; x < 10000; x++)
-        {
-            int i = (int)(Random.value * 4);
-            n[i]++;
-        }
-        for(int i = 0; i < 4; i++)
-        {
-            Debug.Log(n[i]);
-        }
-    }
-
-    void GenerateSection(int direction, int sec)
-    {
-        int i = (int)(Random.value * LevelPart.Count);
-        IndexedGameObject ir1;
-        GameObject randomPart1 = LevelPart.Instantiate(levelParts[i], Vector2.right * levelPartWidth * sec, Quaternion.identity, sec);
-        ir1.index = sec;
-        ir1.gameObject = randomPart1;
-        generatedSections.Add(ir1);
-    }
-
     void DetermineVisibleSections()
     {
-        foreach(IndexedGameObject ig in generatedSections)
+        foreach(KeyValuePair<int, GameObject> pair in indexedGameObjects)
         {
-            ig.gameObject.SetActive(Mathf.Abs(ig.index - section) <= 1);
+            pair.Value.SetActive(Mathf.Abs(pair.Key - section) <= 1);
         }
     }
 
@@ -234,158 +190,16 @@ public class InfiniteRunGenerator : MonoBehaviour
     {
         doneRespawning = true;
         ScoreTracker.ResetScore();
-        positionX = 0;
-        oldPositionX = 0;
-    }
-    public static string Read(string filename)
-    {
-        TextAsset theTextFile = Resources.Load<TextAsset>(filename);
-        if (theTextFile != null)
-            return theTextFile.text;
-        return string.Empty;
     }
 
-    void ParseLevelPart(List<string> lines, int levelPartIndex, string name)
+    void LoadAssets()
     {
-        int i = levelPartIndex + 1;
-        float x = 0;
-        float y = 0;
-        int difficulty = 0;
-        List<GameObject> objects = new List<GameObject>();
-        while (i < lines.Count && lines[i].Split(' ')[0] != "LevelPart")
+        foreach(GameObject g in Resources.LoadAll("Level Parts"))
         {
-            string s = lines[i];
-            if (s.Contains("x = "))
-            {
-                string[] line = s.Split(' ');
-                try
-                {
-                    x = float.Parse((line[line.Length - 1]));
-                }
-                catch (System.FormatException e)
-                {
-                    Debug.LogError("Attempted to parse a number on line " + (i + 1) + " and failed.");
-                    Debug.LogException(e);
-                }
-            }
-            else if (s.Contains("\ty = "))
-            {
-                string[] line = s.Split(' ');
-                try
-                {
-                    y = float.Parse((line[line.Length - 1]));
-                }
-                catch (System.FormatException e)
-                {
-                    Debug.LogError("Attempted to parse a number on line " + (i + 1) + " and failed.");
-                    Debug.LogException(e);
-                }
-            }
-            else if (s.Contains("difficulty = "))
-            {
-                string[] line = s.Split(' ');
-                difficulty = int.Parse((line[line.Length - 1]));
-            }
-            else if (s.Contains("Object"))
-            {
-                i = ParseObject(lines, i, ref objects);
-            }
-            i++;
+            indexes.Add(prefabs.Count, g.name);
+            prefabs.Add(g.name, g);
         }
-        levelParts.Add(new LevelPart(new Vector2(x, y), objects, difficulty, name));
-    }
-
-    int ParseObject(List<string> lines, int ObjectIndex, ref List<GameObject> objects)
-    {
-        int i = ObjectIndex + 1;
-        float x = 0;
-        float y = 0;
-        string type = "";
-
-        while (i < lines.Count && lines[i].Trim().Substring(0) != "}")
-        {
-            string s = lines[i];
-            if (s.Contains("x = "))
-            {
-                string[] line = s.Split(' '); try
-                {
-                    x = float.Parse((line[line.Length - 1]));
-                }
-                catch (System.FormatException e)
-                {
-                    Debug.LogError("Attempted to parse a number on line " + (i + 1) + " and failed.");
-                    Debug.LogException(e);
-                }
-            }
-            else if (s.Contains("\ty = "))
-            {
-                string[] line = s.Split(' ');
-                try
-                {
-                    y = float.Parse((line[line.Length - 1]));
-                }
-                catch (System.FormatException e)
-                {
-                    Debug.LogError("Attempted to parse a number on line " + (i + 1) + " and failed.");
-                    Debug.LogException(e);
-                }
-            }
-            else if (s.Contains("type = "))
-            {
-                string[] line = s.Split(' ');
-                type = line[line.Length - 1];
-            }
-            i++;
-        }
-        objects.Add(InstantiateObject(x, y, type));
-        return i;
-    }
-
-    GameObject InstantiateObject(float x, float y, string type)
-    {
-        GameObject g;
-        if (type == "nonHookLeaf")
-        {
-            g = (GameObject)Instantiate(nonHookLeafPrefab, new Vector2(x, y), Quaternion.identity);
-        }
-        else if (type == "hookLeaf")
-        {
-            g = (GameObject)Instantiate(hookLeafPrefab, new Vector2(x, y), Quaternion.identity);
-        }
-        else if (type == "mushroom")
-        {
-            g = (GameObject)Instantiate(mushroomPrefab, new Vector2(x, y), Quaternion.identity);
-        }
-        else if (type == "stem")
-        {
-            g = (GameObject)Instantiate(stemPrefab, new Vector2(x, y), Quaternion.identity);
-        }
-        else if (type == "treeTrunk")
-        {
-            g = (GameObject)Instantiate(treeTrunkPrefab, new Vector2(x, y), Quaternion.identity);
-        }
-        else if (type == "stemSideways")
-        {
-            g = (GameObject)Instantiate(stemSidewaysPrefab, new Vector2(x, y), Quaternion.identity);
-        }
-        else if (type == "treeTrunkSideways")
-        {
-            g = (GameObject)Instantiate(treeTrunkSidewaysPrefab, new Vector2(x, y), Quaternion.identity);
-        }
-        else
-        {
-            g = new GameObject("Unknown Type (" + type + ")");
-        }
-        return g;
-    }
-
-    string Join(List<string> info)
-    {
-        string r = "";
-        foreach (string s in info)
-        {
-            r += s;
-        }
-        return r;
+        if (prefabs.Count > 0)
+            InitalizeLevel();
     }
 }

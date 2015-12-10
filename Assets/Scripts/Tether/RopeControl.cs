@@ -30,6 +30,8 @@ public class RopeControl : MonoBehaviour {
     private Vector2 anchorOffset;
     private Vector3 frontSensorAngle;
     private Transform hand;
+    private Transform frontSensor;
+    private ObstacleSensor obstacleSensor;
 
     private DistanceJoint2D rope;
     private SpringJoint2D spring;
@@ -50,9 +52,17 @@ public class RopeControl : MonoBehaviour {
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<LateralMovement>();
         playerBody = player.getRigidBody();
-        FindWallSensors();
+        FindSensors();
         moveForce = player.moveForce;
         RescaleY(0.0f);
+    }
+
+    void FindSensors()
+    {
+        GameObject fsensor = GameObject.Find("FrontSensorR");
+        frontSensor = fsensor.transform;
+        obstacleSensor = fsensor.GetComponent<ObstacleSensor>();
+        FindWallSensors();
     }
 
     void FindWallSensors() 
@@ -81,8 +91,6 @@ public class RopeControl : MonoBehaviour {
             RotateObjectTowardsRope();
         }
         DrawRope();
-        //frontSensorAngle = Quaternion.FromToRotation(hand.gameObject.transform.position, hook.transform.position).eulerAngles;
-        //frontSensorAngle.z += 90;
     }
 
     void ControlRope()
@@ -151,9 +159,6 @@ public class RopeControl : MonoBehaviour {
         spriteTransform.rotation = Quaternion.FromToRotation(Vector2.up, jointDirection);
 
         rope.anchor = anchorOffset;
-
-        //if(isTouchingWall())
-            //FaceWall();
     }
 
 
@@ -194,23 +199,15 @@ public class RopeControl : MonoBehaviour {
 
         float minScale = ropeProperties.minScale;
         float maxScale = ropeProperties.maxScale;
-        //float distance = hookshot.IsHooked() ? distance = rope.distance : Vector3.Distance(playerOffset, hookPos);
         float distance = Vector3.Distance(playerOffset, hookPos);
 
+        // lolwut does this do?
         RescaleY(minScale + ((maxScale - minScale) * ((distance - ropeProperties.minLength)) / (ropeProperties.maxLength - ropeProperties.minLength)));
-        //RescaleY(distance / 7);
     }
 
     private Vector2 GetPlayerOffset()
     {
-        //Debug.Log(hand.position);
         return hand.position;
-    }
-
-    private void setRopeSensors(Vector3 angle)
-    {
-        Transform sensor = hand.GetComponent<AimAtMouse>().frontSensor.transform;
-        sensor.localRotation = Quaternion.Euler(angle);
     }
 
     private void RescaleY(float y)
@@ -220,20 +217,12 @@ public class RopeControl : MonoBehaviour {
         transform.localScale = scale;
     }
 
-    private bool obstacleBlocking(float a)
+    private bool obstacleBlocking(float direction)
     {
-        if (a > 0)
-        {
-            //setRopeSensors(new Vector3(transform.rotation.x, transform.rotation.y, transform.rotation.z + 90));
-            setRopeSensors(new Vector3(0, 0, 90));
-            return hand.GetComponent<AimAtMouse>().frontSensor.GetComponent<ObstacleSensor>().obstacleDetected();
-        }
-        else if (a < 0)
-        {
-            setRopeSensors(new Vector3(0, 0, -90));
-            return hand.GetComponent<AimAtMouse>().frontSensor.GetComponent<ObstacleSensor>().obstacleDetected();
-        }
-        else
-            return false;
+        if (direction == 0) // Fat chance for floats
+            return true;
+
+        frontSensor.localRotation = Quaternion.Euler(0, 0, direction > 0 ? 90 : -90);
+        return obstacleSensor.Obstacle;
     }
 }

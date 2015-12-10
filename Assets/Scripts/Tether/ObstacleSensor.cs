@@ -3,6 +3,7 @@ using System.Collections;
 
 public class ObstacleSensor : MonoBehaviour {
 
+    [HideInInspector]
     public bool Obstacle = false;
 
     void OnTriggerStay2D(Collider2D c)
@@ -14,10 +15,5 @@ public class ObstacleSensor : MonoBehaviour {
     {
         if (c.CompareTag("Environment") || c.CompareTag("Hookable"))
             Obstacle = false;
-    }
-
-    public bool obstacleDetected()
-    {
-        return Obstacle;
     }
 }
