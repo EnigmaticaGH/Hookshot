@@ -37,7 +37,7 @@ public class InfiniteRunGenerator : MonoBehaviour
         KillEnemies.OnRespawn += DoneRespawning;
         InitalizeVariables();
         FindObjects();
-        //LoadAssets();
+        LoadAssets();
         InitalizeEnvironment();
         
     }

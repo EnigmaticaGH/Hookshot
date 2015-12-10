@@ -39,6 +39,8 @@ public class ScoreTracker : MonoBehaviour {
 
         score *= distanceScoreFactor;
         score -= timePenaltyFactor * (Time.time - startTime);
+        if (score < 0)
+            score = 0;
         scoreText.text = "Score: " + score.ToString("0");
 
         if (score > best) best = score;
