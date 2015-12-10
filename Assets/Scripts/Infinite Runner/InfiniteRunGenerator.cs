@@ -128,7 +128,6 @@ public class InfiniteRunGenerator : MonoBehaviour
             int direction = section - oldSection;
             canGenerate = !indexedGameObjects.ContainsKey(section);
             canGenerateAhead = !indexedGameObjects.ContainsKey(section + direction);
-            Debug.Log(direction + ": " + section);
             if (canGenerate)
             {
                 GenerateSection(section);
