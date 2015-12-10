@@ -176,7 +176,7 @@ GameObject:
   - 231: {fileID: 23160442}
   m_Layer: 0
   m_Name: Bouncy Mushroom Cap
-  m_TagString: Untagged
+  m_TagString: Environment
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -345,7 +345,7 @@ GameObject:
   - 231: {fileID: 23148680}
   m_Layer: 0
   m_Name: Bouncy Mushroom Cap
-  m_TagString: Untagged
+  m_TagString: Environment
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -721,7 +721,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 158250}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -15.928894, y: 3.98999977, z: 0}
+  m_LocalPosition: {x: -15.8199997, y: 2.79999995, z: 0}
   m_LocalScale: {x: 7, y: 1, z: 1}
   m_Children:
   - {fileID: 479070}
@@ -747,7 +747,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 188424}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.20558727, y: 1.54384232, z: 0}
+  m_LocalPosition: {x: 37.3167343, y: 8.6817255, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 420532}
@@ -807,7 +807,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 195344}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: .00999999978, y: -1.10000002, z: -1}
+  m_LocalPosition: {x: 0, y: .219999999, z: -1}
   m_LocalScale: {x: .0299999993, y: .128743365, z: 1}
   m_Children: []
   m_Father: {fileID: 459002}
@@ -943,7 +943,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!50 &5083530
 Rigidbody2D:
   serializedVersion: 2
@@ -959,7 +959,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!50 &5091326
 Rigidbody2D:
   serializedVersion: 2
