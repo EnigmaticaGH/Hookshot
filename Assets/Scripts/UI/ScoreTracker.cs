@@ -34,7 +34,6 @@ public class ScoreTracker : MonoBehaviour {
 
     void Update()
     {
-        Debug.Log("Update score");
         double score = 0;
         if (player.position.x > maxDistance) {
             score = player.position.x;
