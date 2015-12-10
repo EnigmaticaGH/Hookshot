@@ -65,7 +65,6 @@ LightmapSettings:
     m_TextureCompression: 1
     m_FinalGather: 0
     m_FinalGatherRayCount: 1024
-    m_ReflectionCompression: 2
   m_LightmapSnapshot: {fileID: 0}
   m_RuntimeCPUUsage: 25
 --- !u!196 &4
@@ -85,6 +84,9 @@ NavMeshSettings:
     cellSize: .166666672
     manualCellSize: 0
   m_NavMeshData: {fileID: 0}
+--- !u!127 &5
+LevelGameManager:
+  m_ObjectHideFlags: 0
 --- !u!4 &104971436 stripped
 Transform:
   m_PrefabParentObject: {fileID: 428938, guid: d119b269f3277b14aa913ba552b19ed4, type: 2}
@@ -348,7 +350,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11430776, guid: 548a469b20b08094486b5f8b5f1f5218, type: 2}
       propertyPath: timePenaltyFactor
-      value: 50
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 11430776, guid: 548a469b20b08094486b5f8b5f1f5218, type: 2}
       propertyPath: player
@@ -421,6 +423,10 @@ Prefab:
       propertyPath: prefabs.Array.data[3]
       value: 
       objectReference: {fileID: 196124, guid: e3f19cbf73b01ae43b4137b97828c19b, type: 2}
+    - target: {fileID: 11450860, guid: d119b269f3277b14aa913ba552b19ed4, type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 21267166, guid: d119b269f3277b14aa913ba552b19ed4, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: d119b269f3277b14aa913ba552b19ed4, type: 2}
