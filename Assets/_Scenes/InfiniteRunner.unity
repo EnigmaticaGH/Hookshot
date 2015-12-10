@@ -216,7 +216,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 8293944, guid: cca22155fc5b2764fbc20584edfe118f, type: 2}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: cca22155fc5b2764fbc20584edfe118f, type: 2}
@@ -453,7 +453,7 @@ Transform:
   - {fileID: 1883361522}
   - {fileID: 1467780190}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
 --- !u!224 &1883361522 stripped
 RectTransform:
   m_PrefabParentObject: {fileID: 22440680, guid: 49ebb174ca0036d478298558a30b0463,

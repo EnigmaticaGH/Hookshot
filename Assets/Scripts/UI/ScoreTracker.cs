@@ -5,8 +5,6 @@ using System;
 
 public class ScoreTracker : MonoBehaviour {
 
-    private static double currentScore = 0;
-    private static double totalScore = 0;
     private static double best = 0;
     private static double maxDistance;
     private static double startTime;
@@ -52,8 +50,6 @@ public class ScoreTracker : MonoBehaviour {
     public static void ResetScore()
     {
         maxDistance = 0;
-        totalScore = 0;
-        currentScore = 0;
         startTime = Time.time;
     }
 }
