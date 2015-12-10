@@ -211,8 +211,8 @@ public class InfiniteRunGenerator : MonoBehaviour
     {
         foreach(GameObject g in Resources.LoadAll("Level Parts"))
         {
+            indexes.Add(prefabs.Count, g.name);
             prefabs.Add(g.name, g);
-            indexes.Add(prefabs.Count - 1, g.name);
         }
         if (prefabs.Count > 0)
             InitalizeLevel();
