@@ -128,7 +128,6 @@ public class InfiniteRunGenerator : MonoBehaviour
             int direction = section - oldSection;
             canGenerate = !indexedGameObjects.ContainsKey(section);
             canGenerateAhead = !indexedGameObjects.ContainsKey(section + direction);
-            Debug.Log(direction + ": " + section);
             if (canGenerate)
             {
                 GenerateSection(section);
@@ -211,8 +210,8 @@ public class InfiniteRunGenerator : MonoBehaviour
     {
         foreach(GameObject g in Resources.LoadAll("Level Parts"))
         {
+            indexes.Add(prefabs.Count, g.name);
             prefabs.Add(g.name, g);
-            indexes.Add(prefabs.Count - 1, g.name);
         }
         if (prefabs.Count > 0)
             InitalizeLevel();
