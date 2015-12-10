@@ -702,15 +702,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parallaxBackgroundSpeed: 2
   backgroundPrefab: {fileID: 176652, guid: c42afb4c5fe576f43aa6b742ce365aca, type: 2}
-  deathBoxPrefab: {fileID: 153022, guid: a4e9e4a9651e53c4594e27a811dba819, type: 2}
-  nonHookLeafPrefab: {fileID: 199736, guid: 396fa737cce44cc4ca3de87d8659f34f, type: 2}
-  hookLeafPrefab: {fileID: 196124, guid: e3f19cbf73b01ae43b4137b97828c19b, type: 2}
-  mushroomPrefab: {fileID: 130688, guid: b8da0c69b0133c945bcd467c32394b50, type: 2}
-  stemPrefab: {fileID: 178632, guid: 18c876a801c67c348883d5f3e152da6b, type: 2}
-  treeTrunkPrefab: {fileID: 139688, guid: 080e28ddcd15c6b4a956648379995cd8, type: 2}
-  stemSidewaysPrefab: {fileID: 173538, guid: e4a53e3c8d0ecf7488e2088068678564, type: 2}
-  treeTrunkSidewaysPrefab: {fileID: 177374, guid: d1144b297f3dc034aaef6a485525c85d,
-    type: 2}
   levelPartWidth: 100
 --- !u!114 &11454834
 MonoBehaviour:
@@ -808,6 +799,7 @@ MonoBehaviour:
   wallJumpForce: 50
   jumpSpeed: 10
   wallJumpSpeed: 6
+  soundPlayer: {fileID: 0}
   canDoubleJump: 0
 --- !u!212 &21242406
 SpriteRenderer:
