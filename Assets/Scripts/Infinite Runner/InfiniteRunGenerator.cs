@@ -19,14 +19,19 @@ public class InfiniteRunGenerator : MonoBehaviour
     private Vector2 deathBoxPos;
     private Vector2 backgroundPos;
     private GameObject bgFolder;
+
     private bool doneRespawning;
+
     private int oldSection = 0;
     private int section = 0;
     private int oldParallaxSection = 0;
     private int parallaxSection = 0;
+
+    private float maxPositionX = 0;
+    private float oldPositionX = 0;
+    private float positionX = 0;
+
     private float bgWidth;
-    private float oldPositionX;
-    private float positionX;
     public float levelPartWidth;
 
     private Rigidbody2D player;
@@ -41,7 +46,7 @@ public class InfiniteRunGenerator : MonoBehaviour
         KillEnemies.OnRespawn += DoneRespawning;
         InitalizeVariables();
         FindObjects();
-        LoadAssets();
+        //LoadAssets();
         InitalizeEnvironment();
         
     }
@@ -111,10 +116,12 @@ public class InfiniteRunGenerator : MonoBehaviour
         UpdateLevelParts();
         ParallaxBackground();
         CheckForDeath();
+        if (transform.position.x > maxPositionX)
+            maxPositionX = transform.position.x;
         oldPositionX = positionX;
         positionX = transform.position.x;
-        double score = Mathf.Abs(positionX - oldPositionX) * Mathf.Pow((player.velocity.x / movement.speed) + 1, 2);
-        Score(score);
+        double scoreDelta = positionX - oldPositionX;
+        Score(scoreDelta);
     }
     void UpdateLevelParts()
     {
