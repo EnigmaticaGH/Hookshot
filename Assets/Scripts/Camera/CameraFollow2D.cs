@@ -22,12 +22,14 @@ public class CameraFollow2D : MonoBehaviour
 
     void Start()
     {
-        target = GameObject.FindGameObjectWithTag("Player").transform;
+        if(GameObject.FindGameObjectWithTag("Player") != null)
+            target = GameObject.FindGameObjectWithTag("Player").transform;
         cameraScreenWidth = GetComponent<Camera>().orthographicSize;
     }
 
     void Update()
     {
+        if (target == null) return;
         Vector3 point = GetComponent<Camera>().WorldToViewportPoint(target.position);
         Vector3 delta = target.position - GetComponent<Camera>().ViewportToWorldPoint(new Vector3(0.5f, 0.5f, point.z)) + Vector3.right * cameraScreenWidth;
 
