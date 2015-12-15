@@ -10,7 +10,7 @@ GameObject:
   - 4: {fileID: 460842}
   m_Layer: 0
   m_Name: TreeTrunkSideways
-  m_TagString: Hookable
+  m_TagString: Environment
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -105,7 +105,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 0}
       propertyPath: m_TagString
-      value: Hookable
+      value: Environment
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_Materials.Array.data[0]
