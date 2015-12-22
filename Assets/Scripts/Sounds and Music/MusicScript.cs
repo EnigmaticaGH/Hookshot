@@ -10,11 +10,6 @@ public class MusicScript : MonoBehaviour {
 	void Start () {
         PlayMusic(Music[0]);
 	}
-	
-	// Update is called once per frame
-	void Update () {
-        
-	}
 
     void PlayMusic(AudioClip clip)
     {
