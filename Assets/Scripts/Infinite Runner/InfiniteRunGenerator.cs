@@ -32,6 +32,7 @@ public class InfiniteRunGenerator : MonoBehaviour
 
     public delegate void RespawnAction();
     public static event RespawnAction Respawn;
+
     void Start()
     {
         KillEnemies.OnRespawn += DoneRespawning;
@@ -41,6 +42,7 @@ public class InfiniteRunGenerator : MonoBehaviour
         InitalizeEnvironment();
         
     }
+
     void InitalizeVariables()
     {
         prefabs = new Dictionary<string, GameObject>();
@@ -58,14 +60,17 @@ public class InfiniteRunGenerator : MonoBehaviour
 
         doneRespawning = true;
     }
+
     void FindObjects()
     {
         bgFolder = GameObject.Find("Background");
     }
+
     void OnDestroy()
     {
         KillEnemies.OnRespawn -= DoneRespawning;
     }
+
     void InitalizeEnvironment()
     {
         for (int i = 0; i < 4; i++)
@@ -75,6 +80,7 @@ public class InfiniteRunGenerator : MonoBehaviour
             backgrounds[i].transform.parent = bgFolder.transform;
         }
     }
+
     void InitalizeLevel()
     {
         indexedGameObjects.Add(-1, (GameObject)Instantiate(prefabs[indexes[(int)(Random.value * prefabs.Count)]],
@@ -98,12 +104,14 @@ public class InfiniteRunGenerator : MonoBehaviour
             }
         }
     }
+
     void Update()
     {
         UpdateLevelParts();
         ParallaxBackground();
         CheckForDeath();
     }
+
     void UpdateLevelParts()
     {
         oldSection = section;
@@ -158,6 +166,7 @@ public class InfiniteRunGenerator : MonoBehaviour
             MoveSection();
         }
     }
+
     void MoveSection()
     {
         for (int i = 0; i < backgrounds.Count; i++)
@@ -186,6 +195,7 @@ public class InfiniteRunGenerator : MonoBehaviour
             }
         }
     }
+
     void DoneRespawning()
     {
         doneRespawning = true;
