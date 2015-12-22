@@ -8,13 +8,15 @@ public class InfiniteRunGenerator : MonoBehaviour
     public float parallaxBackgroundSpeed;
 
     public GameObject backgroundPrefab;
+    private GameObject backgroundFolder;
+    private List<GameObject> backgrounds;
+
+    private float bgWidth;
+    public float levelPartWidth;
 
     private Dictionary<string, GameObject> prefabs;
     private Dictionary<int, string> indexes;
     private Dictionary<int, GameObject> indexedGameObjects;
-
-    private GameObject backgroundFolder;
-    private List<GameObject> backgrounds;
 
     private Vector2 deathBoxPos;
     private Vector2 backgroundPos;
@@ -27,20 +29,16 @@ public class InfiniteRunGenerator : MonoBehaviour
     private int oldParallaxSection = 0;
     private int parallaxSection = 0;
 
-    private float bgWidth;
-    public float levelPartWidth;
-
     public delegate void RespawnAction();
     public static event RespawnAction Respawn;
 
-    void Start()
+    void Awake()
     {
         KillEnemies.OnRespawn += DoneRespawning;
         InitalizeVariables();
         FindObjects();
         LoadAssets();
         InitalizeEnvironment();
-        
     }
 
     void InitalizeVariables()
