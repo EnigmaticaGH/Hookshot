@@ -11,9 +11,8 @@ GameObject:
   - 212: {fileID: 21270200}
   - 61: {fileID: 6107970}
   - 114: {fileID: 11466868}
-  - 114: {fileID: 11425382}
   - 50: {fileID: 5078438}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Iceman
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -27,7 +26,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 156858}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 44.3099976, y: 6.65799999, z: 0}
+  m_LocalPosition: {x: 48.1899986, y: 3.67000008, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -61,17 +60,6 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Size: {x: .319999993, y: .639999986}
---- !u!114 &11425382
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 156858}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb3debb91e7347f4986bd8dc4c3afc1b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &11466868
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -83,8 +71,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e869ce7ca38fa6542920faf4c790d52f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  xMin: 0
-  xMax: 0
+  xMin: 44.3100014
+  xMax: 53.5
   patrolSpeed: 2.5
 --- !u!212 &21270200
 SpriteRenderer:
