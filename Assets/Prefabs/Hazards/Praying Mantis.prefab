@@ -9,13 +9,12 @@ GameObject:
   m_Component:
   - 4: {fileID: 496110}
   - 114: {fileID: 11439592}
-  - 114: {fileID: 11489718}
   - 61: {fileID: 6187926}
   - 61: {fileID: 6171906}
   - 61: {fileID: 6132782}
   - 50: {fileID: 5020178}
   m_Layer: 10
-  m_Name: Demon
+  m_Name: Praying Mantis
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -131,17 +130,6 @@ MonoBehaviour:
   xMin: 22
   xMax: 29.7000008
   patrolSpeed: 4
---- !u!114 &11489718
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 150770}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d6f332963e7e8a44a346d2c6754cb78, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!212 &21231794
 SpriteRenderer:
   m_ObjectHideFlags: 1
