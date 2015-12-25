@@ -1,6 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/*
+ * This class is used to change the colliders as the animations switch
+ * so that the colliders always match the object sprite.
+ * */
 public class DynamicCollider : MonoBehaviour
 {
     private BoxCollider2D[] Sensors;
