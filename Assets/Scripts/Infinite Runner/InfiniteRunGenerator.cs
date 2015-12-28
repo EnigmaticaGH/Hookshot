@@ -21,9 +21,7 @@ public class InfiniteRunGenerator : MonoBehaviour
 
     private bool doneRespawning;
 
-    private int oldSection = 0;
     private int section = 0;
-    private int oldParallaxSection = 0;
     private int parallaxSection = 0;
 
     public delegate void RespawnAction();
@@ -71,8 +69,12 @@ public class InfiniteRunGenerator : MonoBehaviour
 
     void InitializeLevel()
     {
+        GameObject startSection = (GameObject)Instantiate(
+            levelPartPicker.FindByName("Start"),
+            Vector2.zero, Quaternion.identity);
+
         indexedGameObjects.Add(-1, GetRandomLevelPart(Vector2.left * levelPartWidth));
-        indexedGameObjects.Add(0, (GameObject)Instantiate(levelPartPicker.random, Vector2.zero, Quaternion.identity));
+        indexedGameObjects.Add(0, startSection);
         indexedGameObjects.Add(1, GetRandomLevelPart(Vector2.right * levelPartWidth));
 
         foreach (KeyValuePair<int, GameObject> pair in indexedGameObjects)
@@ -106,24 +108,25 @@ public class InfiniteRunGenerator : MonoBehaviour
 
     void UpdateLevelParts()
     {
-        oldSection = section;
         float pos = transform.position.x;
-        section = (int)(pos / levelPartWidth);
-        if (section != oldSection)
+        int newSection = (int)(pos / levelPartWidth);
+        if (newSection != section)
         {
-            int direction = section - oldSection;
-            bool canGenerate = !indexedGameObjects.ContainsKey(section);
-            bool canGenerateAhead = !indexedGameObjects.ContainsKey(section + direction);
+            int direction = newSection - section;
+            bool canGenerate = !indexedGameObjects.ContainsKey(newSection);
+            bool canGenerateAhead = !indexedGameObjects.ContainsKey(newSection + direction);
             if (canGenerate)
             {
-                GenerateSection(section);
+                Debug.Log("Generating");
+                GenerateSection(newSection);
             }
             if (canGenerateAhead)
             {
-                GenerateSection(section + direction);
+                GenerateSection(newSection + direction);
             }
             DetermineVisibleSections();
         }
+        section = newSection;
     }
 
     void GenerateSection(int index)
@@ -146,13 +149,13 @@ public class InfiniteRunGenerator : MonoBehaviour
         {
             bg.GetComponent<Rigidbody2D>().velocity = Vector2.right * (GetComponent<Rigidbody2D>().velocity.x / GetComponent<LateralMovement>().speed) * parallaxBackgroundSpeed;
         }
-        oldParallaxSection = parallaxSection;
         float positionXFromCenter = transform.position.x - backgrounds[1].transform.position.x;
-        parallaxSection = (int)(positionXFromCenter / bgWidth);
-        if(parallaxSection != oldParallaxSection)
+        int newParallaxSection = (int)(positionXFromCenter / bgWidth);
+        if(newParallaxSection != parallaxSection)
         {
             MoveSection();
         }
+        parallaxSection = newParallaxSection;
     }
 
     void MoveSection()
