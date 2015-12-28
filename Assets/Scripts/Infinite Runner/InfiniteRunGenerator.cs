@@ -35,12 +35,12 @@ public class InfiniteRunGenerator : MonoBehaviour
     void Awake()
     {
         KillEnemies.OnRespawn += DoneRespawning;
-        InitalizeVariables();
-        InitalizeEnvironment();
-        InitalizeLevel();
+        InitializeVariables();
+        InitializeEnvironment();
+        InitializeLevel();
     }
 
-    void InitalizeVariables()
+    void InitializeVariables()
     {
         levelPartPicker = new LevelPartPicker();
         indexedGameObjects = new Dictionary<int, GameObject>();
@@ -57,7 +57,7 @@ public class InfiniteRunGenerator : MonoBehaviour
         doneRespawning = true;
     }
 
-    void InitalizeEnvironment()
+    void InitializeEnvironment()
     {
         for (int i = 0; i < 4; i++)
         {
@@ -69,7 +69,7 @@ public class InfiniteRunGenerator : MonoBehaviour
         }
     }
 
-    void InitalizeLevel()
+    void InitializeLevel()
     {
         indexedGameObjects.Add(-1, GetRandomLevelPart(Vector2.left * levelPartWidth));
         indexedGameObjects.Add(0, (GameObject)Instantiate(levelPartPicker.random, Vector2.zero, Quaternion.identity));
