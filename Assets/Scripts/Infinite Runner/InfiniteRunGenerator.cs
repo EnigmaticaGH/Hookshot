@@ -32,6 +32,9 @@ public class InfiniteRunGenerator : MonoBehaviour
     public delegate void RespawnAction();
     public static event RespawnAction Respawn;
 
+    /* ********************************************************************* */
+    //                                Start Up                    
+    /* ********************************************************************* */
     void Awake()
     {
         KillEnemies.OnRespawn += DoneRespawning;
@@ -64,9 +67,15 @@ public class InfiniteRunGenerator : MonoBehaviour
         bgFolder = GameObject.Find("Background");
     }
 
-    void OnDestroy()
+    void LoadAssets()
     {
-        KillEnemies.OnRespawn -= DoneRespawning;
+        foreach(GameObject g in Resources.LoadAll("Level Parts"))
+        {
+            indexes.Add(prefabs.Count, g.name);
+            prefabs.Add(g.name, g);
+        }
+        if (prefabs.Count > 0)
+            InitalizeLevel();
     }
 
     void InitalizeEnvironment()
@@ -81,14 +90,9 @@ public class InfiniteRunGenerator : MonoBehaviour
 
     void InitalizeLevel()
     {
-        indexedGameObjects.Add(-1, (GameObject)Instantiate(prefabs[indexes[(int)(Random.value * prefabs.Count)]],
-            Vector2.left * levelPartWidth, Quaternion.identity));
-
-        indexedGameObjects.Add(0, (GameObject)Instantiate(prefabs["Start"],
-            Vector2.zero, Quaternion.identity));
-
-        indexedGameObjects.Add(1, (GameObject)Instantiate(prefabs[indexes[(int)(Random.value * prefabs.Count)]], 
-            Vector2.right * levelPartWidth, Quaternion.identity));
+        indexedGameObjects.Add(-1, GetRandomLevelPart(Vector2.left * levelPartWidth));
+        indexedGameObjects.Add(0, (GameObject)Instantiate(prefabs["Start"], Vector2.zero, Quaternion.identity));
+        indexedGameObjects.Add(1, GetRandomLevelPart(Vector2.right * levelPartWidth));
 
         foreach (KeyValuePair<int, GameObject> pair in indexedGameObjects)
         {
@@ -103,6 +107,15 @@ public class InfiniteRunGenerator : MonoBehaviour
         }
     }
 
+    GameObject GetRandomLevelPart(Vector2 position)
+    {
+        string randomIndex = indexes[(int)(Random.value * prefabs.Count)];
+        return (GameObject)Instantiate(prefabs[randomIndex], position, Quaternion.identity);
+    }
+
+    /* ********************************************************************* */
+    //                             Process
+    /* ********************************************************************* */
     void Update()
     {
         UpdateLevelParts();
@@ -113,15 +126,13 @@ public class InfiniteRunGenerator : MonoBehaviour
     void UpdateLevelParts()
     {
         oldSection = section;
-        bool canGenerate = true;
-        bool canGenerateAhead = true;
         float pos = transform.position.x;
         section = (int)(pos / levelPartWidth);
         if (section != oldSection)
         {
             int direction = section - oldSection;
-            canGenerate = !indexedGameObjects.ContainsKey(section);
-            canGenerateAhead = !indexedGameObjects.ContainsKey(section + direction);
+            bool canGenerate = !indexedGameObjects.ContainsKey(section);
+            bool canGenerateAhead = !indexedGameObjects.ContainsKey(section + direction);
             if (canGenerate)
             {
                 GenerateSection(section);
@@ -200,14 +211,11 @@ public class InfiniteRunGenerator : MonoBehaviour
         ScoreTracker.ResetScore();
     }
 
-    void LoadAssets()
+    /* ********************************************************************* */
+    //                              Clean Up                      
+    /* ********************************************************************* */
+    void OnDestroy()
     {
-        foreach(GameObject g in Resources.LoadAll("Level Parts"))
-        {
-            indexes.Add(prefabs.Count, g.name);
-            prefabs.Add(g.name, g);
-        }
-        if (prefabs.Count > 0)
-            InitalizeLevel();
+        KillEnemies.OnRespawn -= DoneRespawning;
     }
 }
