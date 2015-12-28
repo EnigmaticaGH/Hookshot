@@ -1,7 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-using System.IO;
-using System.Collections;
 
 public class InfiniteRunGenerator : MonoBehaviour
 {
