@@ -18,7 +18,6 @@ public class InfiniteRunGenerator : MonoBehaviour
 
     private Vector2 deathBoxPos;
     private Vector2 backgroundPos;
-    private GameObject bgFolder;
 
     private bool doneRespawning;
 
@@ -37,7 +36,6 @@ public class InfiniteRunGenerator : MonoBehaviour
     {
         KillEnemies.OnRespawn += DoneRespawning;
         InitalizeVariables();
-        FindObjects();
         LoadAssets();
         InitalizeEnvironment();
     }
@@ -60,11 +58,6 @@ public class InfiniteRunGenerator : MonoBehaviour
         doneRespawning = true;
     }
 
-    void FindObjects()
-    {
-        bgFolder = GameObject.Find("Background");
-    }
-
     void LoadAssets()
     {
         foreach(GameObject g in Resources.LoadAll("Level Parts"))
@@ -82,7 +75,7 @@ public class InfiniteRunGenerator : MonoBehaviour
         {
             GameObject background = (GameObject)Instantiate(backgroundPrefab, backgroundPos + (Vector2.right * bgWidth * i), Quaternion.identity);
             backgrounds.Add(background);
-            backgrounds[i].transform.parent = bgFolder.transform;
+            backgrounds[i].transform.parent = backgroundFolder.transform;
         }
     }
 
@@ -145,9 +138,7 @@ public class InfiniteRunGenerator : MonoBehaviour
 
     void GenerateSection(int index)
     {
-        int i = (int)(Random.value * prefabs.Count);
-        indexedGameObjects.Add(index, (GameObject)Instantiate(prefabs[indexes[i]],
-            Vector2.right * levelPartWidth * index, Quaternion.identity));
+        indexedGameObjects.Add(index, GetRandomLevelPart(Vector2.right * levelPartWidth * index));
 
         foreach (Transform part in indexedGameObjects[index].transform)
         {
