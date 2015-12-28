@@ -16,6 +16,7 @@ class LevelPartPicker
 
     void LoadAssets()
     {
+        prefabs = new List<GameObject>();
         foreach(GameObject prefab in Resources.LoadAll("Level Parts"))
         {
             prefabs.Add(prefab);
