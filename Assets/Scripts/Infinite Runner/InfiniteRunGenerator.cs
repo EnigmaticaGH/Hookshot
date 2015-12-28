@@ -9,11 +9,11 @@ public class InfiniteRunGenerator : MonoBehaviour
     private GameObject backgroundFolder;
     private List<GameObject> backgrounds;
 
+    private LevelPartPicker levelPartPicker;
+
     private float bgWidth;
     public float levelPartWidth;
 
-    private Dictionary<string, GameObject> prefabs;
-    private Dictionary<int, string> indexes;
     private Dictionary<int, GameObject> indexedGameObjects;
 
     private Vector2 deathBoxPos;
@@ -36,14 +36,13 @@ public class InfiniteRunGenerator : MonoBehaviour
     {
         KillEnemies.OnRespawn += DoneRespawning;
         InitalizeVariables();
-        LoadAssets();
         InitalizeEnvironment();
+        InitalizeLevel();
     }
 
     void InitalizeVariables()
     {
-        prefabs = new Dictionary<string, GameObject>();
-        indexes = new Dictionary<int, string>();
+        levelPartPicker = new LevelPartPicker();
         indexedGameObjects = new Dictionary<int, GameObject>();
 
         backgroundFolder = new GameObject("Background");
@@ -58,22 +57,13 @@ public class InfiniteRunGenerator : MonoBehaviour
         doneRespawning = true;
     }
 
-    void LoadAssets()
-    {
-        foreach(GameObject g in Resources.LoadAll("Level Parts"))
-        {
-            indexes.Add(prefabs.Count, g.name);
-            prefabs.Add(g.name, g);
-        }
-        if (prefabs.Count > 0)
-            InitalizeLevel();
-    }
-
     void InitalizeEnvironment()
     {
         for (int i = 0; i < 4; i++)
         {
-            GameObject background = (GameObject)Instantiate(backgroundPrefab, backgroundPos + (Vector2.right * bgWidth * i), Quaternion.identity);
+            GameObject background = (GameObject)Instantiate(backgroundPrefab, 
+                backgroundPos + (Vector2.right * bgWidth * i), 
+                Quaternion.identity);
             backgrounds.Add(background);
             backgrounds[i].transform.parent = backgroundFolder.transform;
         }
@@ -82,7 +72,7 @@ public class InfiniteRunGenerator : MonoBehaviour
     void InitalizeLevel()
     {
         indexedGameObjects.Add(-1, GetRandomLevelPart(Vector2.left * levelPartWidth));
-        indexedGameObjects.Add(0, (GameObject)Instantiate(prefabs["Start"], Vector2.zero, Quaternion.identity));
+        indexedGameObjects.Add(0, (GameObject)Instantiate(levelPartPicker.random, Vector2.zero, Quaternion.identity));
         indexedGameObjects.Add(1, GetRandomLevelPart(Vector2.right * levelPartWidth));
 
         foreach (KeyValuePair<int, GameObject> pair in indexedGameObjects)
@@ -100,8 +90,8 @@ public class InfiniteRunGenerator : MonoBehaviour
 
     GameObject GetRandomLevelPart(Vector2 position)
     {
-        string randomIndex = indexes[(int)(Random.value * prefabs.Count)];
-        return (GameObject)Instantiate(prefabs[randomIndex], position, Quaternion.identity);
+        return (GameObject)Instantiate(levelPartPicker.random, 
+            position, Quaternion.identity);
     }
 
     /* ********************************************************************* */
