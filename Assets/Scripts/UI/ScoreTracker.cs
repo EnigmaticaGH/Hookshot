@@ -18,14 +18,16 @@ public class ScoreTracker : MonoBehaviour {
     public Transform player;
     void Awake()
     {
-        InfiniteRunGenerator.Respawn += UpdateBest;
+        KillEnemies.OnRespawn += UpdateBest;
+        KillEnemies.OnRespawn += ResetScore;
         bestText.text = "Best: " + best;
         player = GameObject.FindGameObjectWithTag("Player").transform;
         maxDistance = 0;
     }
     void OnDestroy()
     {
-        InfiniteRunGenerator.Respawn -= UpdateBest;
+        KillEnemies.OnRespawn -= UpdateBest;
+        KillEnemies.OnRespawn -= ResetScore;
     }
 
     void Update()
