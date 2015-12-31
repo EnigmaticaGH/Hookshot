@@ -11,26 +11,29 @@ public class KillEnemies : MonoBehaviour
     private HookshotControl hook;
     private Rigidbody2D player;
     private GameObject lastSpawn;
+    private Vector2 deathBoxPos;
 
-    public delegate void RespawnAction();
-    public static event RespawnAction OnRespawn;
-
+    public delegate void RespawnListener();
+    public static event RespawnListener OnRespawn;
     void Start()
     {
-        InfiniteRunGenerator.Respawn += Respawn;
         playerSprite = GameObject.Find("FrogSprite");
         player = GetComponent<Rigidbody2D>();
         hook = GetComponent<LateralMovement>().getHookScript();
+        deathBoxPos = Vector2.down * 5;
     }
 
-    void OnDestroy()
+    void Update()
     {
-        InfiniteRunGenerator.Respawn -= Respawn;
+        CheckForDeath();
     }
 
-    private void Respawn()
+    void CheckForDeath()
     {
-        StartCoroutine(Explosion());
+        if (transform.position.y < deathBoxPos.y)
+        {
+            StartCoroutine(Explosion());
+        }
     }
 
     IEnumerator Explosion()
@@ -43,7 +46,7 @@ public class KillEnemies : MonoBehaviour
         player.isKinematic = false;
         transform.position = Vector2.up;
         playerSprite.SetActive(true);
-        if(OnRespawn != null)
+        if (OnRespawn != null)
             OnRespawn();
     }
 

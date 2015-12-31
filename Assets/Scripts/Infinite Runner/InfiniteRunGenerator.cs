@@ -16,23 +16,16 @@ public class InfiniteRunGenerator : MonoBehaviour
 
     private Dictionary<int, GameObject> indexedGameObjects;
 
-    private Vector2 deathBoxPos;
     private Vector2 backgroundPos;
-
-    private bool doneRespawning;
 
     private int section = 0;
     private int parallaxSection = 0;
-
-    public delegate void RespawnAction();
-    public static event RespawnAction Respawn;
 
     /* ********************************************************************* */
     //                                Start Up                    
     /* ********************************************************************* */
     void Awake()
     {
-        KillEnemies.OnRespawn += DoneRespawning;
         InitializeVariables();
         InitializeEnvironment();
         InitializeLevel();
@@ -50,9 +43,6 @@ public class InfiniteRunGenerator : MonoBehaviour
         //Make the backgrounds overlap just a little bit, to prevent the white back-background from showing
         bgWidth = (backgroundPrefab.GetComponent<SpriteRenderer>().sprite.bounds.extents.x * 2) - 0.01f;
         backgroundPos = Vector2.zero;
-        deathBoxPos = backgroundPos + (Vector2.down * 5);
-
-        doneRespawning = true;
     }
 
     void InitializeEnvironment()
@@ -103,7 +93,6 @@ public class InfiniteRunGenerator : MonoBehaviour
     {
         UpdateLevelParts();
         ParallaxBackground();
-        CheckForDeath();
     }
 
     void UpdateLevelParts()
@@ -113,20 +102,13 @@ public class InfiniteRunGenerator : MonoBehaviour
         if (newSection != section)
         {
             int direction = newSection - section;
-            bool canGenerate = !indexedGameObjects.ContainsKey(newSection);
-            bool canGenerateAhead = !indexedGameObjects.ContainsKey(newSection + direction);
-            if (canGenerate)
-            {
-                Debug.Log("Generating");
-                GenerateSection(newSection);
-            }
-            if (canGenerateAhead)
+            if (!indexedGameObjects.ContainsKey(newSection + direction))
             {
                 GenerateSection(newSection + direction);
             }
             DetermineVisibleSections();
+            section = newSection;
         }
-        section = newSection;
     }
 
     void GenerateSection(int index)
@@ -150,12 +132,8 @@ public class InfiniteRunGenerator : MonoBehaviour
             bg.GetComponent<Rigidbody2D>().velocity = Vector2.right * (GetComponent<Rigidbody2D>().velocity.x / GetComponent<LateralMovement>().speed) * parallaxBackgroundSpeed;
         }
         float positionXFromCenter = transform.position.x - backgrounds[1].transform.position.x;
-        int newParallaxSection = (int)(positionXFromCenter / bgWidth);
-        if(newParallaxSection != parallaxSection)
-        {
-            MoveSection();
-        }
-        parallaxSection = newParallaxSection;
+        parallaxSection = (int)(positionXFromCenter / bgWidth);
+        MoveSection();
     }
 
     void MoveSection()
@@ -173,31 +151,5 @@ public class InfiniteRunGenerator : MonoBehaviour
         {
             pair.Value.SetActive(Mathf.Abs(pair.Key - section) <= 1);
         }
-    }
-
-    void CheckForDeath()
-    {
-        if (transform.position.y < deathBoxPos.y && doneRespawning)
-        {
-            if (Respawn != null)
-            {
-                Respawn();
-                doneRespawning = false;
-            }
-        }
-    }
-
-    void DoneRespawning()
-    {
-        doneRespawning = true;
-        ScoreTracker.ResetScore();
-    }
-
-    /* ********************************************************************* */
-    //                              Clean Up                      
-    /* ********************************************************************* */
-    void OnDestroy()
-    {
-        KillEnemies.OnRespawn -= DoneRespawning;
     }
 }
