@@ -99,16 +99,11 @@ public class InfiniteRunGenerator : MonoBehaviour
     {
         float pos = transform.position.x;
         int newSection = (int)(pos / levelPartWidth);
-        if (newSection != section)
-        {
-            int direction = newSection - section;
-            if (!indexedGameObjects.ContainsKey(newSection + direction))
-            {
-                GenerateSection(newSection + direction);
-            }
-            DetermineVisibleSections();
-            section = newSection;
-        }
+        int direction = newSection - section;
+        section = newSection;
+        if (!indexedGameObjects.ContainsKey(section + direction))
+            GenerateSection(section + direction);
+        DetermineVisibleSections();
     }
 
     void GenerateSection(int index)
