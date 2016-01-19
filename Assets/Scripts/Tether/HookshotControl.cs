@@ -48,6 +48,7 @@ public class HookshotControl : MonoBehaviour {
     private AnimateFrog frogAnim;
 
     private GameObject ropeObj;
+    private Rigidbody2D body;
 
     private bool playingHookAnim;
 
@@ -69,6 +70,7 @@ public class HookshotControl : MonoBehaviour {
         FindPlayerColliders();
         hand = transform.parent.gameObject;
         mouseAimer = hand.GetComponent<AimAtMouse>();
+        body = GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody2D>();
     }
 
     private void FindPlayerColliders()
@@ -113,6 +115,10 @@ public class HookshotControl : MonoBehaviour {
         if (Input.GetButtonDown("Fire1") || keybinds.GetButtonDown("Jump"))
         {
             DestroyHookAndRope();
+            //Amplify player speed when he unhooks as a coefficient of currentSpeed/maxSpeed
+            //(less speed will be artificially added as he becomes faster to prevent him becoming a spaceship
+            if (body.velocity.x > 0)
+                body.velocity += (Vector2.right * player.speed) / ((body.velocity.x / player.speed) + 1);
             ChangeState(HookshotState.FLYING);
         }
 
