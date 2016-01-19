@@ -191,10 +191,18 @@ public class LateralMovement : MonoBehaviour
 
     void DoNormalMovement(bool onTheGround)
     {
-        Vector2 lateralForce = new Vector2(horizontal * moveForce, 0);
+        if (onTheGround)
+        {
+            Vector2 lateralVelocity = new Vector2(speed * Input.GetAxis("Horizontal"), player.velocity.y);
+            player.velocity = lateralVelocity;
+        }
+        else
+        {
+            Vector2 lateralForce = new Vector2(horizontal * moveForce, 0);
 
-        if (Mathf.Abs(player.velocity.x) < speed)
-            player.AddForce(lateralForce);
+            if (Mathf.Abs(player.velocity.x) < speed)
+                player.AddForce(lateralForce);
+        }
 
         if (player.velocity.x > 0 && horizontal < 0
          || player.velocity.x < 0 && horizontal > 0)
@@ -306,6 +314,7 @@ public class LateralMovement : MonoBehaviour
 
     public IEnumerator DisableMovement(float disableTime)
     {
+        ChangeState(MovementState.DISABLED);
         canMove = false;
         yield return new WaitForSeconds(disableTime);
         canMove = true;
