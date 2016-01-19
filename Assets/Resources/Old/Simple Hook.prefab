@@ -1813,6 +1813,7 @@ SpringJoint2D:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 191898}
   m_Enabled: 1
+  serializedVersion: 3
   m_EnableCollision: 0
   m_ConnectedRigidBody: {fileID: 0}
   m_Anchor: {x: 0, y: 0}
@@ -1827,6 +1828,7 @@ SpringJoint2D:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 159150}
   m_Enabled: 1
+  serializedVersion: 3
   m_EnableCollision: 0
   m_ConnectedRigidBody: {fileID: 0}
   m_Anchor: {x: 0, y: 0}
@@ -1841,6 +1843,7 @@ SpringJoint2D:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 152838}
   m_Enabled: 1
+  serializedVersion: 3
   m_EnableCollision: 0
   m_ConnectedRigidBody: {fileID: 0}
   m_Anchor: {x: 0, y: 0}
@@ -1855,6 +1858,7 @@ SpringJoint2D:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 126510}
   m_Enabled: 1
+  serializedVersion: 3
   m_EnableCollision: 0
   m_ConnectedRigidBody: {fileID: 0}
   m_Anchor: {x: 0, y: 0}
@@ -1869,6 +1873,7 @@ SpringJoint2D:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 140156}
   m_Enabled: 1
+  serializedVersion: 3
   m_EnableCollision: 0
   m_ConnectedRigidBody: {fileID: 0}
   m_Anchor: {x: 0, y: 0}
@@ -1883,6 +1888,7 @@ SpringJoint2D:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 160500}
   m_Enabled: 1
+  serializedVersion: 3
   m_EnableCollision: 0
   m_ConnectedRigidBody: {fileID: 0}
   m_Anchor: {x: 0, y: 0}
