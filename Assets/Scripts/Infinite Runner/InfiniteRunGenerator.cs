@@ -3,23 +3,13 @@ using System.Collections.Generic;
 
 public class InfiniteRunGenerator : MonoBehaviour
 {
-    public float parallaxBackgroundSpeed;
-
-    public GameObject backgroundPrefab;
-    private GameObject backgroundFolder;
-    private List<GameObject> backgrounds;
-
     private LevelPartPicker levelPartPicker;
 
-    private float bgWidth;
     public float levelPartWidth;
 
     private Dictionary<int, GameObject> indexedGameObjects;
 
-    private Vector2 backgroundPos;
-
     private int section = 0;
-    private int parallaxSection = 0;
 
     /* ********************************************************************* */
     //                                Start Up                    
@@ -27,7 +17,6 @@ public class InfiniteRunGenerator : MonoBehaviour
     void Awake()
     {
         InitializeVariables();
-        InitializeEnvironment();
         InitializeLevel();
     }
 
@@ -35,26 +24,6 @@ public class InfiniteRunGenerator : MonoBehaviour
     {
         levelPartPicker = new LevelPartPicker();
         indexedGameObjects = new Dictionary<int, GameObject>();
-
-        backgroundFolder = new GameObject("Background");
-        backgroundFolder.transform.position = Vector2.zero;
-        backgrounds = new List<GameObject>();
-
-        //Make the backgrounds overlap just a little bit, to prevent the white back-background from showing
-        bgWidth = (backgroundPrefab.GetComponent<SpriteRenderer>().sprite.bounds.extents.x * 2) - 0.01f;
-        backgroundPos = Vector2.zero;
-    }
-
-    void InitializeEnvironment()
-    {
-        for (int i = 0; i < 4; i++)
-        {
-            GameObject background = (GameObject)Instantiate(backgroundPrefab, 
-                backgroundPos + (Vector2.right * bgWidth * i), 
-                Quaternion.identity);
-            backgrounds.Add(background);
-            backgrounds[i].transform.parent = backgroundFolder.transform;
-        }
     }
 
     void InitializeLevel()
@@ -92,7 +61,6 @@ public class InfiniteRunGenerator : MonoBehaviour
     void Update()
     {
         UpdateLevelParts();
-        ParallaxBackground();
     }
 
     void UpdateLevelParts()
@@ -117,26 +85,6 @@ public class InfiniteRunGenerator : MonoBehaviour
                 part.GetComponent<SpringJoint2D>().connectedAnchor
                     = (Vector2)(part.transform.position) + (Vector2.up * 0.4f);
             }
-        }
-    }
-
-    void ParallaxBackground()
-    {
-        foreach(GameObject bg in backgrounds)
-        {
-            bg.GetComponent<Rigidbody2D>().velocity = Vector2.right * (GetComponent<Rigidbody2D>().velocity.x / GetComponent<LateralMovement>().speed) * parallaxBackgroundSpeed;
-        }
-        float positionXFromCenter = transform.position.x - backgrounds[1].transform.position.x;
-        parallaxSection = (int)(positionXFromCenter / bgWidth);
-        MoveSection();
-    }
-
-    void MoveSection()
-    {
-        for (int i = 0; i < backgrounds.Count; i++)
-        {
-            Vector2 offset = Vector2.right * bgWidth * parallaxSection;
-            backgrounds[i].transform.position += (Vector3)offset;
         }
     }
 
