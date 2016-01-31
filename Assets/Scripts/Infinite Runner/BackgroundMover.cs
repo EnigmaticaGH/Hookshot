@@ -14,8 +14,17 @@ public class BackgroundMover : MonoBehaviour {
     private Vector2 backgroundPos;
     private int parallaxSection = 0;
 
+    private Rigidbody2D playerBody;
+    private float playerSpeed;
+
     void Awake()
     {
+        // Pick out some properties of the player so we can move the backgrounds 
+        // at appropriate speeds
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        playerBody = player.GetComponent<Rigidbody2D>();
+        playerSpeed = player.GetComponent<LateralMovement>().speed;
+
         // Assemble background pool
         backgroundFolder = new GameObject("Background");
         backgroundFolder.transform.position = Vector2.zero;
@@ -38,11 +47,13 @@ public class BackgroundMover : MonoBehaviour {
 	
 	void Update () 
     {
+        Vector2 halfPlayerVelocity = Vector2.right * (playerBody.velocity.x / playerSpeed) * parallaxBackgroundSpeed;
         foreach(GameObject bg in backgrounds)
         {
-            bg.GetComponent<Rigidbody2D>().velocity = Vector2.right * (GetComponent<Rigidbody2D>().velocity.x / GetComponent<LateralMovement>().speed) * parallaxBackgroundSpeed;
+            bg.GetComponent<Rigidbody2D>().velocity = halfPlayerVelocity;
         }
-        float positionXFromCenter = transform.position.x - backgrounds[1].transform.position.x;
+
+        float positionXFromCenter = playerBody.transform.position.x - backgrounds[1].transform.position.x;
         parallaxSection = (int)(positionXFromCenter / bgWidth);
         MoveSection();
 	}
