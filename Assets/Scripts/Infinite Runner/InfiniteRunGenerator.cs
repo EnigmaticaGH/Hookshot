@@ -12,11 +12,11 @@ public class InfiniteRunGenerator : MonoBehaviour
     public StartingPieces[] startingPieces;
 
     private LevelPartPicker levelPartPicker;
-
     public float levelPartWidth;
 
     private Dictionary<int, GameObject> indexedGameObjects;
 
+    private GameObject player;
     private int section = 0;
 
     /* ********************************************************************* */
@@ -32,6 +32,7 @@ public class InfiniteRunGenerator : MonoBehaviour
     {
         levelPartPicker = new LevelPartPicker();
         indexedGameObjects = new Dictionary<int, GameObject>();
+        player = GameObject.FindGameObjectWithTag("Player");
     }
 
     void InitializeLevel()
@@ -41,8 +42,8 @@ public class InfiniteRunGenerator : MonoBehaviour
             int location = startingPieces[i].Location;
 
             GameObject section = (GameObject)Instantiate(
-            levelPartPicker.FindByName(startingPieces[i].Name),
-            Vector2.right * location * levelPartWidth, Quaternion.identity);
+                levelPartPicker.FindByName(startingPieces[i].Name),
+                Vector2.right * location * levelPartWidth, Quaternion.identity);
             
             indexedGameObjects.Add(location, section);
         }
@@ -64,7 +65,7 @@ public class InfiniteRunGenerator : MonoBehaviour
 
     void UpdateLevelParts()
     {
-        float pos = transform.position.x;
+        float pos = player.transform.position.x;
         int newSection = (int)(pos / levelPartWidth);
         int direction = newSection - section;
         section = newSection;
