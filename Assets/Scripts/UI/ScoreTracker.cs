@@ -5,9 +5,9 @@ using System;
 
 public class ScoreTracker : MonoBehaviour {
 
-    private static double best = 0;
-    private static double maxDistance;
-    private static double startTime;
+    private static int best = 0;
+    private static int maxDistance;
+    private static float startTime;
     public Text scoreText;
     public Text bestText;
 
@@ -32,20 +32,21 @@ public class ScoreTracker : MonoBehaviour {
 
     void Update()
     {
-        double score = 0;
+        int score = 0;
         if (player.position.x > maxDistance) {
-            score = player.position.x;
-            maxDistance = player.position.x;
+            score = Mathf.FloorToInt(player.position.x);
+            maxDistance = Mathf.FloorToInt(player.position.x);
         } else
             score = maxDistance;
 
-        score *= distanceScoreFactor;
-        score -= timePenaltyFactor * (Time.time - startTime);
+        score *= Mathf.FloorToInt(distanceScoreFactor);
+        score -= Mathf.FloorToInt(timePenaltyFactor * (Time.time - startTime));
         if (score < 0)
             score = 0;
         scoreText.text = "Score: " + score.ToString("0");
 
-        if (score > best) best = score;
+        if (score > best) 
+            best = score;
     }
     void UpdateBest()
     {

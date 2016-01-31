@@ -9,8 +9,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 484872}
   - 212: {fileID: 21218532}
-  - 50: {fileID: 5059264}
-  - 231: {fileID: 23101926}
   - 58: {fileID: 5827706}
   - 58: {fileID: 5812046}
   - 58: {fileID: 5877898}
@@ -33,22 +31,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!50 &5059264
-Rigidbody2D:
-  serializedVersion: 2
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 196124}
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: .0500000007
-  m_GravityScale: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 5
 --- !u!58 &5812046
 CircleCollider2D:
   m_ObjectHideFlags: 1
@@ -114,21 +96,6 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 1b2fe4463197df94192a5da1cf1f1501, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
---- !u!231 &23101926
-SpringJoint2D:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 196124}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_EnableCollision: 0
-  m_ConnectedRigidBody: {fileID: 0}
-  m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0, y: .239999995}
-  m_Distance: .400000006
-  m_DampingRatio: 1
-  m_Frequency: 5
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

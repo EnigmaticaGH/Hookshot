@@ -7,19 +7,20 @@ public class SoundEffectHelper : MonoBehaviour {
     public AudioClip []foliageSound;
     public AudioClip []waterSound;
 
+    public AudioSource source;
+
+    public float MasterVolume = 1.0f;
+    public float SFXVolume = 1.0f;
+
 	// Use this for initialization
 	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
+        source.volume = SFXVolume * MasterVolume;
 	}
 
     public void playSound(Vector3 soundDeployment, AudioClip sound)
     {
-        AudioSource.PlayClipAtPoint(sound, soundDeployment);
+        source.PlayOneShot(sound);
+        //AudioSource.PlayClipAtPoint(sound, soundDeployment);
     }
 
     public void playSoundRandom(Vector3 soundPos, AudioClip []arrayOfSounds, int sizeOfArray, int []availableSounds, int lenghtOfAvailableSounds)
@@ -46,8 +47,26 @@ public class SoundEffectHelper : MonoBehaviour {
 
         if (numIsUsable)
         {
-            AudioSource.PlayClipAtPoint(arrayOfSounds[ranNum], soundPos);
+            source.PlayOneShot(arrayOfSounds[ranNum]);
+            //AudioSource.PlayClipAtPoint(arrayOfSounds[ranNum], soundPos);
             Debug.Log(ranNum);
         }
+    }
+
+    public void refreshVolume()
+    {
+        source.volume = SFXVolume * MasterVolume;
+    }
+
+    public void OnMasterChange(float newMasterVolume)
+    {
+        MasterVolume = newMasterVolume;
+        refreshVolume();
+    }
+
+    public void OnSFXChange(float newSFXVolume)
+    {
+        SFXVolume = newSFXVolume;
+        refreshVolume();
     }
 }

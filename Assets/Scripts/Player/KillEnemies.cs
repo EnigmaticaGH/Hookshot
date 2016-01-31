@@ -12,6 +12,7 @@ public class KillEnemies : MonoBehaviour
     private Rigidbody2D player;
     private GameObject lastSpawn;
     private Vector2 deathBoxPos;
+    private bool respawning;
 
     public delegate void RespawnListener();
     public static event RespawnListener OnRespawn;
@@ -21,6 +22,7 @@ public class KillEnemies : MonoBehaviour
         player = GetComponent<Rigidbody2D>();
         hook = GetComponent<LateralMovement>().getHookScript();
         deathBoxPos = Vector2.down * 5;
+        respawning = false;
     }
 
     void Update()
@@ -30,14 +32,16 @@ public class KillEnemies : MonoBehaviour
 
     void CheckForDeath()
     {
-        if (transform.position.y < deathBoxPos.y)
+        if (transform.position.y < deathBoxPos.y && !respawning)
         {
             StartCoroutine(Explosion());
+            StartCoroutine(GetComponent<LateralMovement>().DisableMovement(respawnDelay));
         }
     }
 
     IEnumerator Explosion()
     {
+        respawning = true;
         playerSprite.SetActive(false);
         hook.CancelHook();
         player.velocity = Vector2.zero;
@@ -46,6 +50,7 @@ public class KillEnemies : MonoBehaviour
         player.isKinematic = false;
         transform.position = Vector2.up;
         playerSprite.SetActive(true);
+        respawning = false;
         if (OnRespawn != null)
             OnRespawn();
     }

@@ -256,9 +256,9 @@ Transform:
   - {fileID: 411354}
   - {fileID: 464602}
   - {fileID: 435376}
-  - {fileID: 441300}
-  - {fileID: 446028}
   - {fileID: 432804}
+  - {fileID: 446028}
+  - {fileID: 441300}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!4 &432804
@@ -272,7 +272,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 428938}
-  m_RootOrder: 5
+  m_RootOrder: 3
 --- !u!4 &435376
 Transform:
   m_ObjectHideFlags: 1
@@ -296,7 +296,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 428938}
-  m_RootOrder: 3
+  m_RootOrder: 5
 --- !u!4 &443802
 Transform:
   m_ObjectHideFlags: 1
@@ -718,6 +718,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 317b72d5517eb6147b51f33b6bc4f15f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startingPieces:
+  - Location: -1
+    Name: Hook Hook Hook
+  - Location: 0
+    Name: Start
+  - Location: 1
+    Name: Hook Hook Hook
   parallaxBackgroundSpeed: 2
   backgroundPrefab: {fileID: 176652, guid: c42afb4c5fe576f43aa6b742ce365aca, type: 2}
   levelPartWidth: 100

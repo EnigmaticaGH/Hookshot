@@ -17,8 +17,18 @@ public class PauseScript : MonoBehaviour
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            pauseScreen.enabled = !pauseScreen.enabled;
+            pause();
+            
+    }
+
+    public void QuitToMenu()
+    {
+        Application.LoadLevel(0);
+    }
+
+    public void pause()
+    {
+        pauseScreen.enabled = !pauseScreen.enabled;
             if (pauseScreen.enabled)
             {
                 oldTime = Time.timeScale;
@@ -28,11 +38,5 @@ public class PauseScript : MonoBehaviour
             {
                 Time.timeScale = oldTime;
             }
-        }
-    }
-
-    public void QuitToMenu()
-    {
-        Application.LoadLevel(0);
     }
 }

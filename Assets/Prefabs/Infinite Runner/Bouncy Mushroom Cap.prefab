@@ -10,8 +10,6 @@ GameObject:
   - 4: {fileID: 486622}
   - 212: {fileID: 21228334}
   - 61: {fileID: 6114040}
-  - 50: {fileID: 5033216}
-  - 231: {fileID: 23190680}
   m_Layer: 0
   m_Name: Bouncy Mushroom Cap
   m_TagString: Untagged
@@ -31,22 +29,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!50 &5033216
-Rigidbody2D:
-  serializedVersion: 2
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 176046}
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: .0500000007
-  m_GravityScale: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 5
 --- !u!61 &6114040
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -86,21 +68,6 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: e48e2d440a1ea52478037021660129cf, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
---- !u!231 &23190680
-SpringJoint2D:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 176046}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_EnableCollision: 0
-  m_ConnectedRigidBody: {fileID: 0}
-  m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0, y: 0}
-  m_Distance: .00499999989
-  m_DampingRatio: 1
-  m_Frequency: 8
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
