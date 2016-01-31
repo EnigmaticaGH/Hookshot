@@ -64,8 +64,6 @@ GameObject:
   - 114: {fileID: 11492752}
   - 114: {fileID: 11442132}
   - 114: {fileID: 11478330}
-  - 114: {fileID: 11450860}
-  - 114: {fileID: 11480084}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -707,27 +705,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0e24637a45aeee469bb47dee591330d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &11450860
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 121668}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 317b72d5517eb6147b51f33b6bc4f15f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startingPieces:
-  - Location: -1
-    Name: Hook Hook Hook
-  - Location: 0
-    Name: Start
-  - Location: 1
-    Name: Hook Hook Hook
-  parallaxBackgroundSpeed: 2
-  backgroundPrefab: {fileID: 176652, guid: c42afb4c5fe576f43aa6b742ce365aca, type: 2}
-  levelPartWidth: 100
 --- !u!114 &11454834
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -798,19 +775,6 @@ MonoBehaviour:
   lethalVelocity: 2
   respawnDelay: 0.5
   deathParticle: {fileID: 19839016, guid: 87ea72fd2e963954c851c47d0f46d916, type: 2}
---- !u!114 &11480084
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 121668}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a52d9fffc3f169429ab99b5c0d97d03, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  parallaxBackgroundSpeed: 2
-  backgroundPrefab: {fileID: 176652, guid: c42afb4c5fe576f43aa6b742ce365aca, type: 2}
 --- !u!114 &11488570
 MonoBehaviour:
   m_ObjectHideFlags: 1
