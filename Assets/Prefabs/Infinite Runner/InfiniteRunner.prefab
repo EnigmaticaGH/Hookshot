@@ -24,7 +24,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 112684}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.40827432, y: 3.6569147, z: 0}
+  m_LocalPosition: {x: -.408274323, y: 3.65691471, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -40,7 +40,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 317b72d5517eb6147b51f33b6bc4f15f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingPieces: []
+  startingPieces:
+  - Location: -1
+    Name: Hook Hook Hook
+  - Location: 0
+    Name: Start
+  - Location: 1
+    Name: Hook Hook Hook
   levelPartWidth: 100
 --- !u!114 &11491476
 MonoBehaviour:
