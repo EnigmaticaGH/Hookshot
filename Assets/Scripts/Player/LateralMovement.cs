@@ -34,6 +34,7 @@ public class LateralMovement : MonoBehaviour
     public float speedInWater;
     public float force;
     public float moveForce;
+    public float speedForParticles = 5;
     private float horizontal;
 
     private GameObject hand;
@@ -47,6 +48,7 @@ public class LateralMovement : MonoBehaviour
     private WallSensor wallSensorLeft;
     private AnimateFrog frogAnim;
     private RelativeVelocity relative;
+    private ParticleEffectManager PEM;
 
     private const float AIR_STOP_TIME = 0.05f;
     private const float SPRITE_OFFSET_ANGLE = -5.73f;
@@ -70,6 +72,7 @@ public class LateralMovement : MonoBehaviour
         player = GetComponent<Rigidbody2D>();
         
         ChangeState(MovementState.GROUND);
+        PEM = GameObject.FindGameObjectWithTag("Particles Manager").GetComponent<ParticleEffectManager>();
     }
 
     void Awake()
@@ -94,6 +97,8 @@ public class LateralMovement : MonoBehaviour
     {
         horizontal = Input.GetAxisRaw("Horizontal");
         stateProcesses[(int)state]();
+        if (player.velocity.x >= speedForParticles)
+            PEM.SendMessage("generateSpeedParticles", transform.position);
     }
 
     void ChangeState(MovementState newState)
