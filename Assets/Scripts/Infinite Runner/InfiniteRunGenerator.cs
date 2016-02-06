@@ -76,7 +76,17 @@ public class InfiniteRunGenerator : MonoBehaviour
 
     void GenerateSection(int index)
     {
-        indexedGameObjects.Add(index, GetRandomLevelPart(Vector2.right * levelPartWidth * index));
+        GameObject randomLevelPart = GetRandomLevelPart(Vector2.right * levelPartWidth * index);
+        AdjustForDifficulty(randomLevelPart);
+        indexedGameObjects.Add(index, randomLevelPart);
+    }
+
+    void AdjustForDifficulty(GameObject levelPart)
+    {
+        PrefabProperties[] objects = levelPart.GetComponentsInChildren<PrefabProperties>();
+        foreach (PrefabProperties obj in objects)
+        {
+        }
     }
 
     void DetermineVisibleSections()
