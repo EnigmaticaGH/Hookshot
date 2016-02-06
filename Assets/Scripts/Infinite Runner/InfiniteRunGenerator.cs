@@ -18,6 +18,7 @@ public class InfiniteRunGenerator : MonoBehaviour
 
     private GameObject player;
     private int section = 0;
+    public int sectionToDifficultyRaise = 5;
 
     /* ********************************************************************* */
     //                                Start Up                    
@@ -76,16 +77,22 @@ public class InfiniteRunGenerator : MonoBehaviour
 
     void GenerateSection(int index)
     {
-        GameObject randomLevelPart = GetRandomLevelPart(Vector2.right * levelPartWidth * index);
-        AdjustForDifficulty(randomLevelPart);
+        Vector2 partPosition = Vector2.right * levelPartWidth * index;
+        GameObject randomLevelPart = GetRandomLevelPart(partPosition);
+        AdjustForDifficulty(randomLevelPart, index);
         indexedGameObjects.Add(index, randomLevelPart);
     }
 
-    void AdjustForDifficulty(GameObject levelPart)
+    void AdjustForDifficulty(GameObject levelPart, int partIndex)
     {
+        int difficulty = partIndex / sectionToDifficultyRaise;
         PrefabProperties[] objects = levelPart.GetComponentsInChildren<PrefabProperties>();
         foreach (PrefabProperties obj in objects)
         {
+            obj.gameObject.SetActive(
+                (obj.minDifficulty < 0 || obj.minDifficulty <= difficulty) && 
+                (obj.maxDifficulty < 0 || difficulty <= obj.maxDifficulty)
+            );
         }
     }
 
