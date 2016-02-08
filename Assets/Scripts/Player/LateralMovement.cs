@@ -36,6 +36,7 @@ public class LateralMovement : MonoBehaviour
     public float moveForce;
     public float speedForParticles = 5;
     private float horizontal;
+    private float defaultMaxSpeed;
 
     private GameObject hand;
     private HookshotControl hookshotControl;
@@ -53,6 +54,7 @@ public class LateralMovement : MonoBehaviour
     private const float AIR_STOP_TIME = 0.05f;
     private const float SPRITE_OFFSET_ANGLE = -5.73f;
     private const float TIME_BETWEEN_JUMPS = 0.08f;
+    private const float MOVESPEED_DECREASE_DELTA = 0.7f;
     private bool canMove;
     private bool canJump;
 
@@ -70,7 +72,7 @@ public class LateralMovement : MonoBehaviour
         canJump = true;
         MapStateFunctions();
         player = GetComponent<Rigidbody2D>();
-        
+        defaultMaxSpeed = speed;
         ChangeState(MovementState.GROUND);
         PEM = GameObject.FindGameObjectWithTag("Particles Manager").GetComponent<ParticleEffectManager>();
     }
@@ -97,8 +99,13 @@ public class LateralMovement : MonoBehaviour
     {
         horizontal = Input.GetAxisRaw("Horizontal");
         stateProcesses[(int)state]();
+        if (speed > defaultMaxSpeed)
+            speed -= MOVESPEED_DECREASE_DELTA * Time.deltaTime * Mathf.Pow(speed / defaultMaxSpeed, 3);
+        else
+            speed = defaultMaxSpeed;
         if (player.velocity.x >= speedForParticles)
             PEM.SendMessage("generateSpeedParticles", transform.position);
+        Debug.Log("Max move speed: " + speed);
     }
 
     void ChangeState(MovementState newState)
@@ -121,6 +128,8 @@ public class LateralMovement : MonoBehaviour
         if (isGrounded()) ChangeState(MovementState.GROUND);
         if (isOnWall()) ChangeState(MovementState.WALLJUMP);
         if (isHooked()) ChangeState(MovementState.HOOKED);
+        if (player.velocity.x > defaultMaxSpeed)
+            speed = player.velocity.x;
         DoNormalMovement(isGrounded());
         if (JumpState != null)
             JumpState();
