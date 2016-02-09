@@ -249,6 +249,10 @@ Prefab:
       propertyPath: m_Name
       value: salivaSplash 2
       objectReference: {fileID: 0}
+    - target: {fileID: 166602, guid: 626bf4628bc799d4d955ff9ba0883203, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 626bf4628bc799d4d955ff9ba0883203, type: 2}
   m_IsPrefabParent: 0
@@ -660,6 +664,10 @@ Prefab:
       propertyPath: m_Name
       value: salivaSplash 1
       objectReference: {fileID: 0}
+    - target: {fileID: 166602, guid: 626bf4628bc799d4d955ff9ba0883203, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 626bf4628bc799d4d955ff9ba0883203, type: 2}
   m_IsPrefabParent: 0
@@ -780,6 +788,10 @@ Prefab:
     - target: {fileID: 104360, guid: 85b61e31b17dbdf4182f3830789e2fbf, type: 2}
       propertyPath: m_Name
       value: Dust 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 104360, guid: 85b61e31b17dbdf4182f3830789e2fbf, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 85b61e31b17dbdf4182f3830789e2fbf, type: 2}
@@ -1293,6 +1305,10 @@ Prefab:
     - target: {fileID: 104360, guid: 85b61e31b17dbdf4182f3830789e2fbf, type: 2}
       propertyPath: m_Name
       value: Dust 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 104360, guid: 85b61e31b17dbdf4182f3830789e2fbf, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 85b61e31b17dbdf4182f3830789e2fbf, type: 2}
@@ -1949,6 +1965,10 @@ Prefab:
       propertyPath: m_Name
       value: Air Dust 2
       objectReference: {fileID: 0}
+    - target: {fileID: 193182, guid: d82205283f9abc1418d660d5bf1b1f6b, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d82205283f9abc1418d660d5bf1b1f6b, type: 2}
   m_IsPrefabParent: 0
@@ -1994,6 +2014,10 @@ Prefab:
     - target: {fileID: 104360, guid: 85b61e31b17dbdf4182f3830789e2fbf, type: 2}
       propertyPath: m_Name
       value: Dust 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 104360, guid: 85b61e31b17dbdf4182f3830789e2fbf, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 85b61e31b17dbdf4182f3830789e2fbf, type: 2}
@@ -3146,6 +3170,10 @@ Prefab:
       propertyPath: m_Name
       value: Air Dust 1
       objectReference: {fileID: 0}
+    - target: {fileID: 193182, guid: d82205283f9abc1418d660d5bf1b1f6b, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d82205283f9abc1418d660d5bf1b1f6b, type: 2}
   m_IsPrefabParent: 0
@@ -3762,6 +3790,10 @@ Prefab:
     - target: {fileID: 104360, guid: 85b61e31b17dbdf4182f3830789e2fbf, type: 2}
       propertyPath: m_Name
       value: Dust 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 104360, guid: 85b61e31b17dbdf4182f3830789e2fbf, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 85b61e31b17dbdf4182f3830789e2fbf, type: 2}
