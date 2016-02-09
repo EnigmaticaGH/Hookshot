@@ -3,9 +3,9 @@ using System.Collections;
 
 public class ParticleEffectManager : MonoBehaviour {
 
-    public ParticleSystem dust;
-    public ParticleSystem tongueStick;
-    public ParticleSystem muchSpeed;
+    public ParticleSystem[] dust;
+    public ParticleSystem[] tongueStick;
+    public ParticleSystem[] muchSpeed;
 
     public float timeBetweenSpeedParticles = 1;
 
@@ -13,25 +13,30 @@ public class ParticleEffectManager : MonoBehaviour {
 
     public void spawnParticles(ParticleSystem particles, Vector3 location, float despawnTime)
     {
-        ParticleSystem part = Instantiate(particles, location, Quaternion.Euler(particles.transform.eulerAngles)) as ParticleSystem;
-        StartCoroutine(mementoMori(part, despawnTime));
+        particles.transform.position = location;
+        particles.gameObject.SetActive(true);
+        particles.time = 0;
+        StartCoroutine(mementoMori(particles, despawnTime));
     }
 
     public void generateDust(Vector3 pos)
     {
-        spawnParticles(dust, pos, dust.duration);
+        int av = getAvailableParticle(dust);
+        spawnParticles(dust[av], pos, dust[av].duration);
     }
 
     public void generateSalivaSplash(Vector3 pos)
     {
-        spawnParticles(tongueStick, pos, dust.duration);
+        int av = getAvailableParticle(tongueStick);
+        spawnParticles(tongueStick[av], pos, tongueStick[av].duration);
     }
 
     public void generateSpeedParticles(Vector3 pos)
     {
         if (canGenerateSpeedPart)
         {
-            spawnParticles(muchSpeed, pos, timeBetweenSpeedParticles);
+            int av = getAvailableParticle(muchSpeed);
+            spawnParticles(muchSpeed[av], pos, timeBetweenSpeedParticles);
         }
     }
 
@@ -40,8 +45,35 @@ public class ParticleEffectManager : MonoBehaviour {
         canGenerateSpeedPart = false;
 
         yield return new WaitForSeconds(time);
-        Destroy(particles.gameObject);
+        particles.gameObject.SetActive(false);
 
         canGenerateSpeedPart = true;
+    }
+
+    int getAvailableParticle(ParticleSystem[] sys)
+    {
+        int PositionInArray = -1;
+        int sizeOfArray = sys.Length;
+
+        for (int a = 0; a < 100; a++)
+        {
+            if (a > sizeOfArray - 1)
+            {
+                break;
+            }
+
+            if (!sys[a].gameObject.activeInHierarchy)
+            {
+                PositionInArray = a;
+                break;
+            }
+        }
+
+        if (PositionInArray >= 0)
+            return PositionInArray;
+        else
+            return 0;
+
+
     }
 }

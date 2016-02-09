@@ -97,7 +97,7 @@ public class LateralMovement : MonoBehaviour
     {
         horizontal = Input.GetAxisRaw("Horizontal");
         stateProcesses[(int)state]();
-        if (player.velocity.x >= speedForParticles)
+        if (Mathf.Abs(player.velocity.x) >= speedForParticles)
             PEM.SendMessage("generateSpeedParticles", transform.position);
     }
 
