@@ -1322,6 +1322,10 @@ Prefab:
       propertyPath: sectionToDifficultyRaise
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 11459458, guid: e250e8fcae4628449867d5ef97e8da8a, type: 2}
+      propertyPath: startingPieces.Array.data[2].Name
+      value: Kill La Kill
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e250e8fcae4628449867d5ef97e8da8a, type: 2}
   m_IsPrefabParent: 0

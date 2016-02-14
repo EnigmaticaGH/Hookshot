@@ -25,8 +25,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 418330}
   - 61: {fileID: 6177288}
-  - 50: {fileID: 5073182}
-  - 231: {fileID: 23144790}
   m_Layer: 0
   m_Name: Hookable Leaf
   m_TagString: Hookable
@@ -41,8 +39,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 197004}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 147.100006, y: 31.1000004, z: 0}
-  m_LocalScale: {x: 27.775671, y: 4.09085846, z: 1}
+  m_LocalPosition: {x: 12.54, y: 5.09, z: 0}
+  m_LocalScale: {x: 27.775671, y: 4.0908585, z: 1}
   m_Children:
   - {fileID: 433988}
   m_Father: {fileID: 0}
@@ -53,28 +51,12 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 111236}
-  m_LocalRotation: {x: -.0295790192, y: 0, z: 0, w: .999562442}
-  m_LocalPosition: {x: 0, y: .129999995, z: -1}
-  m_LocalScale: {x: -.0245811027, y: .120567381, z: 1}
+  m_LocalRotation: {x: -0.02957902, y: 0, z: 0, w: 0.99956244}
+  m_LocalPosition: {x: 0, y: 0.13, z: -1}
+  m_LocalScale: {x: -0.024581103, y: 0.12056738, z: 1}
   m_Children: []
   m_Father: {fileID: 418330}
   m_RootOrder: 0
---- !u!50 &5073182
-Rigidbody2D:
-  serializedVersion: 2
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 197004}
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: .0500000007
-  m_GravityScale: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 5
 --- !u!61 &6177288
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -82,12 +64,13 @@ BoxCollider2D:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 197004}
   m_Enabled: 1
+  m_Density: 1
   m_Material: {fileID: 6200000, guid: 784af44ee49d815438714b00650f5e24, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Size: {x: .319999993, y: .319999993}
+  m_Size: {x: 0.32, y: 0.32}
 --- !u!212 &21298196
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -106,29 +89,18 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 1b2fe4463197df94192a5da1cf1f1501, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
---- !u!231 &23144790
-SpringJoint2D:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 197004}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_EnableCollision: 0
-  m_ConnectedRigidBody: {fileID: 0}
-  m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 234.611572, y: 8.99339867}
-  m_Distance: 1
-  m_DampingRatio: 1
-  m_Frequency: 5
+  m_FlipX: 0
+  m_FlipY: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
