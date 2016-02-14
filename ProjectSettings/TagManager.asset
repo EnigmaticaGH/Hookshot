@@ -16,6 +16,7 @@ TagManager:
   - Edible
   - Player Sprite
   - Sensor
+  - Particles Manager
   layers:
   - Default
   - TransparentFX

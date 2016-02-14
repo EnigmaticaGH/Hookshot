@@ -5,6 +5,12 @@ using UnityEngine.UI;
 [RequireComponent(typeof(KeybindScript))]
 public class JumpControl : MonoBehaviour
 {
+    [Header("Particles")]
+    public float speedForDust = -5;
+    public ParticleEffectManager PartMang;
+    public Rigidbody2D reggiebody;
+    public Vector3 offSet;
+
     private const float JUMP_INTERVAL = 0.15f;
     public float jumpForce;
     public float wallJumpForce;
@@ -126,6 +132,11 @@ public class JumpControl : MonoBehaviour
     {
         if (isGrounded)
         {
+            if (reggiebody.velocity.y <= speedForDust)
+            {
+                PartMang.SendMessage("generateDust", transform.position + offSet);
+            }
+
             grounded = true;
         }
         else
