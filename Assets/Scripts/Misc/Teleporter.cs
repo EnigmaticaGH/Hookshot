@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class Teleporter : MonoBehaviour {
@@ -9,7 +10,7 @@ public class Teleporter : MonoBehaviour {
     {
         if (other.CompareTag(playerTag))
         {
-            Application.LoadLevel(zoneName);
+            SceneManager.LoadScene(zoneName);
         }
     }
 }

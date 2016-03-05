@@ -105,7 +105,6 @@ public class LateralMovement : MonoBehaviour
             speed = defaultMaxSpeed;
         if (Mathf.Abs(player.velocity.x) >= speedForParticles)
             PEM.SendMessage("generateSpeedParticles", transform.position);
-        Debug.Log("Max move speed: " + speed);
     }
 
     void ChangeState(MovementState newState)
@@ -229,6 +228,11 @@ public class LateralMovement : MonoBehaviour
                 ChangeState(MovementState.DISABLED);
             }
         }
+    }
+
+    public void ResetMaxSpeed()
+    {
+        speed = defaultMaxSpeed;
     }
 
     Transform HookPoint()
