@@ -1,23 +1,20 @@
-﻿using UnityEngine;
+﻿﻿using UnityEngine;
 using System.Collections.Generic;
 
 public class InfiniteRunGenerator : MonoBehaviour
 {
-    [System.Serializable]
-    public struct StartingPieces
-    {
-        public int Location;
-        public string Name;
-    }
-    public StartingPieces[] startingPieces;
+    public string[] startingPieces;
 
     private LevelPartPicker levelPartPicker;
-    public float levelPartWidth;
 
-    private Dictionary<int, GameObject> indexedGameObjects;
+    private float levelWidth;
 
-    private GameObject player;
+    private Dictionary<int, LevelPartPicker.LevelPart> indexedGameObjects;
+
+
     private int section = 0;
+
+    private CameraFollow2D cam;
 
     /* ********************************************************************* */
     //                                Start Up                    
@@ -28,31 +25,43 @@ public class InfiniteRunGenerator : MonoBehaviour
         InitializeLevel();
     }
 
+    void Start()
+    {
+        cam = GameObject.Find("MainCamera").GetComponent<CameraFollow2D>();
+    }
+
     void InitializeVariables()
     {
         levelPartPicker = new LevelPartPicker();
-        indexedGameObjects = new Dictionary<int, GameObject>();
-        player = GameObject.FindGameObjectWithTag("Player");
+        indexedGameObjects = new Dictionary<int, LevelPartPicker.LevelPart>();
     }
 
     void InitializeLevel()
     {
+        levelWidth = 0;
         for(int i = 0; i < startingPieces.Length; i++)
         {
-            int location = startingPieces[i].Location;
+            LevelPartPicker.LevelPart? levelPartMaybe = levelPartPicker.FindByName(startingPieces[i]);
+            if (!levelPartMaybe.HasValue) continue;
+            LevelPartPicker.LevelPart levelPart = levelPartMaybe.Value;
 
-            GameObject section = (GameObject)Instantiate(
-                levelPartPicker.FindByName(startingPieces[i].Name),
-                Vector2.right * location * levelPartWidth, Quaternion.identity);
-            
-            indexedGameObjects.Add(location, section);
+            Debug.Log("Spawning initial object at " + levelWidth);
+
+            GameObject section = (GameObject)Instantiate(levelPart.GameObject,
+            Vector2.right * levelWidth, Quaternion.identity);
+
+            levelPart.GameObject = section;
+            indexedGameObjects.Add(i, levelPart);
+            levelWidth += levelPart.Width;
         }
     }
 
-    GameObject GetRandomLevelPart(Vector2 position)
+    LevelPartPicker.LevelPart GetRandomLevelPart(Vector2 position)
     {
-        return (GameObject)Instantiate(levelPartPicker.random, 
+        LevelPartPicker.LevelPart levelPart = levelPartPicker.random;
+        levelPart.GameObject = (GameObject)Instantiate(levelPart.GameObject,
             position, Quaternion.identity);
+        return levelPart;
     }
 
     /* ********************************************************************* */
@@ -65,25 +74,35 @@ public class InfiniteRunGenerator : MonoBehaviour
 
     void UpdateLevelParts()
     {
-        float pos = player.transform.position.x;
-        int newSection = (int)(pos / levelPartWidth);
-        int direction = newSection - section;
+        float pos = transform.position.x;
+        if (!indexedGameObjects.ContainsKey(section))
+            GenerateSection(section);
+        int newSection = (int)(pos / indexedGameObjects[section].Width);
         section = newSection;
-        if (!indexedGameObjects.ContainsKey(section + direction))
-            GenerateSection(section + direction);
+        if (!indexedGameObjects.ContainsKey(section + 1))
+            GenerateSection(section + 1);
         DetermineVisibleSections();
     }
 
     void GenerateSection(int index)
     {
-        indexedGameObjects.Add(index, GetRandomLevelPart(Vector2.right * levelPartWidth * index));
+        indexedGameObjects.Add(index, GetRandomLevelPart(Vector2.right * levelWidth));
+        //Debug.Log("Spawning object at " + levelWidth);
+        levelWidth += indexedGameObjects[index].Width;
     }
 
     void DetermineVisibleSections()
     {
-        foreach(KeyValuePair<int, GameObject> pair in indexedGameObjects)
+        foreach(KeyValuePair<int, LevelPartPicker.LevelPart> pair in indexedGameObjects)
         {
-            pair.Value.SetActive(Mathf.Abs(pair.Key - section) <= 1);
+            float position = pair.Value.GameObject.transform.position.x;
+            float rightBoundDistanceFromPosition = pair.Value.Right;
+            float leftBoundDistanceFromPosition = pair.Value.Left;
+            float leftMostPosition = position + leftBoundDistanceFromPosition;
+            float rightMostPosition = position + rightBoundDistanceFromPosition;
+            float cameraLeftBound = transform.position.x - cam.GetScreenWidth();
+            float cameraRightBound = transform.position.x + cam.GetScreenWidth();
+            pair.Value.GameObject.SetActive(leftMostPosition - cameraRightBound < pair.Value.Width && rightMostPosition - cameraLeftBound > -pair.Value.Width);
         }
     }
 }
