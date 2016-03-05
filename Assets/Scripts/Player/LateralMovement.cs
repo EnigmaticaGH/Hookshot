@@ -36,7 +36,8 @@ public class LateralMovement : MonoBehaviour
     public float moveForce;
     public float speedForParticles = 5;
     private float horizontal;
-    private float defaultMaxSpeed;
+    [HideInInspector]
+    public float defaultMaxSpeed;
 
     private GameObject hand;
     private HookshotControl hookshotControl;
@@ -105,7 +106,6 @@ public class LateralMovement : MonoBehaviour
             speed = defaultMaxSpeed;
         if (Mathf.Abs(player.velocity.x) >= speedForParticles)
             PEM.SendMessage("generateSpeedParticles", transform.position);
-        Debug.Log("Max move speed: " + speed);
     }
 
     void ChangeState(MovementState newState)
@@ -229,6 +229,11 @@ public class LateralMovement : MonoBehaviour
                 ChangeState(MovementState.DISABLED);
             }
         }
+    }
+
+    public void ResetMaxSpeed()
+    {
+        speed = defaultMaxSpeed;
     }
 
     Transform HookPoint()

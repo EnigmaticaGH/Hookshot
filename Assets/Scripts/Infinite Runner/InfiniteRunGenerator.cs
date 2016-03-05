@@ -11,9 +11,6 @@ public class InfiniteRunGenerator : MonoBehaviour
 
     private Dictionary<int, LevelPartPicker.LevelPart> indexedGameObjects;
 
-
-    private int section = 0;
-
     private CameraFollow2D cam;
 
     /* ********************************************************************* */
@@ -45,15 +42,16 @@ public class InfiniteRunGenerator : MonoBehaviour
             if (!levelPartMaybe.HasValue) continue;
             LevelPartPicker.LevelPart levelPart = levelPartMaybe.Value;
 
-            Debug.Log("Spawning initial object at " + levelWidth);
+            Debug.Log("Spawning initial object at " + levelWidth + ": " + levelPart.GameObject.name);
 
             GameObject section = (GameObject)Instantiate(levelPart.GameObject,
             Vector2.right * levelWidth, Quaternion.identity);
 
             levelPart.GameObject = section;
             indexedGameObjects.Add(i, levelPart);
-            levelWidth += levelPart.Width;
+            levelWidth += indexedGameObjects[i].Right + levelPart.GameObject.GetComponent<PrefabProperties>().distanceBetweenOtherParts;
         }
+        StartCoroutine(GenerateSections(startingPieces.Length));
     }
 
     LevelPartPicker.LevelPart GetRandomLevelPart(Vector2 position)
@@ -64,31 +62,28 @@ public class InfiniteRunGenerator : MonoBehaviour
         return levelPart;
     }
 
+    System.Collections.IEnumerator GenerateSections(int startingIndex)
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(1);
+            GenerateSection(startingIndex++);
+        }
+    }
+
     /* ********************************************************************* */
     //                             Process
     /* ********************************************************************* */
     void Update()
     {
-        UpdateLevelParts();
-    }
-
-    void UpdateLevelParts()
-    {
-        float pos = transform.position.x;
-        if (!indexedGameObjects.ContainsKey(section))
-            GenerateSection(section);
-        int newSection = (int)(pos / indexedGameObjects[section].Width);
-        section = newSection;
-        if (!indexedGameObjects.ContainsKey(section + 1))
-            GenerateSection(section + 1);
         DetermineVisibleSections();
     }
 
     void GenerateSection(int index)
     {
         indexedGameObjects.Add(index, GetRandomLevelPart(Vector2.right * levelWidth));
-        //Debug.Log("Spawning object at " + levelWidth);
-        levelWidth += indexedGameObjects[index].Width;
+        Debug.Log("Spawning object at " + levelWidth + ": " + indexedGameObjects[index].GameObject.name);
+        levelWidth += indexedGameObjects[index].Right + indexedGameObjects[index].GameObject.GetComponent<PrefabProperties>().distanceBetweenOtherParts;
     }
 
     void DetermineVisibleSections()
@@ -100,8 +95,8 @@ public class InfiniteRunGenerator : MonoBehaviour
             float leftBoundDistanceFromPosition = pair.Value.Left;
             float leftMostPosition = position + leftBoundDistanceFromPosition;
             float rightMostPosition = position + rightBoundDistanceFromPosition;
-            float cameraLeftBound = transform.position.x - cam.GetScreenWidth();
-            float cameraRightBound = transform.position.x + cam.GetScreenWidth();
+            float cameraLeftBound = cam.transform.position.x - cam.GetScreenWidth();
+            float cameraRightBound = cam.transform.position.x + cam.GetScreenWidth();
             pair.Value.GameObject.SetActive(leftMostPosition - cameraRightBound < pair.Value.Width && rightMostPosition - cameraLeftBound > -pair.Value.Width);
         }
     }

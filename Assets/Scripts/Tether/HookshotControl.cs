@@ -120,7 +120,7 @@ public class HookshotControl : MonoBehaviour {
             if (body.velocity.x > 0)
             {
                 //body.velocity += (Vector2.right * player.speed) / ((body.velocity.x / player.speed) + 1);
-                body.velocity = new Vector2(body.velocity.x + player.speed, 6);
+                body.velocity = new Vector2(body.velocity.x + 6, 6);
             }
             ChangeState(HookshotState.FLYING);
         }
