@@ -64,6 +64,7 @@ GameObject:
   - 114: {fileID: 11492752}
   - 114: {fileID: 11442132}
   - 114: {fileID: 11478330}
+  - 114: {fileID: 11450860}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -248,7 +249,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 121668}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0, y: 2.49, z: 0}
+  m_LocalPosition: {x: 0, y: 2.49, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children:
   - {fileID: 411354}
@@ -694,6 +695,7 @@ MonoBehaviour:
   speedInWater: 3
   force: 600
   moveForce: 400
+  speedForParticles: 5
 --- !u!114 &11446654
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -705,6 +707,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0e24637a45aeee469bb47dee591330d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &11450860
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 121668}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 317b72d5517eb6147b51f33b6bc4f15f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startingPieces:
+  - 
+  - 
+  - 
+  - 
 --- !u!114 &11454834
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -797,6 +815,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68be204a48c676646910df89d9039d78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speedForDust: -5
+  PartMang: {fileID: 0}
+  reggiebody: {fileID: 0}
+  offSet: {x: 0, y: 0, z: 0}
   jumpForce: 90
   wallJumpForce: 50
   jumpSpeed: 10

@@ -18,20 +18,24 @@ public class CameraFollow2D : MonoBehaviour
     public bool LimitCameraPos;
     public Vector2 minPos;
     public Vector2 maxPos;
+    private Camera cam;
+    private float cameraScreenHeight;
     private float cameraScreenWidth;
 
     void Start()
     {
         if(GameObject.FindGameObjectWithTag("Player") != null)
             target = GameObject.FindGameObjectWithTag("Player").transform;
-        cameraScreenWidth = GetComponent<Camera>().orthographicSize;
+        cam = GetComponent<Camera>();
+        cameraScreenHeight = cam.orthographicSize;
     }
 
     void Update()
     {
+        cameraScreenWidth = cam.orthographicSize * GetComponent<Camera>().aspect;
         if (target == null) return;
         Vector3 point = GetComponent<Camera>().WorldToViewportPoint(target.position);
-        Vector3 delta = target.position - GetComponent<Camera>().ViewportToWorldPoint(new Vector3(0.5f, 0.5f, point.z)) + Vector3.right * cameraScreenWidth;
+        Vector3 delta = target.position - GetComponent<Camera>().ViewportToWorldPoint(new Vector3(0.5f, 0.5f, point.z)) + Vector3.right * cameraScreenHeight;
 
         float yCoordinate = 0;
         float xCoordinate = 0;
@@ -76,6 +80,10 @@ public class CameraFollow2D : MonoBehaviour
         destination = new Vector3(xCoordinate, yCoordinate, transform.position.z + delta.z);
 
         transform.position = Vector3.SmoothDamp(transform.position, destination, ref velocity, dampTime);
+    }
 
+    public float GetScreenWidth()
+    {
+        return cameraScreenWidth;
     }
 }

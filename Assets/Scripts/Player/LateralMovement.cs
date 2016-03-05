@@ -103,7 +103,7 @@ public class LateralMovement : MonoBehaviour
             speed -= MOVESPEED_DECREASE_DELTA * Time.deltaTime * Mathf.Pow(speed / defaultMaxSpeed, 3);
         else
             speed = defaultMaxSpeed;
-        if (player.velocity.x >= speedForParticles)
+        if (Mathf.Abs(player.velocity.x) >= speedForParticles)
             PEM.SendMessage("generateSpeedParticles", transform.position);
         Debug.Log("Max move speed: " + speed);
     }
