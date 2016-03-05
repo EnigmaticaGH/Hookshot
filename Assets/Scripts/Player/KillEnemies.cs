@@ -34,8 +34,7 @@ public class KillEnemies : MonoBehaviour
     {
         if (transform.position.y < deathBoxPos.y && !respawning)
         {
-            StartCoroutine(Explosion());
-            StartCoroutine(GetComponent<LateralMovement>().DisableMovement(respawnDelay));
+            backToStart();
         }
     }
 
@@ -58,5 +57,32 @@ public class KillEnemies : MonoBehaviour
     private bool Flying()
     {
         return hook.IsHooked() || hook.IsFlying();
+    }
+
+    IEnumerator restart()
+    {
+        LateralMovement lm = GetComponent<LateralMovement>();
+
+        respawning = true;
+        lm.changeCanMove(false);
+        playerSprite.SetActive(false);
+        hook.CancelHook();
+        player.velocity = Vector2.zero;
+        player.isKinematic = true;
+        yield return new WaitForSeconds(respawnDelay);
+        player.isKinematic = false;
+        transform.position = Vector2.up;
+        playerSprite.SetActive(true);
+        respawning = false;
+        
+        if (OnRespawn != null)
+            OnRespawn();
+
+        lm.changeCanMove(true);
+    }
+
+    public void backToStart()
+    {
+        StartCoroutine(restart());
     }
 }
