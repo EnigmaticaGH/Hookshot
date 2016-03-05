@@ -118,7 +118,10 @@ public class HookshotControl : MonoBehaviour {
             //Amplify player speed when he unhooks as a coefficient of currentSpeed/maxSpeed
             //(less speed will be artificially added as he becomes faster to prevent him becoming a spaceship
             if (body.velocity.x > 0)
-                body.velocity += (Vector2.right * player.speed) / ((body.velocity.x / player.speed) + 1);
+            {
+                //body.velocity += (Vector2.right * player.speed) / ((body.velocity.x / player.speed) + 1);
+                body.velocity = new Vector2(body.velocity.x + player.speed, 6);
+            }
             ChangeState(HookshotState.FLYING);
         }
 

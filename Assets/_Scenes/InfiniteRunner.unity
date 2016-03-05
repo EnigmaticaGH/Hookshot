@@ -1510,11 +1510,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 437184, guid: e250e8fcae4628449867d5ef97e8da8a, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -.408274323
+      value: -0.40827432
       objectReference: {fileID: 0}
     - target: {fileID: 437184, guid: e250e8fcae4628449867d5ef97e8da8a, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 3.65691471
+      value: 3.6569147
       objectReference: {fileID: 0}
     - target: {fileID: 437184, guid: e250e8fcae4628449867d5ef97e8da8a, type: 2}
       propertyPath: m_LocalPosition.z
@@ -2211,7 +2211,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 414634, guid: e17d06f747085d54896164d7d0483727, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 1.25
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 414634, guid: e17d06f747085d54896164d7d0483727, type: 2}
       propertyPath: m_LocalPosition.z
@@ -3117,8 +3117,11 @@ Prefab:
       propertyPath: speedForParticles
       value: 10
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 11450860, guid: d119b269f3277b14aa913ba552b19ed4, type: 2}
+    - target: {fileID: 5001532, guid: d119b269f3277b14aa913ba552b19ed4, type: 2}
+      propertyPath: m_LinearDrag
+      value: 0.4
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d119b269f3277b14aa913ba552b19ed4, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &1477802185
