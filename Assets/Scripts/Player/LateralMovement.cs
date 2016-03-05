@@ -340,4 +340,14 @@ public class LateralMovement : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
         }
     }
+
+    public void disableMovement()
+    {
+        ChangeState(MovementState.DISABLED);
+    }
+
+    public void changeCanMove(bool value)
+    {
+        canMove = value;
+    }
 }
