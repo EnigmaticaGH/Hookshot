@@ -11,8 +11,6 @@ public class InfiniteRunGenerator : MonoBehaviour
 
     private Dictionary<int, LevelPartPicker.LevelPart> indexedGameObjects;
 
-    private int section = 0;
-
     private CameraFollow2D cam;
 
     /* ********************************************************************* */
