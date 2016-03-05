@@ -36,7 +36,8 @@ public class LateralMovement : MonoBehaviour
     public float moveForce;
     public float speedForParticles = 5;
     private float horizontal;
-    private float defaultMaxSpeed;
+    [HideInInspector]
+    public float defaultMaxSpeed;
 
     private GameObject hand;
     private HookshotControl hookshotControl;
