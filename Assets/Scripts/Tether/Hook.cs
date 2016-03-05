@@ -10,11 +10,13 @@ public class Hook : MonoBehaviour
     private Rigidbody2D hookBody;
     private GameObject hookedObject;
     private Vector3 offsetToHookPoint;
+    private ParticleEffectManager partManag;
 
     void Start()
     {
         hookBody = GetComponent<Rigidbody2D>();
         hookBody.AddForce(transform.rotation * Vector2.right * hookSpeed, ForceMode2D.Impulse);
+        partManag = GameObject.FindGameObjectWithTag("Particles Manager").GetComponent<ParticleEffectManager>();
     }
 
     void FixedUpdate()
@@ -29,6 +31,7 @@ public class Hook : MonoBehaviour
     {
         if (c.CompareTag("Hookable"))
         {
+            partManag.SendMessage("generateSalivaSplash", transform.position + offsetToHookPoint);
             hookedObject = c.gameObject;
             offsetToHookPoint = transform.position - hookedObject.transform.position;
             offsetToHookPoint = Quaternion.Inverse(hookedObject.transform.rotation) * offsetToHookPoint;
