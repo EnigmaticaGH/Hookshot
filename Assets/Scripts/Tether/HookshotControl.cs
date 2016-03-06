@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class HookshotControl : MonoBehaviour {
-    enum HookshotState {
+    public enum HookshotState {
         READY,
         EXTENDING,
         RETRACTING,
@@ -259,7 +259,10 @@ public class HookshotControl : MonoBehaviour {
         );
     }
 
-    
+    public HookshotState State
+    {
+        get { return state; }
+    }
 
     void AimAtMouse()
     {

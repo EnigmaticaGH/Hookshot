@@ -8,7 +8,6 @@ public class ScoreTracker : MonoBehaviour {
     private static float best = 0;
     private static float score;
     private static int maxDistance;
-    private static float startTime;
     public Text scoreText;
     public Text bestText;
     private Rigidbody2D body;
@@ -58,6 +57,5 @@ public class ScoreTracker : MonoBehaviour {
     {
         maxDistance = 0;
         score = 0;
-        startTime = Time.time;
     }
 }
