@@ -81,7 +81,7 @@ class LevelPartPicker
         if (maxObj.GetComponent<SpriteRenderer>().sprite != null)
         {
             sprite = maxObj.GetComponent<SpriteRenderer>().sprite;
-            spriteWidth = sprite.bounds.center.x + (sprite.bounds.extents.x * minObj.transform.localScale.x);
+            spriteWidth = sprite.bounds.center.x + (sprite.bounds.extents.x * maxObj.transform.localScale.x);
         }
         max = maxObj.transform.position.x + spriteWidth - g.transform.position.x;
 
