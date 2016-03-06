@@ -3105,11 +3105,6 @@ Prefab:
       propertyPath: soundPlayer
       value: 
       objectReference: {fileID: 1923873426}
-    - target: {fileID: 6161658, guid: d119b269f3277b14aa913ba552b19ed4, type: 2}
-      propertyPath: m_Material
-      value: 
-<<<<<<< HEAD
-      objectReference: {fileID: 1707440366}
     - target: {fileID: 11492752, guid: d119b269f3277b14aa913ba552b19ed4, type: 2}
       propertyPath: speedForDust
       value: -1
@@ -3136,18 +3131,6 @@ Prefab:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 11450860, guid: d119b269f3277b14aa913ba552b19ed4, type: 2}
-=======
-      objectReference: {fileID: 6200000, guid: 18c622a366f1b414d9ff8fcb9eac3e8b, type: 2}
-    - target: {fileID: 6119622, guid: d119b269f3277b14aa913ba552b19ed4, type: 2}
-      propertyPath: m_Material
-      value: 
-      objectReference: {fileID: 6200000, guid: 18c622a366f1b414d9ff8fcb9eac3e8b, type: 2}
-    - target: {fileID: 6173310, guid: d119b269f3277b14aa913ba552b19ed4, type: 2}
-      propertyPath: m_Material
-      value: 
-      objectReference: {fileID: 6200000, guid: 18c622a366f1b414d9ff8fcb9eac3e8b, type: 2}
-    m_RemovedComponents: []
->>>>>>> 9d18ffa48d6328821adecbc115494159a1d5d820
   m_ParentPrefab: {fileID: 100100000, guid: d119b269f3277b14aa913ba552b19ed4, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &1477802185
