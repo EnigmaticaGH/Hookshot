@@ -336,7 +336,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Difficulty: 0
-  distanceBetweenOtherParts: 12
+  distanceBetweenOtherParts: 14
 --- !u!212 &21206532
 SpriteRenderer:
   m_ObjectHideFlags: 1

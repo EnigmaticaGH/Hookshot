@@ -42,10 +42,10 @@ public class InfiniteRunGenerator : MonoBehaviour
             if (!levelPartMaybe.HasValue) continue;
             LevelPartPicker.LevelPart levelPart = levelPartMaybe.Value;
 
-            Debug.Log("Spawning initial object at " + levelWidth + ": " + levelPart.GameObject.name);
+            Debug.Log("Spawning initial object at " + (levelWidth - levelPart.Left) + ": " + levelPart.GameObject.name);
 
             GameObject section = (GameObject)Instantiate(levelPart.GameObject,
-            Vector2.right * levelWidth, Quaternion.identity);
+            Vector2.right * (levelWidth - levelPart.Left), Quaternion.identity);
 
             levelPart.GameObject = section;
             indexedGameObjects.Add(i, levelPart);
@@ -82,7 +82,8 @@ public class InfiniteRunGenerator : MonoBehaviour
     void GenerateSection(int index)
     {
         indexedGameObjects.Add(index, GetRandomLevelPart(Vector2.right * levelWidth));
-        Debug.Log("Spawning object at " + levelWidth + ": " + indexedGameObjects[index].GameObject.name);
+        indexedGameObjects[index].GameObject.transform.position -= Vector3.right * indexedGameObjects[index].Left;
+        Debug.Log("Spawning object at " + (levelWidth - indexedGameObjects[index].Left) + ": " + indexedGameObjects[index].GameObject.name);
         levelWidth += indexedGameObjects[index].Right + indexedGameObjects[index].GameObject.GetComponent<PrefabProperties>().distanceBetweenOtherParts;
     }
 

@@ -1018,7 +1018,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 410160, guid: cca22155fc5b2764fbc20584edfe118f, type: 2}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8293944, guid: cca22155fc5b2764fbc20584edfe118f, type: 2}
       propertyPath: m_Enabled
@@ -1035,6 +1035,14 @@ Prefab:
     - target: {fileID: 183734, guid: cca22155fc5b2764fbc20584edfe118f, type: 2}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8293944, guid: cca22155fc5b2764fbc20584edfe118f, type: 2}
+      propertyPath: m_Volume
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11427714, guid: cca22155fc5b2764fbc20584edfe118f, type: 2}
+      propertyPath: MusicVolume
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: cca22155fc5b2764fbc20584edfe118f, type: 2}
@@ -1538,7 +1546,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 437184, guid: e250e8fcae4628449867d5ef97e8da8a, type: 2}
       propertyPath: m_RootOrder
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 11459458, guid: e250e8fcae4628449867d5ef97e8da8a, type: 2}
       propertyPath: startingPieces.Array.data[0]
@@ -1546,11 +1554,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11459458, guid: e250e8fcae4628449867d5ef97e8da8a, type: 2}
       propertyPath: startingPieces.Array.data[1]
-      value: Hook Hook Hook
+      value: Stairs
       objectReference: {fileID: 0}
     - target: {fileID: 11459458, guid: e250e8fcae4628449867d5ef97e8da8a, type: 2}
       propertyPath: startingPieces.Array.data[2]
-      value: Start
+      value: Hook Hook Hook
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e250e8fcae4628449867d5ef97e8da8a, type: 2}
@@ -2235,7 +2243,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 414634, guid: e17d06f747085d54896164d7d0483727, type: 2}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e17d06f747085d54896164d7d0483727, type: 2}
@@ -3059,7 +3067,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 428938, guid: d119b269f3277b14aa913ba552b19ed4, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 428938, guid: d119b269f3277b14aa913ba552b19ed4, type: 2}
       propertyPath: m_LocalPosition.y
@@ -3097,9 +3105,10 @@ Prefab:
       propertyPath: soundPlayer
       value: 
       objectReference: {fileID: 1923873426}
-    - target: {fileID: 11492752, guid: d119b269f3277b14aa913ba552b19ed4, type: 2}
-      propertyPath: reggiebody
+    - target: {fileID: 6161658, guid: d119b269f3277b14aa913ba552b19ed4, type: 2}
+      propertyPath: m_Material
       value: 
+<<<<<<< HEAD
       objectReference: {fileID: 1707440366}
     - target: {fileID: 11492752, guid: d119b269f3277b14aa913ba552b19ed4, type: 2}
       propertyPath: speedForDust
@@ -3127,6 +3136,18 @@ Prefab:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 11450860, guid: d119b269f3277b14aa913ba552b19ed4, type: 2}
+=======
+      objectReference: {fileID: 6200000, guid: 18c622a366f1b414d9ff8fcb9eac3e8b, type: 2}
+    - target: {fileID: 6119622, guid: d119b269f3277b14aa913ba552b19ed4, type: 2}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 6200000, guid: 18c622a366f1b414d9ff8fcb9eac3e8b, type: 2}
+    - target: {fileID: 6173310, guid: d119b269f3277b14aa913ba552b19ed4, type: 2}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 6200000, guid: 18c622a366f1b414d9ff8fcb9eac3e8b, type: 2}
+    m_RemovedComponents: []
+>>>>>>> 9d18ffa48d6328821adecbc115494159a1d5d820
   m_ParentPrefab: {fileID: 100100000, guid: d119b269f3277b14aa913ba552b19ed4, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &1477802185
@@ -3831,11 +3852,6 @@ ParticleSystem:
   m_PrefabParentObject: {fileID: 19828008, guid: 626bf4628bc799d4d955ff9ba0883203,
     type: 2}
   m_PrefabInternal: {fileID: 269422628}
---- !u!50 &1707440366 stripped
-Rigidbody2D:
-  m_PrefabParentObject: {fileID: 5001532, guid: d119b269f3277b14aa913ba552b19ed4,
-    type: 2}
-  m_PrefabInternal: {fileID: 1471560589}
 --- !u!1 &1716185252
 GameObject:
   m_ObjectHideFlags: 0
@@ -4610,7 +4626,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   spreadCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -4632,7 +4648,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
 --- !u!1 &1972208693
 GameObject:
   m_ObjectHideFlags: 0
