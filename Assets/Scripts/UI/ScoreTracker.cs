@@ -5,11 +5,13 @@ using System;
 
 public class ScoreTracker : MonoBehaviour {
 
-    private static int best = 0;
+    private static float best = 0;
+    private static float score;
     private static int maxDistance;
-    private static float startTime;
     public Text scoreText;
     public Text bestText;
+    private Rigidbody2D body;
+    private LateralMovement movement;
 
     public float distanceScoreFactor;
     public float timePenaltyFactor;
@@ -22,7 +24,10 @@ public class ScoreTracker : MonoBehaviour {
         KillEnemies.OnRespawn += ResetScore;
         bestText.text = "Best: " + best;
         player = GameObject.FindGameObjectWithTag("Player").transform;
+        score = 0;
         maxDistance = 0;
+        body = player.GetComponent<Rigidbody2D>();
+        movement = player.GetComponent<LateralMovement>();
     }
     void OnDestroy()
     {
@@ -32,17 +37,13 @@ public class ScoreTracker : MonoBehaviour {
 
     void Update()
     {
-        int score = 0;
-        if (player.position.x > maxDistance) {
-            score = Mathf.FloorToInt(player.position.x);
+        if (player.position.x > maxDistance && body.velocity.x > 0)
+        {
+            float scoreMultiplier = Mathf.Pow(Mathf.Clamp(movement.speed / movement.defaultMaxSpeed, 1, Mathf.Infinity), 2);
+            score += body.velocity.x * Time.deltaTime * (1 + Mathf.Pow(player.position.x / 100f, 0.5f)) * scoreMultiplier;
             maxDistance = Mathf.FloorToInt(player.position.x);
-        } else
-            score = maxDistance;
+        }
 
-        score *= Mathf.FloorToInt(distanceScoreFactor);
-        score -= Mathf.FloorToInt(timePenaltyFactor * (Time.time - startTime));
-        if (score < 0)
-            score = 0;
         scoreText.text = "Score: " + score.ToString("0");
 
         if (score > best) 
@@ -55,6 +56,6 @@ public class ScoreTracker : MonoBehaviour {
     public static void ResetScore()
     {
         maxDistance = 0;
-        startTime = Time.time;
+        score = 0;
     }
 }

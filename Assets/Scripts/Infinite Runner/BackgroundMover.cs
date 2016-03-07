@@ -32,7 +32,7 @@ public class BackgroundMover : MonoBehaviour {
 
         // Make the backgrounds overlap just a little bit, to prevent the white back-background from showing
         bgWidth = (backgroundPrefab.GetComponent<SpriteRenderer>().sprite.bounds.extents.x * 2) - 0.01f;
-        backgroundPos = Vector2.zero;
+        backgroundPos = Vector2.up * Camera.main.transform.position.y;
 
         // Initialize environment
         for (int i = 0; i < 4; i++)

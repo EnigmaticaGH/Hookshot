@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class HookshotControl : MonoBehaviour {
-    enum HookshotState {
+    public enum HookshotState {
         READY,
         EXTENDING,
         RETRACTING,
@@ -30,6 +30,7 @@ public class HookshotControl : MonoBehaviour {
     public Transform backSensor;
 
     public float retractTime;
+    public float terminalVelocity = 6;
 
     private List<Collider2D> playerColliders;
     private GameObject hand;
@@ -118,7 +119,10 @@ public class HookshotControl : MonoBehaviour {
             //Amplify player speed when he unhooks as a coefficient of currentSpeed/maxSpeed
             //(less speed will be artificially added as he becomes faster to prevent him becoming a spaceship
             if (body.velocity.x > 0)
-                body.velocity += (Vector2.right * player.speed) / ((body.velocity.x / player.speed) + 1);
+            {
+                //body.velocity += (Vector2.right * player.speed) / ((body.velocity.x / player.speed) + 1);
+                body.velocity = new Vector2(body.velocity.x + terminalVelocity, terminalVelocity);
+            }
             ChangeState(HookshotState.FLYING);
         }
 
@@ -256,7 +260,10 @@ public class HookshotControl : MonoBehaviour {
         );
     }
 
-    
+    public HookshotState State
+    {
+        get { return state; }
+    }
 
     void AimAtMouse()
     {
