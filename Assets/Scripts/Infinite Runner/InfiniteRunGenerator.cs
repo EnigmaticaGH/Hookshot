@@ -83,7 +83,7 @@ public class InfiniteRunGenerator : MonoBehaviour
     {
         indexedGameObjects.Add(index, GetRandomLevelPart(Vector2.right * levelWidth));
         indexedGameObjects[index].GameObject.transform.position -= Vector3.right * indexedGameObjects[index].Left;
-        Debug.Log("Spawning object at " + (levelWidth - indexedGameObjects[index].Left) + ": " + indexedGameObjects[index].GameObject.name);
+        //Debug.Log("Spawning object at " + (levelWidth - indexedGameObjects[index].Left) + ": " + indexedGameObjects[index].GameObject.name);
         levelWidth += indexedGameObjects[index].Right + indexedGameObjects[index].GameObject.GetComponent<PrefabProperties>().distanceBetweenOtherParts;
     }
 

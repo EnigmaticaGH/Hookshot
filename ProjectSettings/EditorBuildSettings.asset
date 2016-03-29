@@ -6,30 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 0
-    path: Assets/_Scenes/CityOneHub.unity
-  - enabled: 0
     path: Assets/_Scenes/MainMenu.unity
-  - enabled: 0
-    path: Assets/_Scenes/Sidescroller1.unity
-  - enabled: 0
-    path: Assets/_Scenes/3.ThirdLevelSet/HardcoreRopeLevel.unity
-  - enabled: 0
-    path: Assets/_Scenes/3.ThirdLevelSet/MovingPlatformLevel.unity
-  - enabled: 0
-    path: Assets/_Scenes/3.ThirdLevelSet/PlatformingLevel.unity
-  - enabled: 0
-    path: Assets/_Scenes/3.ThirdLevelSet/SplitPlatformLevel.unity
-  - enabled: 0
-    path: Assets/_Scenes/3.ThirdLevelSet/PhysicsLevel.unity
-  - enabled: 0
-    path: Assets/_Scenes/3.ThirdLevelSet/EnemiesLevel.unity
-  - enabled: 0
-    path: Assets/_Scenes/4.AlphaMainLevels/Level 1 Alpha.unity
-  - enabled: 0
-    path: Assets/_Scenes/4.AlphaMainLevels/Level 2 Alpha.unity
-  - enabled: 0
-    path: Assets/_Scenes/4.AlphaMainLevels/Level 3 Alpha.unity
-  - enabled: 0
-    path: Assets/_Scenes/DefinitiveLevels/Level 1.unity
   - enabled: 1
     path: Assets/_Scenes/InfiniteRunner.unity

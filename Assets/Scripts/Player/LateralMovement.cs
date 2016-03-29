@@ -98,7 +98,7 @@ public class LateralMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        horizontal = Input.GetAxisRaw("Horizontal");
+        setHorizontalAxis(Input.GetAxisRaw("Horizontal"));
         stateProcesses[(int)state]();
         if (speed > defaultMaxSpeed)
             speed -= MOVESPEED_DECREASE_DELTA * Time.deltaTime * Mathf.Pow(speed / defaultMaxSpeed, 3);
@@ -363,5 +363,10 @@ public class LateralMovement : MonoBehaviour
     public void changeCanMove(bool value)
     {
         canMove = value;
+    }
+
+    public void setHorizontalAxis(float dir)
+    {
+        horizontal = dir;
     }
 }
