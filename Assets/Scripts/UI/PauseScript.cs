@@ -5,20 +5,23 @@ using UnityEngine.UI;
 
 public class PauseScript : MonoBehaviour
 {
-    public Canvas pauseScreen;
+    public GameObject pauseScreen;
+    public GameObject ControlUI;
 
     private float oldTime;
 
     void Start()
     {
-        pauseScreen.enabled = false;
+        pauseScreen.SetActive(false);
         Time.timeScale = 1.0f;
     }
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
+        {
             pause();
+        }
             
     }
 
@@ -29,8 +32,9 @@ public class PauseScript : MonoBehaviour
 
     public void pause()
     {
-        pauseScreen.enabled = !pauseScreen.enabled;
-            if (pauseScreen.enabled)
+        pauseScreen.SetActive(!pauseScreen.activeInHierarchy);
+        ControlUI.SetActive(!ControlUI.activeInHierarchy);
+            if (pauseScreen.activeInHierarchy)
             {
                 oldTime = Time.timeScale;
                 Time.timeScale = 0f;

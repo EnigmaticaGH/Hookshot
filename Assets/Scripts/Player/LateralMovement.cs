@@ -58,6 +58,7 @@ public class LateralMovement : MonoBehaviour
     private const float MOVESPEED_DECREASE_DELTA = 0.7f;
     private bool canMove;
     private bool canJump;
+    private bool triggerMove = false;
 
     public delegate void GroundStateDelegate();
     public delegate void JumpStateDelegate();
@@ -98,7 +99,9 @@ public class LateralMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        setHorizontalAxis(Input.GetAxisRaw("Horizontal"));
+        if (!triggerMove)
+            setHorizontalAxis(Input.GetAxisRaw("Horizontal"));
+
         stateProcesses[(int)state]();
         if (speed > defaultMaxSpeed)
             speed -= MOVESPEED_DECREASE_DELTA * Time.deltaTime * Mathf.Pow(speed / defaultMaxSpeed, 3);
@@ -207,7 +210,7 @@ public class LateralMovement : MonoBehaviour
     {
         if (onTheGround)
         {
-            Vector2 lateralVelocity = new Vector2(speed * Input.GetAxis("Horizontal"), player.velocity.y);
+            Vector2 lateralVelocity = new Vector2(speed * horizontal, player.velocity.y);
             player.velocity = lateralVelocity;
         }
         else
@@ -368,5 +371,15 @@ public class LateralMovement : MonoBehaviour
     public void setHorizontalAxis(float dir)
     {
         horizontal = dir;
+    }
+
+    public float returnHorizontal()
+    {
+        return horizontal;
+    }
+
+    public void triggerMoveNow(bool val)
+    {
+        triggerMove = val;
     }
 }

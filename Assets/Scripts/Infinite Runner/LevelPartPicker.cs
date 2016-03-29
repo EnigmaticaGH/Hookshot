@@ -33,7 +33,7 @@ class LevelPartPicker
             part.Width = GetLevelPartWidth(prefab, out left, out right);
             part.Right = right;
             part.Left = left;
-            Debug.Log("Adding prefab: " + prefab.name + ", Width: " + part.Width + ", Distance Right: " + part.Right + ", Distance Left: " + part.Left);
+            //Debug.Log("Adding prefab: " + prefab.name + ", Width: " + part.Width + ", Distance Right: " + part.Right + ", Distance Left: " + part.Left);
             prefabs.Add(part);
         }
     }

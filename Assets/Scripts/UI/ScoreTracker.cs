@@ -8,8 +8,8 @@ public class ScoreTracker : MonoBehaviour {
     private static int best = 0;
     private static int score;
     private static int maxDistance;
-    public Text scoreText;
-    public Text bestText;
+    //public Text scoreText;
+    //public Text bestText;
     public const int digitsInScore = 9;
     public Sprite[] numbers = new Sprite[10];
     public Image[] scoreSlots = new Image[digitsInScore];
@@ -29,7 +29,7 @@ public class ScoreTracker : MonoBehaviour {
     {
         KillEnemies.OnRespawn += UpdateBest;
         KillEnemies.OnRespawn += ResetScore;
-        bestText.text = "Best: " + best;
+        //bestText.text = "Best: " + best;
         player = GameObject.FindGameObjectWithTag("Player").transform;
         score = 0;
         maxDistance = 0;
@@ -117,7 +117,7 @@ public class ScoreTracker : MonoBehaviour {
         }
 
         result += score;
-        print(result);
+        //print(result);
         return result;
     }
 

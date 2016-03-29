@@ -33,6 +33,7 @@ public class JumpControl : MonoBehaviour
     private bool isRunning;
     private bool touchingRight;
     private bool touchingLeft;
+    private bool triggerJump = false;
 
     void Start()
     {
@@ -52,7 +53,7 @@ public class JumpControl : MonoBehaviour
     }
     void Update()
     {
-        if (readyForJump && keybinds.GetButtonDown("Jump") && Time.timeScale > 0f)
+        if (readyForJump && (keybinds.GetButtonDown("Jump") || triggerJump) && Time.timeScale > 0f)
         {
             if (grounded)
             {
@@ -61,6 +62,7 @@ public class JumpControl : MonoBehaviour
                 soundPlayer.playSound(transform.position, soundPlayer.jumpSound[1]);
                 jump = true;
                 wallJump = false;
+                triggerJump = false;
             }
             else if (doubleJump && canDoubleJump)
             {
@@ -69,9 +71,10 @@ public class JumpControl : MonoBehaviour
                 doubleJump = false;
             }
         }
-        else if(keybinds.GetButtonUp("Jump") && Time.timeScale > 0f)
+        else if((keybinds.GetButtonUp("Jump") || triggerJump) && Time.timeScale > 0f)
         {
             wallJump = true;
+            triggerJump = false;
         }
     }
 
@@ -157,5 +160,15 @@ public class JumpControl : MonoBehaviour
         readyForJump = false;
         yield return new WaitForSeconds(JUMP_INTERVAL);
         readyForJump = true;
+    }
+
+    public void JumpNow()
+    {
+        triggerJump = true;
+    }
+
+    public bool isTriggerActivated()
+    {
+        return triggerJump;
     }
 }

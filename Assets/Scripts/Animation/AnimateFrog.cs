@@ -21,7 +21,7 @@ public class AnimateFrog : MonoBehaviour
 
     void Update()
     {
-        horizontal = Input.GetAxisRaw("Horizontal");
+        horizontal = player.returnHorizontal();
         if (Time.time > 0.01f && !anim.GetBool("WallJump"))
         {
             anim.SetBool("Grounded", player.isGrounded());

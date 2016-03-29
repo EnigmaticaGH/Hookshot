@@ -52,6 +52,7 @@ public class HookshotControl : MonoBehaviour {
     private Rigidbody2D body;
 
     private bool playingHookAnim;
+    private bool triggerShoot = false;
 
     void Start()
     {
@@ -113,7 +114,7 @@ public class HookshotControl : MonoBehaviour {
 
     void Hooked()
     {
-        if (Input.GetButtonDown("Fire1") || keybinds.GetButtonDown("Jump"))
+        if (triggerShoot || jumpControl.isTriggerActivated() || Input.GetButtonDown("Fire1") || keybinds.GetButtonDown("Jump"))
         {
             DestroyHookAndRope();
             //Amplify player speed when he unhooks as a coefficient of currentSpeed/maxSpeed
@@ -152,7 +153,7 @@ public class HookshotControl : MonoBehaviour {
 
     void UpdateHookFire()
     {
-        if (Input.GetButtonDown("Fire1")/* && !jumpControl.isGrounded()*/)
+        if (triggerShoot || Input.GetButtonDown("Fire1") /* && !jumpControl.isGrounded()*/)
         {
             FireHookAndRope();
             ChangeState(HookshotState.EXTENDING);
@@ -173,6 +174,7 @@ public class HookshotControl : MonoBehaviour {
         {
             DestroyHookAndRope();
             ChangeState(HookshotState.READY);
+            triggerShoot = false;
         }
     }
 
@@ -183,6 +185,7 @@ public class HookshotControl : MonoBehaviour {
         hook.GetComponent<Hook>().hookGun = this;
 
         //IgnoreHookPlayerCollisions();
+        //ChangeState(HookshotState.EXTENDING);
 
         // And spawn a rope to go with it
         ropeObj = (GameObject)Instantiate(ropeFab, transform.position, transform.rotation);
@@ -274,5 +277,10 @@ public class HookshotControl : MonoBehaviour {
         Vector3 angles = Quaternion.FromToRotation(Vector3.right, direction).eulerAngles;
         angles = new Vector3(0, 0, angles.z);
         playerRenderer.transform.rotation = Quaternion.Euler(angles);
+    }
+
+    public void shootNow()
+    {
+        triggerShoot = true;
     }
 }
